@@ -1,0 +1,12 @@
+.menu-label .pagetitle {
+    font-family: $font-title;
+}
+
+.menu {
+    background-color: $color-primary;
+    height: 100vh;
+
+    .icon-container {
+        width: 5rem;
+    }
+}
