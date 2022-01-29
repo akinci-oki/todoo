@@ -1,26 +1,39 @@
-function Menu() {
+import { ReactComponent as HamburgerIcon } from "../../icons/hamburger-icon.svg";
+import { ReactComponent as SettingsIcon } from "../../icons/settings-icon.svg";
+import { ReactComponent as StatisticsIcon } from "../../icons/statistics-icon.svg";
+import { ReactComponent as AccountIcon } from "../../icons/account-icon.svg";
+import PropTypes from "prop-types";
+
+const Menu = (props) => {
     return (
         <div>
-            <ul className="menu">
-                <li>
-                    <span className="icon-container">X</span>
-                    <span className="menu-label"> ToDoobieDoompie </span>
+            <ul className={`menu ${props.isMenuOpen ? "menu-open" : ""}`}>
+                <li className="page-title">
+                    <span className="icon" onClick={() => props.onToggleMenu()}>
+                        <HamburgerIcon />
+                    </span>
+                    <span className="label"> ToDoobieDoompie </span>
                 </li>
-                <li>
-                    <span className="icon-container">X</span>
-                    <span className="menu-label"> Settings </span>
+                <li className="menu-item">
+                    <span className="icon"> </span>
+                    <span className="label"> Settings </span>
                 </li>
-                <li>
-                    <span className="icon-container">X</span>
-                    <span className="menu-label"> Statistics </span>
+                <li className="menu-item">
+                    <span className="icon">X</span>
+                    <span className="label"> Statistics </span>
                 </li>
-                <li>
-                    <span className="icon-container">X</span>
-                    <span className="menu-label"> Profile </span>
+                <li className="menu-item">
+                    <span className="icon">X</span>
+                    <span className="label"> Profile </span>
                 </li>
             </ul>
         </div>
     );
-}
+};
+
+Menu.propTypes = {
+    isMenuOpen: PropTypes.bool,
+    onToggleMenu: PropTypes.func,
+};
 
 export default Menu;
