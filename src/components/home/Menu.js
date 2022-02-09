@@ -15,15 +15,21 @@ const Menu = (props) => {
                     <span className="label"> ToDoobieDoompie </span>
                 </li>
                 <li className="menu-item">
-                    <span className="icon"> </span>
+                    <span className="icon" onClick={() => props.onToggleMenu()}>
+                        <SettingsIcon />
+                    </span>
                     <span className="label"> Settings </span>
                 </li>
                 <li className="menu-item">
-                    <span className="icon">X</span>
+                    <span className="icon" onClick={() => props.onToggleMenu()}>
+                        <StatisticsIcon />
+                    </span>
                     <span className="label"> Statistics </span>
                 </li>
                 <li className="menu-item">
-                    <span className="icon">X</span>
+                    <span className="icon" onClick={() => props.onToggleMenu()}>
+                        <AccountIcon />
+                    </span>
                     <span className="label"> Profile </span>
                 </li>
             </ul>

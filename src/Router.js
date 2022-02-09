@@ -1,12 +1,13 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import App from "./App";
-import { NotFound } from "./components";
+import { NotFound, Settings } from "./components";
 
 const Router = () => (
     <BrowserRouter>
         <Routes>
             <Route exact path="/" element={<App />} />
+            {/*  <Route path="/" element={<Settings />} /> */}
             <Route path="*" element={<NotFound />} />
         </Routes>
     </BrowserRouter>
