@@ -16,5 +16,17 @@ html {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    height: 100vh;
+    height: 110rem;
+}
+
+button {
+    width: 100%;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-color: $color-primary;
+    background-color: $color-primary;
+    font-size: 1rem;
+    &.secondary {
+        background-color: rgb(185, 181, 181);
+    }
 }

@@ -6,6 +6,8 @@
     padding: 0;
     font-family: $font-primary;
     font-weight: 600;
+    transition: height 0.8s;
+    height: 4rem;
 
     .menu-item,
     .page-title {
@@ -23,6 +25,7 @@
     }
 
     &-open {
+        transition: height 0.8s;
         .menu-item {
             display: flex;
         }

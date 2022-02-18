@@ -37,6 +37,7 @@ class App extends React.Component {
                 />
                 {/*  <Home /> */}
                 <Settings categories={this.state.categories} />
+                {/* <NewCategoryForm categories={this.state.categories} /> */}
             </div>
         );
     }
