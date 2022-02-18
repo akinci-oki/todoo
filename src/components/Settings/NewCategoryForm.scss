@@ -1,42 +1,40 @@
-.settings {
-    margin: 0 2rem;
+.NewCategoryForm {
+    display: flex;
+    flex-direction: column;
+    height: 21rem;
 
-    .form-container {
-        display: none;
-        height: 0;
-        transition: height 0.8s;
-        &.form-open {
-            height: 21rem;
-            display: block;
-            transition: height 0.8s;
-        }
+    label {
+        margin-bottom: 0.5rem;
     }
 
-    h2 {
-        margin-top: 2rem;
+    input {
+        height: 2rem;
         margin-bottom: 1rem;
     }
-
-    li {
+    .input-container {
         display: flex;
-        justify-content: space-between;
-        padding: 1rem;
-    }
-    ul {
-        list-style: none;
-        background-color: rgb(175, 163, 163);
-        padding: 0;
-    }
-    .cat-label {
-        display: flex;
+        flex-direction: column;
     }
 
-    .bolletje {
-        margin-right: 0.5rem;
-        border-radius: 50%;
-        width: 1rem;
-        height: 1rem;
-        background-color: red;
+    .button-container {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .color-button {
+        border: 0;
+        width: 2rem;
+        height: 2rem;
+
+        &.selected,
+        &:hover {
+            height: 2.2rem;
+            width: 2.2rem;
+        }
+
+        &.selected {
+            border: 0.2rem solid white;
+        }
 
         &.col-1 {
             background-color: #f02d50;
@@ -80,8 +78,5 @@
         &.col-14 {
             background-color: #42083c;
         }
-    }
-    .icon {
-        padding: 0.4rem;
     }
 }

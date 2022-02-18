@@ -2,10 +2,10 @@ import { ReactComponent as EditNameIcon } from "../../icons/edit-name-icon.svg";
 import { ReactComponent as PickAColorIcon } from "../../icons/pick-a-color-icon.svg";
 import { ReactComponent as DeleteIcon } from "../../icons/delete-icon.svg";
 import PropTypes from "prop-types";
-import NewCategoryForm from "../NewCategoryForm";
+import NewCategoryForm from "./NewCategoryForm";
 import { useState } from "react";
 
-const Settings = ({ categories }) => {
+const Settings = ({ categories, onAddCategory, colors }) => {
     console.log(categories);
 
     const [isFormOpen, setIsFormOpen] = useState(false);
@@ -58,7 +58,11 @@ const Settings = ({ categories }) => {
                 add new category
             </button>
             <div className={`form-container ${isFormOpen ? "form-open" : ""}`}>
-                <NewCategoryForm />
+                <NewCategoryForm
+                    onAddCategory={onAddCategory}
+                    onToggleForm={onToggleForm}
+                    colors={colors}
+                />
             </div>
             {/* <button className="secondary"> cancel </button> */}
         </div>
@@ -66,7 +70,9 @@ const Settings = ({ categories }) => {
 };
 
 Settings.propTypes = {
-    categories: PropTypes.object,
+    categories: PropTypes.array,
+    onAddCategory: PropTypes.func,
+    colors: PropTypes.array,
 };
 
 export default Settings;
