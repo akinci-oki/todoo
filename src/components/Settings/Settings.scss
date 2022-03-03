@@ -1,11 +1,13 @@
 .settings {
     margin: 0 2rem;
 
-    .form-container {
+    .new-form-container,
+    .edit-form-container {
         display: none;
         height: 0;
         transition: height 0.8s;
-        &.form-open {
+        &.new-form-open,
+        &.edit-form-open {
             height: 21rem;
             display: block;
             transition: height 0.8s;

@@ -1,4 +1,4 @@
-.NewCategoryForm {
+.CategoryForm {
     display: flex;
     flex-direction: column;
     height: 21rem;
@@ -12,6 +12,9 @@
         margin-bottom: 1rem;
     }
     .input-container {
+        &.hide-colors {
+            display: none;
+        }
         display: flex;
         flex-direction: column;
     }

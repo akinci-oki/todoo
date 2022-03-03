@@ -2,15 +2,23 @@ import { ReactComponent as EditNameIcon } from "../../icons/edit-name-icon.svg";
 import { ReactComponent as PickAColorIcon } from "../../icons/pick-a-color-icon.svg";
 import { ReactComponent as DeleteIcon } from "../../icons/delete-icon.svg";
 import PropTypes from "prop-types";
-import NewCategoryForm from "./NewCategoryForm";
+import CategoryForm from "./CategoryForm";
 import { useState } from "react";
 
-const Settings = ({ categories, onAddCategory, colors }) => {
+const Settings = ({ categories, onAddCategory, onEditCategory, colors }) => {
     console.log(categories);
 
-    const [isFormOpen, setIsFormOpen] = useState(false);
+    const [isEditFormOpen, setIsEditFormOpen] = useState(false);
+    const [isNewFormOpen, setIsNewFormOpen] = useState(false);
+    const [selectedCategoryId, setSelectedCategoryId] = useState(null);
+
     const onEdit = (id) => {
-        console.log("edit", id);
+        onToggleEditForm();
+        setSelectedCategoryId(id);
+        console.log(
+            "edit",
+            categories.find((category) => category.id === id).desc
+        );
     };
     const onColor = (id) => {
         console.log("color", id);
@@ -19,7 +27,18 @@ const Settings = ({ categories, onAddCategory, colors }) => {
         console.log("delete", id);
     };
 
-    const onToggleForm = () => setIsFormOpen(!isFormOpen);
+    const onToggleNewForm = () => {
+        setIsNewFormOpen(!isNewFormOpen);
+        setIsEditFormOpen(false);
+    };
+    const onToggleEditForm = () => {
+        setIsEditFormOpen(true);
+        setIsNewFormOpen(false);
+    };
+
+    const onSubmitEditCategoryForm = (newName) => {
+        onEditCategory(selectedCategoryId, newName);
+    };
 
     return (
         <div className="settings">
@@ -54,16 +73,40 @@ const Settings = ({ categories, onAddCategory, colors }) => {
                     </li>
                 ))}
             </ul>
-            <button className="primary" onClick={() => onToggleForm()}>
+            <button className="primary" onClick={() => onToggleNewForm()}>
                 add new category
             </button>
-            <div className={`form-container ${isFormOpen ? "form-open" : ""}`}>
-                <NewCategoryForm
+            <div
+                className={`new-form-container ${
+                    isNewFormOpen ? "new-form-open" : ""
+                }`}
+            >
+                <CategoryForm
                     onAddCategory={onAddCategory}
-                    onToggleForm={onToggleForm}
+                    onToggleForm={onToggleNewForm}
                     colors={colors}
+                    mode="new"
+                    title="New category"
+                    buttonLabel="add category"
                 />
             </div>
+
+            <div
+                className={`edit-form-container ${
+                    isEditFormOpen ? "edit-form-open" : ""
+                }`}
+            >
+                <CategoryForm
+                    onEditCategory={onSubmitEditCategoryForm}
+                    onToggleForm={onToggleEditForm}
+                    colors={colors}
+                    isColorPickerHidden
+                    mode="edit"
+                    title="Edit category"
+                    buttonLabel="update category"
+                />
+            </div>
+
             {/* <button className="secondary"> cancel </button> */}
         </div>
     );
@@ -72,6 +115,7 @@ const Settings = ({ categories, onAddCategory, colors }) => {
 Settings.propTypes = {
     categories: PropTypes.array,
     onAddCategory: PropTypes.func,
+    onEditCategory: PropTypes.func,
     colors: PropTypes.array,
 };
 

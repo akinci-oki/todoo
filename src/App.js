@@ -72,14 +72,34 @@ class App extends React.Component {
         this.setState({ isMenuOpen: !this.state.isMenuOpen });
     };
 
-    onAddCategory = (categoryname, color) => {
-        console.log(categoryname, color);
+    onAddCategory = (categoryName, color) => {
+        console.log(categoryName, color);
         this.setState({
             categories: [
                 ...this.state.categories,
-                { id: "", desc: categoryname, color: color },
+                { id: "", desc: categoryName, color: color },
             ],
         });
+    };
+
+    onEditCategory = (id, newName) => {
+        console.log(id, newName);
+        console.log(this.state.categories);
+        const updatedCategories = this.state.categories.map((category) => {
+            console.log(category.id === id);
+            if (category.id === id) {
+                return {
+                    ...category,
+                    desc: newName,
+                };
+            } else {
+                return category;
+            }
+        });
+        this.setState({
+            categories: updatedCategories,
+        });
+        console.log(updatedCategories);
     };
 
     render() {
@@ -93,9 +113,10 @@ class App extends React.Component {
                 <Settings
                     categories={this.state.categories}
                     onAddCategory={this.onAddCategory}
+                    onEditCategory={this.onEditCategory}
                     colors={this.state.colors}
                 />
-                {/* <NewCategoryForm categories={this.state.categories} /> */}
+                {/* <CategoryForm categories={this.state.categories} /> */}
             </div>
         );
     }

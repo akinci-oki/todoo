@@ -1,11 +1,11 @@
 import { useState } from "react";
 
-function NewCategoryForm(props) {
+function CategoryForm(props) {
     const [categoryname, setCategoryname] = useState("");
     const [color, setColor] = useState("col-1");
     return (
-        <div className="NewCategoryForm">
-            <h2> New category </h2>
+        <div className="CategoryForm">
+            <h2> {props.title} </h2>
             <form>
                 <div className="input-container">
                     <label>name</label>
@@ -19,21 +19,27 @@ function NewCategoryForm(props) {
                         id="my-input"
                     />
                 </div>
-                <div className="input-container">
+                <div
+                    className={`input-container ${
+                        props.isColorPickerHidden ? "hide-colors" : ""
+                    }`}
+                >
                     <label>pick a color</label>
 
                     <div className="button-container">
-                        {props.colors.map((propColor, index) => (
-                            <button
-                                className={`color-button ${propColor.id} ${
-                                    propColor.id === color ? "selected" : ""
-                                }`}
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    setColor(propColor.id);
-                                }}
-                            ></button>
-                        ))}
+                        {props.colors.map((propColor, index) => {
+                            return (
+                                <button
+                                    className={`color-button ${propColor.id} ${
+                                        propColor.id === color ? "selected" : ""
+                                    }`}
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        setColor(propColor.id);
+                                    }}
+                                ></button>
+                            );
+                        })}
                     </div>
                 </div>
                 <div>
@@ -42,10 +48,14 @@ function NewCategoryForm(props) {
                         type="submit"
                         onClick={(e) => {
                             e.preventDefault();
-                            props.onAddCategory(categoryname, color);
+                            if (props.mode === "new") {
+                                props.onAddCategory(categoryname, color);
+                            } else if (props.mode === "edit") {
+                                props.onEditCategory(categoryname);
+                            }
                         }}
                     >
-                        add category
+                        {props.buttonLabel}
                     </button>
                     <button
                         className="secondary"
@@ -63,4 +73,4 @@ function NewCategoryForm(props) {
     );
 }
 
-export default NewCategoryForm;
+export default CategoryForm;
