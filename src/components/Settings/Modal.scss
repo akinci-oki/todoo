@@ -1,0 +1,31 @@
+.Modal {
+    margin: 0 2rem;
+    top: 10rem;
+    left: 0;
+    position: absolute;
+    color: #d6092e;
+    padding: 3rem 1rem;
+    border: 1px solid #d6092e;
+    background-color: white;
+    button {
+        border-color: #d6092e;
+        background-color: #d6092e;
+        &.secondary {
+            color: #d6092e;
+            background-color: white;
+        }
+    }
+    p {
+        margin-bottom: 2rem;
+    }
+}
+
+.modal-container {
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #ffffffe7;
+}

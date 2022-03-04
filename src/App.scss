@@ -2,6 +2,7 @@
 @import "./components/home/Home.scss";
 @import "./components/Settings/Settings.scss";
 @import "./components/Settings/CategoryForm.scss";
+@import "./components/Settings/Modal.scss";
 
 :root {
     font-size: 20px;
@@ -27,6 +28,9 @@ button {
     border-color: $color-primary;
     background-color: $color-primary;
     font-size: 1rem;
+    &:last-child {
+        margin-bottom: 0;
+    }
     &.secondary {
         background-color: rgb(185, 181, 181);
     }

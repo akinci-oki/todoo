@@ -4,27 +4,45 @@ import { ReactComponent as DeleteIcon } from "../../icons/delete-icon.svg";
 import PropTypes from "prop-types";
 import CategoryForm from "./CategoryForm";
 import { useState } from "react";
+import Modal from "./Modal";
 
-const Settings = ({ categories, onAddCategory, onEditCategory, colors }) => {
-    console.log(categories);
-
+const Settings = ({
+    categories,
+    onAddCategory,
+    onEditCategory,
+    colors,
+    onDeleteCategory,
+}) => {
     const [isEditFormOpen, setIsEditFormOpen] = useState(false);
     const [isNewFormOpen, setIsNewFormOpen] = useState(false);
     const [selectedCategoryId, setSelectedCategoryId] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const getCategoryDesc = (id) =>
+        categories.find((category) => category.id === id).desc;
 
     const onToggleEdit = (id) => {
         onToggleEditForm();
         setSelectedCategoryId(id);
-        console.log(
-            "edit",
-            categories.find((category) => category.id === id).desc
-        );
     };
     const onColor = (id) => {
         console.log("color", id);
     };
-    const onDelete = (id) => {
-        console.log("delete", id);
+    const onToggleDelete = (id) => {
+        setIsModalOpen(true);
+        setIsEditFormOpen(false);
+        setIsNewFormOpen(false);
+        setSelectedCategoryId(id);
+        document.body.style.overflow = "hidden";
+    };
+    const onCloseModal = () => {
+        setIsModalOpen(false);
+        document.body.style.overflow = "auto";
+    };
+
+    const onConfirmDelete = () => {
+        onCloseModal();
+        onDeleteCategory(selectedCategoryId);
     };
 
     /* only one form should be open at the same time...!!! */
@@ -45,34 +63,43 @@ const Settings = ({ categories, onAddCategory, onEditCategory, colors }) => {
         <div className="settings">
             <h2> My categories </h2>
             <ul>
-                {categories.map((category, index) => (
-                    <li key={index}>
-                        <div className="cat-label">
-                            <div className={`bolletje ${category.color}`} />
-                            {category.desc}
-                        </div>
-                        <span className="icon-container">
-                            <span
-                                className="icon"
-                                onClick={() => onToggleEdit(category.id)}
-                            >
-                                <EditNameIcon />
-                            </span>
-                            <span
-                                className="icon"
-                                onClick={() => onColor(category.id)}
-                            >
-                                <PickAColorIcon />
-                            </span>
-                            <span
-                                className="icon"
-                                onClick={() => onDelete(category.id)}
-                            >
-                                <DeleteIcon />
-                            </span>
-                        </span>
-                    </li>
-                ))}
+                {categories.map(
+                    (category, index) =>
+                        !category.deprecated && (
+                            <li key={index}>
+                                <div className="cat-label">
+                                    <div
+                                        className={`bolletje ${category.color}`}
+                                    />
+                                    {category.desc}
+                                </div>
+                                <span className="icon-container">
+                                    <span
+                                        className="icon"
+                                        onClick={() =>
+                                            onToggleEdit(category.id)
+                                        }
+                                    >
+                                        <EditNameIcon />
+                                    </span>
+                                    <span
+                                        className="icon"
+                                        onClick={() => onColor(category.id)}
+                                    >
+                                        <PickAColorIcon />
+                                    </span>
+                                    <span
+                                        className="icon"
+                                        onClick={() =>
+                                            onToggleDelete(category.id)
+                                        }
+                                    >
+                                        <DeleteIcon />
+                                    </span>
+                                </span>
+                            </li>
+                        )
+                )}
             </ul>
             <button className="primary" onClick={() => onToggleNewForm()}>
                 add new category
@@ -104,6 +131,13 @@ const Settings = ({ categories, onAddCategory, onEditCategory, colors }) => {
                 </div>
             )}
             {/* <button className="secondary"> cancel </button> */}
+            {isModalOpen && (
+                <Modal
+                    onCancel={onCloseModal}
+                    categoryDesc={getCategoryDesc(selectedCategoryId)}
+                    onDeleteCategory={onConfirmDelete}
+                />
+            )}
         </div>
     );
 };

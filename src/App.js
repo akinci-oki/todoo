@@ -10,16 +10,19 @@ class App extends React.Component {
                 id: "cat-01",
                 desc: "personal",
                 color: "col-1",
+                deprecated: false,
             },
             {
                 id: "cat-02",
                 desc: "professional",
                 color: "col-2",
+                deprecated: false,
             },
             {
                 id: "cat-03",
                 desc: "kids",
                 color: "col-3",
+                deprecated: false,
             },
         ],
         colors: [
@@ -73,20 +76,21 @@ class App extends React.Component {
     };
 
     onAddCategory = (categoryName, color) => {
-        console.log(categoryName, color);
         this.setState({
             categories: [
                 ...this.state.categories,
-                { id: "", desc: categoryName, color: color },
+                {
+                    id: `cat-${this.state.categories.length + 1}`,
+                    desc: categoryName,
+                    color: color,
+                    deprecated: false,
+                },
             ],
         });
     };
 
     onEditCategory = (id, newName) => {
-        console.log(id, newName);
-        console.log(this.state.categories);
         const updatedCategories = this.state.categories.map((category) => {
-            console.log(category.id === id);
             if (category.id === id) {
                 return {
                     ...category,
@@ -99,7 +103,22 @@ class App extends React.Component {
         this.setState({
             categories: updatedCategories,
         });
-        console.log(updatedCategories);
+    };
+
+    onDeleteCategory = (id) => {
+        const updatedCategories = this.state.categories.map((category) => {
+            if (category.id === id) {
+                return {
+                    ...category,
+                    deprecated: true,
+                };
+            } else {
+                return category;
+            }
+        });
+        this.setState({
+            categories: updatedCategories,
+        });
     };
 
     render() {
@@ -115,6 +134,7 @@ class App extends React.Component {
                     onAddCategory={this.onAddCategory}
                     onEditCategory={this.onEditCategory}
                     colors={this.state.colors}
+                    onDeleteCategory={this.onDeleteCategory}
                 />
                 {/* <CategoryForm categories={this.state.categories} /> */}
             </div>
