@@ -12,7 +12,7 @@ const Settings = ({ categories, onAddCategory, onEditCategory, colors }) => {
     const [isNewFormOpen, setIsNewFormOpen] = useState(false);
     const [selectedCategoryId, setSelectedCategoryId] = useState(null);
 
-    const onEdit = (id) => {
+    const onToggleEdit = (id) => {
         onToggleEditForm();
         setSelectedCategoryId(id);
         console.log(
@@ -27,6 +27,7 @@ const Settings = ({ categories, onAddCategory, onEditCategory, colors }) => {
         console.log("delete", id);
     };
 
+    /* only one form should be open at the same time...!!! */
     const onToggleNewForm = () => {
         setIsNewFormOpen(!isNewFormOpen);
         setIsEditFormOpen(false);
@@ -53,7 +54,7 @@ const Settings = ({ categories, onAddCategory, onEditCategory, colors }) => {
                         <span className="icon-container">
                             <span
                                 className="icon"
-                                onClick={() => onEdit(category.id)}
+                                onClick={() => onToggleEdit(category.id)}
                             >
                                 <EditNameIcon />
                             </span>
@@ -76,37 +77,32 @@ const Settings = ({ categories, onAddCategory, onEditCategory, colors }) => {
             <button className="primary" onClick={() => onToggleNewForm()}>
                 add new category
             </button>
-            <div
-                className={`new-form-container ${
-                    isNewFormOpen ? "new-form-open" : ""
-                }`}
-            >
-                <CategoryForm
-                    onAddCategory={onAddCategory}
-                    onToggleForm={onToggleNewForm}
-                    colors={colors}
-                    mode="new"
-                    title="New category"
-                    buttonLabel="add category"
-                />
-            </div>
+            {isNewFormOpen && (
+                <div className={"new-form-container"}>
+                    <CategoryForm
+                        onAddCategory={onAddCategory}
+                        onToggleForm={onToggleNewForm}
+                        colors={colors}
+                        mode="new"
+                        title="New category"
+                        buttonLabel="add category"
+                    />
+                </div>
+            )}
 
-            <div
-                className={`edit-form-container ${
-                    isEditFormOpen ? "edit-form-open" : ""
-                }`}
-            >
-                <CategoryForm
-                    onEditCategory={onSubmitEditCategoryForm}
-                    onToggleForm={onToggleEditForm}
-                    colors={colors}
-                    isColorPickerHidden
-                    mode="edit"
-                    title="Edit category"
-                    buttonLabel="update category"
-                />
-            </div>
-
+            {isEditFormOpen && (
+                <div className={"edit-form-container"}>
+                    <CategoryForm
+                        onEditCategory={onSubmitEditCategoryForm}
+                        onToggleForm={onToggleEditForm}
+                        colors={colors}
+                        isColorPickerHidden
+                        mode="edit"
+                        title="Edit category"
+                        buttonLabel="update category"
+                    />
+                </div>
+            )}
             {/* <button className="secondary"> cancel </button> */}
         </div>
     );

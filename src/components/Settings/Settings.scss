@@ -3,15 +3,8 @@
 
     .new-form-container,
     .edit-form-container {
-        display: none;
-        height: 0;
         transition: height 0.8s;
-        &.new-form-open,
-        &.edit-form-open {
-            height: 21rem;
-            display: block;
-            transition: height 0.8s;
-        }
+        height: 21rem;
     }
 
     h2 {
