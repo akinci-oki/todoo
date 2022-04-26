@@ -129,13 +129,7 @@ class App extends React.Component {
                     onToggleMenu={this.onToggleMenu}
                 />
                 {/*  <Home /> */}
-                <Settings
-                    categories={this.state.categories}
-                    onAddCategory={this.onAddCategory}
-                    onEditCategory={this.onEditCategory}
-                    colors={this.state.colors}
-                    onDeleteCategory={this.onDeleteCategory}
-                />
+
                 {/* <CategoryForm categories={this.state.categories} /> */}
             </div>
         );
