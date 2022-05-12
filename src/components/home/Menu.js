@@ -11,33 +11,40 @@ function Menu() {
     const onToggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
+    const onCloseMenu = () => {
+        setIsMenuOpen(false);
+    };
     return (
         <div>
             <ul className={`menu ${isMenuOpen ? "menu-open" : ""}`}>
                 <li className="page-title">
-                    <span className="icon" onClick={() => onToggleMenu()}>
+                    <span className="icon" onClick={onToggleMenu}>
                         <HamburgerIcon />
                     </span>
                     <span className="label">
-                        <Link to="/">ToDoobieDoompie</Link>
+                        <Link to="/" onClick={onCloseMenu}>
+                            ToDoobieDoompie
+                        </Link>
                     </span>
                 </li>
                 <li className="menu-item">
-                    <span className="icon" onClick={() => onToggleMenu()}>
+                    <span className="icon" onClick={onToggleMenu}>
                         <SettingsIcon />
                     </span>
                     <span className="label">
-                        <Link to="/settings">Settings</Link>
+                        <Link to="/settings" onClick={onCloseMenu}>
+                            Settings
+                        </Link>
                     </span>
                 </li>
                 <li className="menu-item">
-                    <span className="icon" onClick={() => onToggleMenu()}>
+                    <span className="icon" onClick={onToggleMenu}>
                         <StatisticsIcon />
                     </span>
                     <span className="label"> Statistics </span>
                 </li>
                 <li className="menu-item">
-                    <span className="icon" onClick={() => onToggleMenu()}>
+                    <span className="icon" onClick={onToggleMenu}>
                         <AccountIcon />
                     </span>
                     <span className="label"> Profile </span>
