@@ -3,31 +3,41 @@ import { ReactComponent as SettingsIcon } from "../../icons/settings-icon.svg";
 import { ReactComponent as StatisticsIcon } from "../../icons/statistics-icon.svg";
 import { ReactComponent as AccountIcon } from "../../icons/account-icon.svg";
 import PropTypes from "prop-types";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
-const Menu = (props) => {
+function Menu() {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const onToggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
     return (
         <div>
-            <ul className={`menu ${props.isMenuOpen ? "menu-open" : ""}`}>
+            <ul className={`menu ${isMenuOpen ? "menu-open" : ""}`}>
                 <li className="page-title">
-                    <span className="icon" onClick={() => props.onToggleMenu()}>
+                    <span className="icon" onClick={() => onToggleMenu()}>
                         <HamburgerIcon />
                     </span>
-                    <span className="label"> ToDoobieDoompie </span>
+                    <span className="label">
+                        <Link to="/">ToDoobieDoompie</Link>
+                    </span>
                 </li>
                 <li className="menu-item">
-                    <span className="icon" onClick={() => props.onToggleMenu()}>
+                    <span className="icon" onClick={() => onToggleMenu()}>
                         <SettingsIcon />
                     </span>
-                    <span className="label"> Settings </span>
+                    <span className="label">
+                        <Link to="/settings">Settings</Link>
+                    </span>
                 </li>
                 <li className="menu-item">
-                    <span className="icon" onClick={() => props.onToggleMenu()}>
+                    <span className="icon" onClick={() => onToggleMenu()}>
                         <StatisticsIcon />
                     </span>
                     <span className="label"> Statistics </span>
                 </li>
                 <li className="menu-item">
-                    <span className="icon" onClick={() => props.onToggleMenu()}>
+                    <span className="icon" onClick={() => onToggleMenu()}>
                         <AccountIcon />
                     </span>
                     <span className="label"> Profile </span>
@@ -35,7 +45,7 @@ const Menu = (props) => {
             </ul>
         </div>
     );
-};
+}
 
 Menu.propTypes = {
     isMenuOpen: PropTypes.bool,
