@@ -1,10 +1,9 @@
 import React from "react";
 import "./App.scss";
-import { Home, Menu, Settings } from "./components";
+import { Router } from "./Router";
 
 class App extends React.Component {
     state = {
-        isMenuOpen: false,
         categories: [
             {
                 id: "cat-01",
@@ -70,11 +69,6 @@ class App extends React.Component {
             },
         ],
     };
-
-    onToggleMenu = () => {
-        this.setState({ isMenuOpen: !this.state.isMenuOpen });
-    };
-
     onAddCategory = (categoryName, color) => {
         this.setState({
             categories: [
@@ -124,12 +118,7 @@ class App extends React.Component {
     render() {
         return (
             <div className="App">
-                <Menu
-                    isMenuOpen={this.state.isMenuOpen}
-                    onToggleMenu={this.onToggleMenu}
-                />
-                {/*  <Home /> */}
-
+                <Router />
                 {/* <CategoryForm categories={this.state.categories} /> */}
             </div>
         );
