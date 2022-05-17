@@ -1,5 +1,4 @@
 // import "./App.scss";
-
 function Home() {
     return (
         <div className="Home">
