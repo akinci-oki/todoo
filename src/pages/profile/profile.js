@@ -1,20 +1,38 @@
 import React, { useEffect, useState } from "react";
-import * as firebase from "firebase";
+import { ref, onValue } from "firebase/database";
+import { db as database } from "../../firebase";
 
 function Profile() {
-    const [users, setUsers] = useState();
+    const [users, setUsers] = useState([]);
+    function createUniqueID() {
+        return Math.floor(Math.random() * Date.now());
+    }
+    async function getUsers() {
+        // https://firebase.google.com/docs/database/web/read-and-write?authuser=0
+        const usersRef = ref(database, "users/");
+        onValue(usersRef, (snapshot) => {
+            const data = snapshot.val();
+            setUsers(data);
+        });
+    }
     useEffect(() => {
-        firebase
-            .database()
-            .ref("/")
-            .once("value")
-            .then((snapshot) => {
-                const data = snapshot.val();
-                console.log(data);
-                setUsers(data);
-            });
+        getUsers();
     }, []);
-    return <div className="profile">profile</div>;
+    return (
+        <div className="profile">
+            {users && users.length && (
+                <ul>
+                    {users.map((user) => {
+                        return (
+                            <li>
+                                {user.id}: {user.name}
+                            </li>
+                        );
+                    })}
+                </ul>
+            )}
+        </div>
+    );
 }
 
 export default Profile;
