@@ -4,25 +4,46 @@ const axios = require("axios");
 function Api() {
     const [person, setPerson] = useState(null);
     const [loading, setLoading] = useState(false);
-    // const person = {
-    //     name: "Luke Skywalker",
-    //     height: "172",
-    //     mass: "77",
-    // };
-    async function getLuke() {
+    const [id, setId] = useState("");
+    const [error, setError] = useState("");
+
+    async function getInfo() {
         setLoading(true);
+        setError("");
+        setPerson(null);
         try {
-            const response = await axios.get("https://swapi.dev/api/people/1");
+            const response = await axios.get(
+                `https://swapi.dev/api/people/${id}`
+            );
             console.log(response.data);
             setPerson(response.data);
             setLoading(false);
         } catch (error) {
-            console.error(error);
+            setError(error.message);
+            setLoading(false);
+            console.error(error.message);
         }
     }
     return (
         <div className="api">
             <h1>Profile</h1>
+
+            <div className="input-container">
+                <label> id </label>
+                <input
+                    value={id}
+                    placeholder="e.g 1"
+                    onChange={(e) => {
+                        e.preventDefault();
+                        console.log(e.target.value);
+                        setId(e.target.value);
+                    }}
+                    type="number"
+                    id="my-input"
+                />
+            </div>
+
+            {error.length > 0 && <span> {error} </span>}
             {loading && <span>loading...</span>}
             {person !== null && (
                 <ul>
@@ -32,8 +53,8 @@ function Api() {
                 </ul>
             )}
 
-            <button className="doesntmatter" onClick={getLuke}>
-                GET ME LUKE!
+            <button className="info" onClick={getInfo}>
+                Get me the info
             </button>
         </div>
     );
