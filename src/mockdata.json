@@ -1,0 +1,22 @@
+{
+    "users": [
+        {
+            "name": "Regen",
+            "categories": [],
+            "todoos": [],
+            "statistics": {
+                "registrationDate": "04.05.2021",
+                "totalOnlineTime": 7
+            }
+        },
+        {
+            "name": "Caitlyn",
+            "categories": [],
+            "todoos": [],
+            "statistics": {
+                "registrationDate": "24.09.2021",
+                "totalOnlineTime": 10
+            }
+        }
+    ]
+}
