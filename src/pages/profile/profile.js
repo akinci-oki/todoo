@@ -24,7 +24,7 @@ function Profile() {
                 <ul>
                     {users.map((user) => {
                         return (
-                            <li>
+                            <li key={user.id}>
                                 {user.id}: {user.name}
                             </li>
                         );

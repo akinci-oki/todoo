@@ -37,6 +37,7 @@ function CategoryForm(props) {
                                         e.preventDefault();
                                         setColor(propColor.id);
                                     }}
+                                    key={propColor.id}
                                 ></button>
                             );
                         })}
