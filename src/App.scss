@@ -6,6 +6,7 @@
 @import "./components/Settings/Modal.scss";
 @import "./components/NotFound/NotFound.scss";
 
+/*general*/
 :root {
     font-size: 20px;
 }
@@ -22,6 +23,7 @@ html {
     height: 110rem;
 }
 
+/* form */
 button {
     width: 100%;
     padding: 1rem;
@@ -36,6 +38,13 @@ button {
         background-color: rgb(185, 181, 181);
     }
 }
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+}
+
+/* others */
 .bolletje {
     margin-right: 0.5rem;
     border-radius: 50%;

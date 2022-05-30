@@ -116,7 +116,6 @@ const Settings = ({
                     />
                 </div>
             )}
-
             {isEditFormOpen && (
                 <div className={"edit-form-container"}>
                     <CategoryForm
