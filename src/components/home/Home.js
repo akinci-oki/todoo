@@ -1,11 +1,30 @@
 import "../../App.scss";
 import { useState } from "react";
+import categories from "../../categories";
 
 function Home() {
     const [isFormOpen, setIsFormOpen] = useState(false);
+    const [toDos, setToDos] = useState([
+        {
+            name: "Pick up Elif",
+            category: "cat-01",
+            isDone: true,
+        },
+        {
+            name: "Get cokes",
+            category: "cat-02",
+            isDone: false,
+        },
+    ]);
 
     const onToggleForm = () => {
         setIsFormOpen(!isFormOpen);
+    };
+    const getColorFromCategoryId = (categoryId) => {
+        const selectedCategory = categories.find(
+            (category) => category.id === categoryId
+        );
+        return selectedCategory.color;
     };
     return (
         <div className="home">
@@ -42,18 +61,18 @@ function Home() {
             )}
 
             <ul>
-                <li>
-                    <div className="todoo">
-                        <div className={`bolletje ${"col-1"}`} />
-                        <p>pick up translations</p>
-                    </div>
-                </li>
-                <li>
-                    <div className="todoo">
-                        <div className={`bolletje ${"col-3"}`} />
-                        <p>pick up Elif</p>
-                    </div>
-                </li>
+                {toDos.map((toDo, index) => (
+                    <li key={index}>
+                        <div className="todoo">
+                            <div
+                                className={`bolletje ${getColorFromCategoryId(
+                                    toDo.category
+                                )}`}
+                            />
+                            <p> {toDo.name} </p>
+                        </div>
+                    </li>
+                ))}
             </ul>
         </div>
     );
