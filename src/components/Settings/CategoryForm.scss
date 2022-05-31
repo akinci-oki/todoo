@@ -3,14 +3,8 @@
     flex-direction: column;
     height: 21rem;
 
-    label {
-        margin-bottom: 0.5rem;
-    }
 
-    input {
-        height: 2rem;
-        margin-bottom: 1rem;
-    }
+
     .input-container {
         &.hide-colors {
             display: none;

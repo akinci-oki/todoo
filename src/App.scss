@@ -44,6 +44,16 @@ button {
     flex-direction: column;
 }
 
+input, select {
+    height: 2rem;
+    margin-bottom: 1rem;
+    padding: 0 0.5rem;
+}
+
+label {
+    margin-bottom: 0.5rem;
+}
+
 /* others */
 .bolletje {
     margin-right: 0.5rem;

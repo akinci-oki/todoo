@@ -1,4 +1,4 @@
-const categories = [
+export const categories = [
     {
         id: "cat-01",
         desc: "personal",
@@ -18,4 +18,3 @@ const categories = [
         deprecated: false,
     },
 ];
-export default categories;

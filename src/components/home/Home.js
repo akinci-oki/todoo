@@ -1,6 +1,6 @@
 import "../../App.scss";
 import { useState } from "react";
-import categories from "../../categories";
+import { categories } from "../../categories";
 
 function Home() {
     const [isFormOpen, setIsFormOpen] = useState(false);
@@ -28,11 +28,14 @@ function Home() {
     };
     return (
         <div className="home">
-            <div>
-                <button className="primary" onClick={onToggleForm}>
-                    add new to do
-                </button>
-            </div>
+            {!isFormOpen && (
+                <div>
+                    <button className="primary" onClick={onToggleForm}>
+                        add new to do
+                    </button>
+                </div>
+            )}
+
             {isFormOpen && (
                 <>
                     <div className="input-container">
@@ -50,7 +53,7 @@ function Home() {
                         </select>
                         <div>
                             <button
-                                className="secondary"
+                                className="primary"
                                 onClick={() => console.log("working!")}
                             >
                                 add
@@ -69,7 +72,9 @@ function Home() {
                                     toDo.category
                                 )}`}
                             />
-                            <p> {toDo.name} </p>
+                            <p className={`${toDo.isDone ? "done" : ""}`}>
+                                {toDo.name}
+                            </p>
                         </div>
                     </li>
                 ))}

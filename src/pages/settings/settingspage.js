@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Settings } from "../../components";
-import categories from "../../categories";
+import { categories as importedCategories } from "../../categories";
 
 function Settingspage() {
-    const [categories, setCategories] = useState(categories);
+    const [categories, setCategories] = useState(importedCategories);
     const [colors, setColors] = useState([
         {
             id: "col-1",
