@@ -3,6 +3,8 @@ import { useState } from "react";
 import { categories } from "../../categories";
 
 function Home() {
+    const [toDoName, setToDoName] = useState();
+    const [toDoCategory, setToDoCategory] = useState();
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [toDos, setToDos] = useState([
         {
@@ -16,7 +18,6 @@ function Home() {
             isDone: false,
         },
     ]);
-
     const onToggleForm = () => {
         setIsFormOpen(!isFormOpen);
     };
@@ -37,30 +38,57 @@ function Home() {
             )}
 
             {isFormOpen && (
-                <>
+                <form>
                     <div className="input-container">
                         <label> description </label>
-                        <input placeholder="to do" type="text" id="desc" />
+                        <input
+                            placeholder="to do"
+                            type="text"
+                            id="desc"
+                            onChange={(e) => {
+                                e.preventDefault();
+                                setToDoName(e.target.value);
+                            }}
+                        />
                     </div>
 
                     <div className="input-container">
                         <label> category </label>
-                        <select name="pets" id="pet-select">
+                        <select
+                            name="pets"
+                            id="pet-select"
+                            onChange={(e) => {
+                                setToDoCategory(e.target.value);
+                            }}
+                        >
                             <option value="">make a choice</option>
-                            <option value="personal">personal</option>
-                            <option value="professional">professional</option>
-                            <option value="kids">kids</option>
+                            {categories.map((category, index) => (
+                                <option key={index} value={category.id}>
+                                    {category.desc}
+                                </option>
+                            ))}
                         </select>
                         <div>
                             <button
                                 className="primary"
-                                onClick={() => console.log("working!")}
+                                type="submit"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    setToDos([
+                                        ...toDos,
+                                        {
+                                            name: toDoName,
+                                            category: toDoCategory,
+                                            isDone: false,
+                                        },
+                                    ]);
+                                }}
                             >
                                 add
                             </button>
                         </div>
                     </div>
-                </>
+                </form>
             )}
 
             <ul>
