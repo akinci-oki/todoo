@@ -24,6 +24,12 @@ html {
 }
 
 /* form */
+.error {
+    margin: 0.5rem 0 1rem 0;
+    font-weight: 700;
+    color: #D6092E;
+
+}
 button {
     width: 100%;
     padding: 1rem;
@@ -48,6 +54,9 @@ input, select {
     height: 2rem;
     margin-bottom: 1rem;
     padding: 0 0.5rem;
+    &+.error {
+        margin-top: 0;
+    }
 }
 
 label {

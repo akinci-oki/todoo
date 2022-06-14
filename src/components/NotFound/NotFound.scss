@@ -1,6 +1,6 @@
 .NotFound {
+    padding: 2rem;
     h1 {
-        position: absolute;
         left: 2rem;
         top: 7.8rem;
 
@@ -10,7 +10,6 @@
     }
 
     p {
-        position: absolute;
         width: 14rem;
         left: 2rem;
         top: 10rem;
@@ -18,5 +17,9 @@
         font-family: "Fira Sans";
         font-size: 20px;
         color: #000000;
+    }
+    button {
+            width: 14rem;
+            height: 3.2rem;
     }
 }

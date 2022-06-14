@@ -3,9 +3,13 @@ import { useState } from "react";
 import { categories } from "../../categories";
 
 function Home() {
-    const [toDoName, setToDoName] = useState();
-    const [toDoCategory, setToDoCategory] = useState();
+    const [toDoName, setToDoName] = useState("");
+    const [toDoCategory, setToDoCategory] = useState(null);
     const [isFormOpen, setIsFormOpen] = useState(false);
+    const [errors, setErrors] = useState({
+        toDoName: null,
+        toDoCategory: null,
+    });
     const [toDos, setToDos] = useState([
         {
             name: "Pick up Elif",
@@ -31,7 +35,13 @@ function Home() {
         <div className="home">
             {!isFormOpen && (
                 <div>
-                    <button className="primary" onClick={onToggleForm}>
+                    <button
+                        className="primary"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            onToggleForm();
+                        }}
+                    >
                         add new to do
                     </button>
                 </div>
@@ -47,9 +57,13 @@ function Home() {
                             id="desc"
                             onChange={(e) => {
                                 e.preventDefault();
+                                setErrors({ ...errors, toDoName: null });
                                 setToDoName(e.target.value);
                             }}
                         />
+                        {errors.toDoName && (
+                            <p className="error">{errors.toDoName}</p>
+                        )}
                     </div>
 
                     <div className="input-container">
@@ -59,21 +73,39 @@ function Home() {
                             id="pet-select"
                             onChange={(e) => {
                                 setToDoCategory(e.target.value);
+                                setErrors({
+                                    ...errors,
+                                    toDoCategory: null,
+                                });
                             }}
                         >
-                            <option value="">make a choice</option>
+                            <option value={null}>make a choice</option>
                             {categories.map((category, index) => (
                                 <option key={index} value={category.id}>
                                     {category.desc}
                                 </option>
                             ))}
                         </select>
+                        {errors.toDoCategory && (
+                            <p className="error">{errors.toDoCategory}</p>
+                        )}
                         <div>
                             <button
                                 className="primary"
                                 type="submit"
                                 onClick={(e) => {
                                     e.preventDefault();
+                                    console.log({ toDoName, toDoCategory });
+                                    if (!toDoName.length || !toDoCategory) {
+                                        setErrors({
+                                            ...errors,
+                                            toDoName:
+                                                "please fill in a description.",
+                                            toDoCategory:
+                                                "please pick a category.",
+                                        });
+                                        return;
+                                    }
                                     setToDos([
                                         ...toDos,
                                         {

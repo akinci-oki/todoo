@@ -57,11 +57,6 @@ function Menu() {
                     <span className="icon" onClick={onToggleMenu}>
                         <AccountIcon />
                     </span>
-                    <span className="label">
-                        <Link to="/laundry" onClick={onCloseMenu}>
-                            laundry
-                        </Link>
-                    </span>
                 </li>
                 <li className="menu-item">
                     <span className="icon" onClick={onToggleMenu}>
