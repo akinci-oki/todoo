@@ -3,8 +3,8 @@ import { useState } from "react";
 import { categories } from "../../categories";
 
 function Home() {
-    const [toDoName, setToDoName] = useState("");
-    const [toDoCategory, setToDoCategory] = useState(null);
+    const [toDoName, setToDoName] = useState('');
+    const [toDoCategory, setToDoCategory] = useState('');
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [errors, setErrors] = useState({
         toDoName: null,
@@ -24,24 +24,24 @@ function Home() {
     ]);
     const onAddToDo = (e) => {
         e.preventDefault();
-        if (toDoName.length < 1) {
-            setErrors({
-                toDoName: "please fill in a description.",
-            });
-            console.log("issue with the toDoName", toDoName, toDoName.length);
-            console.log(errors);
-        } else if (toDoCategory === "make a choice" || toDoCategory === null) {
-            setErrors({
-                toDoCategory: "please pick a category.",
-            });
+
+        // error handling
+        const errors = {
+            toDoName: null,
+            toDoCategory: null
         }
-        if (
-            toDoName.length < 1 ||
-            toDoCategory === "make a choice" ||
-            toDoCategory === null
-        ) {
-            return;
+        if (!toDoName || toDoName?.length < 1) {
+            console.log('!toDoName || toDoName?.length < 1')
+            errors.toDoName = "please fill in a description.";
         }
+        if (!toDoCategory || toDoCategory?.length < 1 || toDoCategory === "make a choice") {
+            console.log('!toDoCategory || toDoCategory?.length < 1 || toDoCategory === "make a choice" || toDoCategory === null')
+            errors.toDoCategory = "please pick a category.";
+        }
+        
+        setErrors(errors);
+
+        // update todos
         setToDos([
             ...toDos,
             {
@@ -59,7 +59,7 @@ function Home() {
         const selectedCategory = categories.find(
             (category) => category.id === categoryId
         );
-        // return selectedCategory.color;
+        return selectedCategory.color;
     };
     return (
         <div className="home">
@@ -87,7 +87,7 @@ function Home() {
                             id="desc"
                             onChange={(e) => {
                                 e.preventDefault();
-                                // setErrors({ ...errors, toDoName: null });
+                                setErrors({ ...errors, toDoName: null });
                                 setToDoName(e.target.value);
                             }}
                         />
@@ -103,13 +103,13 @@ function Home() {
                             id="pet-select"
                             onChange={(e) => {
                                 setToDoCategory(e.target.value);
-                                // setErrors({
-                                //     ...errors,
-                                //     toDoCategory: null,
-                                // });
+                                setErrors({
+                                    ...errors,
+                                    toDoCategory: null,
+                                });
                             }}
                         >
-                            <option value={null}>make a choice</option>
+                            <option value={'make a choice'}>make a choice</option>
                             {categories.map((category, index) => (
                                 <option key={index} value={category.id}>
                                     {category.desc}
