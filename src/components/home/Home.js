@@ -22,6 +22,30 @@ function Home() {
             isDone: false,
         },
     ]);
+    const onAddToDo = (e) => {
+        e.preventDefault();
+        if (
+            !toDoName.length ||
+            toDoCategory === "make a choice" ||
+            toDoCategory === null
+        ) {
+            setErrors({
+                ...errors,
+                toDoName: "please fill in a description.",
+                toDoCategory: "please pick a category.",
+            });
+            return;
+        }
+        setToDos([
+            ...toDos,
+            {
+                name: toDoName,
+                category: toDoCategory,
+                isDone: false,
+            },
+        ]);
+    };
+
     const onToggleForm = () => {
         setIsFormOpen(!isFormOpen);
     };
@@ -93,28 +117,7 @@ function Home() {
                             <button
                                 className="primary"
                                 type="submit"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    console.log({ toDoName, toDoCategory });
-                                    if (!toDoName.length || !toDoCategory) {
-                                        setErrors({
-                                            ...errors,
-                                            toDoName:
-                                                "please fill in a description.",
-                                            toDoCategory:
-                                                "please pick a category.",
-                                        });
-                                        return;
-                                    }
-                                    setToDos([
-                                        ...toDos,
-                                        {
-                                            name: toDoName,
-                                            category: toDoCategory,
-                                            isDone: false,
-                                        },
-                                    ]);
-                                }}
+                                onClick={(e) => onAddToDo(e)}
                             >
                                 add
                             </button>
