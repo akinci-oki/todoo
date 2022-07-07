@@ -24,16 +24,22 @@ function Home() {
     ]);
     const onAddToDo = (e) => {
         e.preventDefault();
+        if (toDoName.length < 1) {
+            setErrors({
+                toDoName: "please fill in a description.",
+            });
+            console.log("issue with the toDoName", toDoName, toDoName.length);
+            console.log(errors);
+        } else if (toDoCategory === "make a choice" || toDoCategory === null) {
+            setErrors({
+                toDoCategory: "please pick a category.",
+            });
+        }
         if (
-            !toDoName.length ||
+            toDoName.length < 1 ||
             toDoCategory === "make a choice" ||
             toDoCategory === null
         ) {
-            setErrors({
-                ...errors,
-                toDoName: "please fill in a description.",
-                toDoCategory: "please pick a category.",
-            });
             return;
         }
         setToDos([
@@ -53,7 +59,7 @@ function Home() {
         const selectedCategory = categories.find(
             (category) => category.id === categoryId
         );
-        return selectedCategory.color;
+        // return selectedCategory.color;
     };
     return (
         <div className="home">
@@ -81,7 +87,7 @@ function Home() {
                             id="desc"
                             onChange={(e) => {
                                 e.preventDefault();
-                                setErrors({ ...errors, toDoName: null });
+                                // setErrors({ ...errors, toDoName: null });
                                 setToDoName(e.target.value);
                             }}
                         />
@@ -97,10 +103,10 @@ function Home() {
                             id="pet-select"
                             onChange={(e) => {
                                 setToDoCategory(e.target.value);
-                                setErrors({
-                                    ...errors,
-                                    toDoCategory: null,
-                                });
+                                // setErrors({
+                                //     ...errors,
+                                //     toDoCategory: null,
+                                // });
                             }}
                         >
                             <option value={null}>make a choice</option>
