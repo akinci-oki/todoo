@@ -1,6 +1,7 @@
 import "../../App.scss";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { categories } from "../../categories";
+import axios from "axios";
 
 function Home() {
     const [toDoName, setToDoName] = useState("");
@@ -10,18 +11,22 @@ function Home() {
         toDoName: null,
         toDoCategory: null,
     });
-    const [toDos, setToDos] = useState([
-        {
-            name: "Pick up Elif",
-            category: "cat-01",
-            isDone: true,
-        },
-        {
-            name: "Get cokes",
-            category: "cat-02",
-            isDone: false,
-        },
-    ]);
+    const [toDos, setToDos] = useState([]);
+
+    useEffect(() => {
+        getToDos();
+    }, []);
+
+    async function getToDos() {
+        try {
+            const response = await axios.get("http://localhost:4000/api/todos");
+            console.log(response);
+            setToDos(response.data);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     const onAddToDo = (e) => {
         e.preventDefault();
         if (toDoName.length < 1) {
