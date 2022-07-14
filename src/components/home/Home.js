@@ -27,7 +27,7 @@ function Home() {
         }
     }
 
-    const onAddToDo = (e) => {
+    async function onAddToDo(e) {
         e.preventDefault();
         if (toDoName.length < 1) {
             setErrors({
@@ -47,15 +47,18 @@ function Home() {
         ) {
             return;
         }
-        setToDos([
-            ...toDos,
-            {
+
+        try {
+            await axios.post("http://localhost:4000/api/todos", {
                 name: toDoName,
-                category: toDoCategory,
                 isDone: false,
-            },
-        ]);
-    };
+                category: toDoCategory,
+            });
+            getToDos();
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     const onToggleForm = () => {
         setIsFormOpen(!isFormOpen);
