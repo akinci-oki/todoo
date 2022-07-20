@@ -59,15 +59,30 @@ function Home() {
             console.error(error);
         }
     }
+    async function onToggleTodo(toDo) {
+        try {
+            await axios.put(`http://localhost:4000/api/todos/${toDo.id}`, {
+                ...toDo,
+                isDone: !toDo.isDone,
+            });
+            getToDos();
+        } catch (error) {
+            console.error(error);
+        }
+        console.log(toDo);
+    }
 
     const onToggleForm = () => {
         setIsFormOpen(!isFormOpen);
     };
     const getColorFromCategoryId = (categoryId) => {
+        if (!categoryId) {
+            return "col-0";
+        }
         const selectedCategory = categories.find(
             (category) => category.id === categoryId
         );
-        // return selectedCategory.color;
+        return selectedCategory.color;
     };
     return (
         <div className="home">
@@ -142,7 +157,7 @@ function Home() {
 
             <ul>
                 {toDos.map((toDo, index) => (
-                    <li key={index}>
+                    <li key={index} onClick={() => onToggleTodo(toDo)}>
                         <div className="todoo">
                             <div
                                 className={`bolletje ${getColorFromCategoryId(

@@ -69,7 +69,11 @@ label {
     border-radius: 50%;
     width: 1rem;
     height: 1rem;
-    background-color: red;
+    
+
+    &.col-0 {
+            border: 1px solid black;
+        }
 
     &.col-1 {
         background-color: #f02d50;
