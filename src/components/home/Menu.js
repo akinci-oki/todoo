@@ -41,7 +41,11 @@ function Menu() {
                     <span className="icon" onClick={onToggleMenu}>
                         <StatisticsIcon />
                     </span>
-                    <span className="label"> Statistics </span>
+                    <span className="label">
+                        <Link to="/statistics" onClick={onCloseMenu}>
+                            Statistics
+                        </Link>
+                    </span>
                 </li>
                 <li className="menu-item">
                     <span className="icon" onClick={onToggleMenu}>

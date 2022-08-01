@@ -3,15 +3,15 @@
     top: 10rem;
     left: 0;
     position: absolute;
-    color: #d6092e;
+    color: $color-error;
     padding: 3rem 1rem;
-    border: 1px solid #d6092e;
+    border: 1px solid $color-error;
     background-color: white;
     button {
-        border-color: #d6092e;
-        background-color: #d6092e;
+        border-color: $color-error;
+        background-color: $color-error;
         &.secondary {
-            color: #d6092e;
+            color: $color-error;
             background-color: white;
         }
     }
@@ -27,5 +27,5 @@
     position: absolute;
     top: 0;
     left: 0;
-    background-color: #ffffffe7;
+    background-color: white;
 }

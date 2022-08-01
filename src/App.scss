@@ -17,6 +17,7 @@
 
 body,
 html {
+    background-color: #eef0eb;
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -26,11 +27,11 @@ html {
 /* form */
 .error {
     margin: 0.5rem 0 1rem 0;
-    font-weight: 700;
-    color: #D6092E;
-
+    font-weight: 600;
+    color: $color-error;
 }
 button {
+    color: white;
     width: 100%;
     padding: 1rem;
     margin-bottom: 1rem;
@@ -41,7 +42,8 @@ button {
         margin-bottom: 0;
     }
     &.secondary {
-        background-color: rgb(185, 181, 181);
+        color: $color-primary;
+        background-color: white;
     }
 }
 
@@ -50,11 +52,12 @@ button {
     flex-direction: column;
 }
 
-input, select {
+input,
+select {
     height: 2rem;
     margin-bottom: 1rem;
     padding: 0 0.5rem;
-    &+.error {
+    & + .error {
         margin-top: 0;
     }
 }
@@ -69,11 +72,10 @@ label {
     border-radius: 50%;
     width: 1rem;
     height: 1rem;
-    
 
     &.col-0 {
-            border: 1px solid black;
-        }
+        border: 1px solid black;
+    }
 
     &.col-1 {
         background-color: #f02d50;
