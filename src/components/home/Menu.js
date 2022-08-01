@@ -57,21 +57,6 @@ function Menu() {
                         </Link>
                     </span>
                 </li>
-                <li className="menu-item">
-                    <span className="icon" onClick={onToggleMenu}>
-                        <AccountIcon />
-                    </span>
-                </li>
-                <li className="menu-item">
-                    <span className="icon" onClick={onToggleMenu}>
-                        <StatisticsIcon />
-                    </span>
-                    <span className="label">
-                        <Link to="/api" onClick={onCloseMenu}>
-                            api
-                        </Link>
-                    </span>
-                </li>
             </ul>
         </div>
     );
