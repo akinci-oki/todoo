@@ -3,8 +3,14 @@ import axios from "axios";
 
 function Profile() {
     const [users, setUsers] = useState([]);
-    const [name, setName] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
+    const [error, setError] = useState({
+        firstName: null,
+        lastName: null,
+        email: null,
+    });
 
     useEffect(() => {
         getUsers();
@@ -20,15 +26,38 @@ function Profile() {
         }
     }
     async function onAddUser() {
+        setError({
+            firstName: null,
+            lastName: null,
+            email: null,
+        });
+        if (firstName.length < 1) {
+            setError((error) => ({
+                ...error,
+                firstName: "please fill in your first name.",
+            }));
+        }
+        if (lastName.length < 1) {
+            setError((error) => ({
+                ...error,
+                lastName: "please fill in your last name.",
+            }));
+        }
+        if (email.length < 1) {
+            setError((error) => ({
+                ...error,
+                email: "please fill in your email.",
+            }));
+        }
+        if (firstName.length < 1 || lastName.length < 1 || email.length < 1) {
+            return;
+        }
+
         try {
             await axios.post("http://localhost:4000/api/users", {
-                name: name,
-                email: email,
-                statistics: {
-                    registrationDate: "05.07.2022",
-                    totalOnlineTime: 5,
-                },
-                todos: ["string"],
+                firstName,
+                lastName,
+                email,
             });
             getUsers();
         } catch (error) {
@@ -38,30 +67,50 @@ function Profile() {
 
     return (
         <div>
+            <h2> Profile </h2>
             <form>
                 <div className="input-container">
-                    <label> name </label>
+                    <label> first name </label>
                     <input
-                        placeholder="your name"
+                        placeholder="Jason"
                         type="text"
-                        id="desc"
+                        id="firstname"
                         onChange={(e) => {
                             e.preventDefault();
-                            setName(e.target.value);
+                            setFirstName(e.target.value);
                         }}
                     />
+                    {error.firstName && (
+                        <p className="error">{error.firstName}</p>
+                    )}
+                </div>
+                <div className="input-container">
+                    <label> last name </label>
+                    <input
+                        placeholder="Doe"
+                        type="text"
+                        id="lastname"
+                        onChange={(e) => {
+                            e.preventDefault();
+                            setLastName(e.target.value);
+                        }}
+                    />
+                    {error.lastName && (
+                        <p className="error">{error.lastName}</p>
+                    )}
                 </div>
                 <div className="input-container">
                     <label> email </label>
                     <input
-                        placeholder="your email"
+                        placeholder="@email.com"
                         type="text"
-                        id="desc"
+                        id="email"
                         onChange={(e) => {
                             e.preventDefault();
                             setEmail(e.target.value);
                         }}
                     />
+                    {error.email && <p className="error">{error.email}</p>}
                 </div>
 
                 <div>
@@ -73,32 +122,10 @@ function Profile() {
                             onAddUser(e);
                         }}
                     >
-                        add
+                        sign up
                     </button>
                 </div>
             </form>
-            <div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th> ID </th>
-                            <th> Email </th>
-                            <th> Name </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {users.map((user, index) => {
-                            return (
-                                <tr key={index}>
-                                    <td> {user.id} </td>
-                                    <td> {user.email} </td>
-                                    <td> {user.name} </td>
-                                </tr>
-                            );
-                        })}
-                    </tbody>
-                </table>
-            </div>
         </div>
     );
 }
