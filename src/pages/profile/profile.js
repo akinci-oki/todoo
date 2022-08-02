@@ -26,14 +26,34 @@ function Profile() {
         }
     }
     async function onAddUser() {
-        if (firstName.length < 1 && lastName.length < 1 && email.length < 1) {
+        setError({
+            firstName: null,
+            lastName: null,
+            email: null,
+        });
+        if (firstName.length < 1) {
+            console.error("firstname");
+            console.log(JSON.parse(JSON.stringify(error)));
             setError({
                 firstName: "please fill in your first name.",
-                lastName: "please fill in your last name.",
-                email: "please fill in your email.",
             });
-            console.log("issue with the inputs", firstName, firstName.length);
-            console.log(error);
+        }
+        if (lastName.length < 1) {
+            console.error("lastname");
+            console.log(JSON.parse(JSON.stringify(error)));
+
+            setError({ ...error, lastName: "please fill in your last name." });
+        }
+        if (email.length < 1) {
+            console.error("email");
+            console.log(JSON.parse(JSON.stringify(error)));
+
+            setError({ ...error, email: "please fill in your email." });
+        }
+        if (firstName.length < 1 || lastName.length < 1 || email.length < 1) {
+            console.error("ALL!");
+            console.log(JSON.parse(JSON.stringify(error)));
+
             return;
         }
 
