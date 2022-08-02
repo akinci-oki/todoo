@@ -32,35 +32,24 @@ function Profile() {
             email: null,
         });
         if (firstName.length < 1) {
-            console.error("firstname");
-            console.log(JSON.parse(JSON.stringify(error)));
             setError((error) => ({
                 ...error,
                 firstName: "please fill in your first name.",
             }));
         }
         if (lastName.length < 1) {
-            console.error("lastname");
-            console.log(JSON.parse(JSON.stringify(error)));
-
             setError((error) => ({
                 ...error,
                 lastName: "please fill in your last name.",
             }));
         }
         if (email.length < 1) {
-            console.error("email");
-            console.log(JSON.parse(JSON.stringify(error)));
-
             setError((error) => ({
                 ...error,
                 email: "please fill in your email.",
             }));
         }
         if (firstName.length < 1 || lastName.length < 1 || email.length < 1) {
-            console.error("ALL!");
-            console.log(JSON.parse(JSON.stringify(error)));
-
             return;
         }
 
@@ -85,7 +74,7 @@ function Profile() {
                     <input
                         placeholder="Jason"
                         type="text"
-                        id="desc"
+                        id="firstname"
                         onChange={(e) => {
                             e.preventDefault();
                             setFirstName(e.target.value);
@@ -100,7 +89,7 @@ function Profile() {
                     <input
                         placeholder="Doe"
                         type="text"
-                        id="desc"
+                        id="lastname"
                         onChange={(e) => {
                             e.preventDefault();
                             setLastName(e.target.value);
@@ -115,7 +104,7 @@ function Profile() {
                     <input
                         placeholder="@email.com"
                         type="text"
-                        id="desc"
+                        id="email"
                         onChange={(e) => {
                             e.preventDefault();
                             setEmail(e.target.value);
