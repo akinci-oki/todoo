@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function NotFound() {
     return (
         <div className="NotFound">
@@ -5,7 +7,11 @@ function NotFound() {
             <p>Uh-oh... seems like you’re lost. We couldn’t find that page.</p>
 
             <div>
-                <button className="primary">take me home scotty!</button>
+                <button className="primary">
+                    <Link to="/" onClick={() => {}}>
+                        take me home scotty!
+                    </Link>
+                </button>
             </div>
         </div>
     );
