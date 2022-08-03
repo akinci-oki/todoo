@@ -9,8 +9,8 @@ const Router = () => (
     <Routes>
         <Route exact path="/" element={<Homepage />}></Route>
         <Route path="/settings" element={<Settingspage />}></Route>
-                <Route path="/profile" element={<ProfilePage />}></Route>
-                <Route path="/*" element={<NotFound />}></Route>
+        <Route path="/profile" element={<ProfilePage />}></Route>
+        <Route path="/*" element={<NotFound />}></Route>
     </Routes>
 );
 export default Router;
