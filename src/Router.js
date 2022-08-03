@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { NotFound, Menu } from "./components";
-import { Homepage, Settingspage, Profile } from "./pages";
+import { Homepage, Settingspage, ProfilePage } from "./pages";
 import "./App.scss";
 
 const Router = () => (
@@ -12,7 +12,7 @@ const Router = () => (
             <Routes>
                 <Route exact path="/" element={<Homepage />}></Route>
                 <Route path="/settings" element={<Settingspage />}></Route>
-                <Route path="/profile" element={<Profile />}></Route>
+                <Route path="/profile" element={<ProfilePage />}></Route>
                 <Route path="/*" element={<NotFound />}></Route>
             </Routes>
         </div>

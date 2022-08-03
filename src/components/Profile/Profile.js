@@ -66,7 +66,7 @@ function Profile() {
     }
 
     return (
-        <div>
+        <div className="profile">
             <h2> Profile </h2>
             <form>
                 <div className="input-container">
@@ -100,7 +100,7 @@ function Profile() {
                     )}
                 </div>
                 <div className="input-container">
-                    <label> email </label>
+                    <label> e-mail </label>
                     <input
                         placeholder="@email.com"
                         type="text"
