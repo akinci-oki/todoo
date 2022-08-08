@@ -2,7 +2,7 @@ import { ReactComponent as EditNameIcon } from "../../icons/edit-name-icon.svg";
 import { ReactComponent as PickAColorIcon } from "../../icons/pick-a-color-icon.svg";
 import { ReactComponent as DeleteIcon } from "../../icons/delete-icon.svg";
 import PropTypes from "prop-types";
-import CategoryForm from "./CategoryForm";
+import { CategoryForm } from "../../components";
 import { useState } from "react";
 import Modal from "./Modal";
 
