@@ -1,13 +1,14 @@
 import React from "react";
 import "./App.scss";
-import { Router } from "./Router";
+import { Menu } from "./components";
+import Router from "./Router";
 
 class App extends React.Component {
     render() {
         return (
             <div className="App">
+                <Menu />
                 <Router />
-                {/* <CategoryForm categories={this.state.categories} /> */}
             </div>
         );
     }
