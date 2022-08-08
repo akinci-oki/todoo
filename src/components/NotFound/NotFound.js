@@ -8,9 +8,7 @@ function NotFound() {
 
             <div>
                 <button className="primary">
-                    <Link to="/" onClick={() => {}}>
-                        take me home scotty!
-                    </Link>
+                    <Link to="/">take me home scotty!</Link>
                 </button>
             </div>
         </div>
