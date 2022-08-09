@@ -1,10 +1,21 @@
+import CategoryForm from "./Settings/CategoryForm";
 import Home from "./home/Home";
+import Login from "./Login/Login";
 import Menu from "./home/Menu";
+import Modal from "./Settings/Modal";
 import NotFound from "./NotFound/NotFound";
 import Settings from "./Settings/Settings";
-import CategoryForm from "./Settings/CategoryForm";
-import Modal from "./Settings/Modal";
 import SignUp from "./SignUp/SignUp";
-import Login from "./Login/Login";
+import Spinner from "./Spinner/Spinner";
 
-export { Home, Menu, NotFound, Settings, CategoryForm, Modal, SignUp, Login };
+export {
+    CategoryForm,
+    Home,
+    Login,
+    Menu,
+    Modal,
+    NotFound,
+    Settings,
+    SignUp,
+    Spinner,
+};
