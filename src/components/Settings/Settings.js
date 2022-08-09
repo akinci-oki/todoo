@@ -71,7 +71,9 @@ const Settings = ({
                                     <div
                                         className={`bolletje ${category.color}`}
                                     />
-                                    {category.desc}
+                                    <div className="cat-desc">
+                                        {category.desc}
+                                    </div>
                                 </div>
                                 <span className="icon-container">
                                     <span

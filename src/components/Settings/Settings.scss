@@ -24,6 +24,15 @@
     }
     .cat-label {
         display: flex;
+        .cat-desc {
+            /* Mobile M*/
+            @media screen and (max-width: $breakpoint-small) {
+                width: 5rem;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
     }
     .icon {
         padding: 0.4rem;
