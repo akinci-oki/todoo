@@ -1,14 +1,18 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Spinner } from "../../components";
+import { useUser } from "../../context";
 
 function Login() {
+    const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState({
         email: null,
         api: null,
     });
+    const { user, setUser } = useUser();
 
     async function onLogin() {
         setError({
@@ -31,7 +35,9 @@ function Login() {
             );
             const user = response.data;
             console.log(user);
+            setUser(user);
             setIsLoading(false);
+            navigate("/profile");
         } catch (error) {
             if (error.message === "Request failed with status code 404") {
                 setError(() => ({

@@ -1,15 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
+import { userContext } from "./context";
 import { Menu } from "./components";
 import Router from "./Router";
 
-class App extends React.Component {
-    render() {
-        return (
-            <div className="App">
+function App() {
+    const [user, setUser] = useState({
+        id: "",
+        name: "",
+        email: "",
+    });
+
+    return (
+        <div className="App">
+            <userContext.Provider
+                value={{
+                    user,
+                    setUser,
+                }}
+            >
                 <Menu />
                 <Router />
-            </div>
-        );
-    }
+            </userContext.Provider>
+        </div>
+    );
 }
 export default App;
