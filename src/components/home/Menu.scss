@@ -15,6 +15,14 @@
         display: flex;
         align-items: center;
     }
+
+    .page-title {
+        justify-content: space-evenly;
+        .icon {
+            width: 2rem;
+        }
+    }
+
     a:link,
     a:visited,
     a:hover,
