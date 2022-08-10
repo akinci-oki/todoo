@@ -59,24 +59,9 @@ function Login() {
                 {error.email && <p className="error">{error.email}</p>}
             </div>
             <div>
-                {isLoading && (
-                    <button
-                        type="submit"
-                        onClick={onLogin}
-                        disabled={isLoading}
-                    >
-                        <Spinner />
-                    </button>
-                )}
-                {!isLoading && (
-                    <button
-                        type="submit"
-                        onClick={onLogin}
-                        disabled={isLoading}
-                    >
-                        log in
-                    </button>
-                )}
+                <button type="submit" onClick={onLogin} disabled={isLoading}>
+                    {isLoading ? <Spinner /> : "log in"}
+                </button>
                 {error.api && <p className="error">{error.api}</p>}
             </div>
         </div>
