@@ -3,8 +3,6 @@
     flex-direction: column;
     height: 21rem;
 
-
-
     .input-container {
         &.hide-colors {
             display: none;
@@ -23,12 +21,7 @@
 
         &.selected,
         &:hover {
-            height: 2.2rem;
-            width: 2.2rem;
-        }
-
-        &.selected {
-            border: 0.2rem solid white;
+            box-shadow: inset 0px 0px 0px 3px white;
         }
 
         &.col-1 {
