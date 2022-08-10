@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Spinner } from "../../components";
 
 function Login() {
     const [email, setEmail] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState({
         email: null,
         api: null,
@@ -16,7 +18,10 @@ function Login() {
             setError(() => ({
                 email: "please fill in your email.",
             }));
+            return;
         }
+        setIsLoading(true);
+
         try {
             const response = await axios.post(
                 "http://localhost:4000/api/users/getByEmail",
@@ -26,12 +31,14 @@ function Login() {
             );
             const user = response.data;
             console.log(user);
+            setIsLoading(false);
         } catch (error) {
             if (error.message === "Request failed with status code 404") {
                 setError(() => ({
                     api: "There's no user found!",
                 }));
             }
+            setIsLoading(false);
         }
     }
 
@@ -52,9 +59,24 @@ function Login() {
                 {error.email && <p className="error">{error.email}</p>}
             </div>
             <div>
-                <button type="submit" onClick={onLogin}>
-                    log in
-                </button>
+                {isLoading && (
+                    <button
+                        type="submit"
+                        onClick={onLogin}
+                        disabled={isLoading}
+                    >
+                        <Spinner />
+                    </button>
+                )}
+                {!isLoading && (
+                    <button
+                        type="submit"
+                        onClick={onLogin}
+                        disabled={isLoading}
+                    >
+                        log in
+                    </button>
+                )}
                 {error.api && <p className="error">{error.api}</p>}
             </div>
         </div>
