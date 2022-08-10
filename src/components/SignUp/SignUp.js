@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Spinner } from "../../components";
 
 function SignUp() {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState({
         firstName: null,
         lastName: null,
@@ -38,6 +40,7 @@ function SignUp() {
         if (firstName.length < 1 || lastName.length < 1 || email.length < 1) {
             return;
         }
+        setIsLoading(true);
 
         try {
             await axios.post("http://localhost:4000/api/users", {
@@ -45,8 +48,10 @@ function SignUp() {
                 lastName,
                 email,
             });
+            setIsLoading(false);
         } catch (error) {
             console.error(error);
+            setIsLoading(false);
         }
     }
 
@@ -102,12 +107,13 @@ function SignUp() {
                     <button
                         className="primary"
                         type="submit"
+                        disabled={isLoading}
                         onClick={(e) => {
                             e.preventDefault();
                             onAddUser(e);
                         }}
                     >
-                        sign up
+                        {isLoading ? <Spinner /> : "sign up"}
                     </button>
                 </div>
             </form>
