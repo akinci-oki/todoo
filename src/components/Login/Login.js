@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Spinner } from "../../components";
+import { useUser } from "../../context";
 
 function Login() {
     const [email, setEmail] = useState("");
@@ -9,6 +10,7 @@ function Login() {
         email: null,
         api: null,
     });
+    const { user } = useUser();
 
     async function onLogin() {
         setError({
@@ -64,6 +66,7 @@ function Login() {
                 </button>
                 {error.api && <p className="error">{error.api}</p>}
             </div>
+            <p> {user} </p>
         </div>
     );
 }
