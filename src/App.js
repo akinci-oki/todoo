@@ -6,7 +6,8 @@ import Router from "./Router";
 function App() {
     const [user, setUser] = useState({
         id: "",
-        name: "",
+        firstName: "",
+        lastName: "",
         email: "",
     });
 

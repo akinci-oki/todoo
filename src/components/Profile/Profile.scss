@@ -4,4 +4,14 @@
     button {
         margin-bottom: 1rem;
     }
+    .success {
+        display: flex;
+        align-items: center;
+        font-weight: 600;
+        color: #3ba86d;
+        margin-bottom: 1rem;
+    }
+    .icon {
+        margin-right: 0.5rem;
+    }
 }
