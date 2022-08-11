@@ -43,7 +43,7 @@ function Menu() {
                     </span>
                     <span className="label">
                         <Link to="/settings" onClick={onCloseMenu}>
-                            Settings
+                            Categories
                         </Link>
                     </span>
                 </li>

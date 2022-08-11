@@ -11,15 +11,22 @@
 
     .menu-item,
     .page-title {
-        height: 4rem;
+        padding: 0 1rem;
+        min-height: 4rem;
         display: flex;
         align-items: center;
-    }
 
-    .page-title {
-        justify-content: space-evenly;
         .icon {
+            margin-right: 2rem;
+            height: 2rem;
             width: 2rem;
+        }
+
+        .label {
+            width: 8rem;
+            flex-grow: 1;
+            word-break: break-word;
+            font-size: 1.5rem;
         }
     }
 
@@ -37,10 +44,6 @@
 
     .menu-item {
         display: none;
-    }
-
-    .icon {
-        width: 5rem;
     }
 
     &-open {
