@@ -19,14 +19,14 @@ html {
 }
 
 h2 {
-    font-weight: 600;
+    font-weight: $fontweight-semibold;
     font-size: 1rem;
 }
 
 /* form */
 .error {
     margin: 0.5rem 0 1rem 0;
-    font-weight: 600;
+    font-weight: $fontweight-semibold;
     color: $color-error;
 }
 button {
@@ -60,7 +60,7 @@ a:active {
     text-decoration: none;
 }
 a:hover {
-    font-weight: 600;
+    font-weight: $fontweight-semibold;
 }
 
 .input-container {
