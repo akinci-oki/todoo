@@ -26,8 +26,8 @@ function Menu() {
                     <span className="icon" onClick={onToggleMenu}>
                         <HamburgerIcon />
                     </span>
-                    <span>
-                        <Link className="label" to="/" onClick={onCloseMenu}>
+                    <span className="label">
+                        <Link to="/" onClick={onCloseMenu}>
                             ToDoobieDoompie
                         </Link>
                     </span>
@@ -41,12 +41,8 @@ function Menu() {
                     <span className="icon" onClick={onToggleMenu}>
                         <SettingsIcon />
                     </span>
-                    <span>
-                        <Link
-                            className="label"
-                            to="/settings"
-                            onClick={onCloseMenu}
-                        >
+                    <span className="label">
+                        <Link to="/settings" onClick={onCloseMenu}>
                             Categories
                         </Link>
                     </span>
@@ -55,12 +51,8 @@ function Menu() {
                     <span className="icon" onClick={onToggleMenu}>
                         <StatisticsIcon />
                     </span>
-                    <span>
-                        <Link
-                            className="label"
-                            to="/statistics"
-                            onClick={onCloseMenu}
-                        >
+                    <span className="label">
+                        <Link to="/statistics" onClick={onCloseMenu}>
                             Statistics
                         </Link>
                     </span>
@@ -69,12 +61,8 @@ function Menu() {
                     <span className="icon" onClick={onToggleMenu}>
                         <AccountIcon />
                     </span>
-                    <span>
-                        <Link
-                            className="label"
-                            to="/profile"
-                            onClick={onCloseMenu}
-                        >
+                    <span className="label">
+                        <Link to="/profile" onClick={onCloseMenu}>
                             Profile
                         </Link>
                     </span>
