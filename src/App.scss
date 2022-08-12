@@ -7,6 +7,9 @@
 
 * {
     font-family: $font-primary;
+    .label {
+        font-family: $font-title;
+    }
 }
 
 body,
@@ -59,8 +62,11 @@ a:active {
     background-color: transparent;
     text-decoration: none;
 }
-a:hover {
-    font-weight: $fontweight-semibold;
+
+a:hover,
+.label:hover {
+    /* for Quicksand bold means fontweight-700! (not 800) */
+    font-weight: 700;
 }
 
 .input-container {
@@ -79,6 +85,7 @@ select {
 }
 
 label {
+    font-family: $font-primary;
     margin-bottom: 0.5rem;
 }
 
