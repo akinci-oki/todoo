@@ -23,14 +23,24 @@ h2 {
     font-size: 1rem;
 }
 
+h3 {
+    margin-top: 3rem;
+    margin-bottom: 2rem;
+    font-weight: $fontweight-semibold;
+    font-size: 1rem;
+}
+
 /* form */
 .error {
     margin: 0.5rem 0 1rem 0;
     font-weight: $fontweight-semibold;
     color: $color-error;
 }
+
 button {
-    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 3rem;
     color: white;
     width: 100%;

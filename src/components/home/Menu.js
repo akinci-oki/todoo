@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 
 import { useUser } from "../../context";
 import { Avatar } from "../../components";
+
+import { ReactComponent as AboutIcon } from "../../icons/about-icon.svg";
 import { ReactComponent as AccountIcon } from "../../icons/account-icon.svg";
 import { ReactComponent as HamburgerIcon } from "../../icons/hamburger-icon.svg";
 import { ReactComponent as SettingsIcon } from "../../icons/settings-icon.svg";
@@ -64,6 +66,16 @@ function Menu() {
                     <span className="label">
                         <Link to="/profile" onClick={onCloseMenu}>
                             Profile
+                        </Link>
+                    </span>
+                </li>
+                <li className="menu-item">
+                    <span className="icon" onClick={onToggleMenu}>
+                        <AboutIcon />
+                    </span>
+                    <span className="label">
+                        <Link to="/about" onClick={onCloseMenu}>
+                            About
                         </Link>
                     </span>
                 </li>
