@@ -70,6 +70,13 @@ function Login() {
                 </button>
                 {error.api && <p className="error">{error.api}</p>}
             </div>
+            <div>
+                <label class="container">
+                    Remember me
+                    <input type="checkbox" />
+                    <span class="checkmark"></span>
+                </label>
+            </div>
         </div>
     );
 }
