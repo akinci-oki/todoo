@@ -14,6 +14,7 @@ function About() {
             <div>
                 <ul>
                     <li>React, JavaScript & SCSS</li>
+                    <li>UseEffect, UseState & UseContext</li>
                     <li>Jira & Figma</li>
                     <li>react-router-dom</li>
                     <li>dealing with forms</li>
