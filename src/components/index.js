@@ -1,4 +1,5 @@
 import Avatar from "./Avatar/Avatar";
+import About from "./About/About";
 import CategoryForm from "./Settings/CategoryForm";
 import Home from "./home/Home";
 import Login from "./Login/Login";
@@ -11,6 +12,7 @@ import Spinner from "./Spinner/Spinner";
 
 export {
     Avatar,
+    About,
     CategoryForm,
     Home,
     Login,
