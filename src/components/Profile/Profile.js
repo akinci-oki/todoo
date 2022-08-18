@@ -53,14 +53,14 @@ function Profile() {
                         </div>
                     )}
                     <div>
-                        <button>
-                            <Link to="/log-in">log in</Link>
-                        </button>
+                        <Link to="/log-in">
+                            <button> log in </button>
+                        </Link>
                     </div>
                     <div>
-                        <button>
-                            <Link to="/sign-up">sign up</Link>
-                        </button>
+                        <Link to="/sign-up">
+                            <button>sign up</button>
+                        </Link>
                     </div>
                 </>
             )}
