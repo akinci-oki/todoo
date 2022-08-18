@@ -24,7 +24,7 @@ function Profile() {
             {user.firstName && (
                 <>
                     <p>
-                        You are currently logged in as &nbsp;
+                        You are currently logged in as&nbsp;
                         <strong className="strong">
                             {user.firstName}&nbsp;
                             {user.lastName} ({user.email})
