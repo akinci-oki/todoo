@@ -23,9 +23,9 @@ function Profile() {
             <h2> Profile </h2>
             {user.firstName && (
                 <>
-                    <p>You are currently logged in as</p>
                     <p>
-                        <strong>
+                        You are currently logged in as &nbsp;
+                        <strong className="strong">
                             {user.firstName}&nbsp;
                             {user.lastName} ({user.email})
                         </strong>
