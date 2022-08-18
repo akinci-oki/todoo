@@ -65,17 +65,17 @@ function Login() {
                 {error.email && <p className="error">{error.email}</p>}
             </div>
             <div>
+                <label class="container">
+                    <input type="checkbox" />
+                    <span className="check-label"> Remember me </span>
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            <div>
                 <button type="submit" onClick={onLogin} disabled={isLoading}>
                     {isLoading ? <Spinner /> : "log in"}
                 </button>
                 {error.api && <p className="error">{error.api}</p>}
-            </div>
-            <div>
-                <label class="container">
-                    Remember me
-                    <input type="checkbox" />
-                    <span class="checkmark"></span>
-                </label>
             </div>
         </div>
     );
