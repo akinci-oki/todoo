@@ -36,10 +36,8 @@ function Login() {
                 }
             );
             const user = response.data;
-            // console.log(user);
             setUser(user);
             Cookies.set("UID", user.id, { expires: 7 });
-            console.log(user.id);
             setIsLoading(false);
             navigate("/profile");
         } catch (error) {

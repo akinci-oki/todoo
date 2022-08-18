@@ -25,7 +25,6 @@ function App() {
             const response = await axios.get(
                 "http://localhost:4000/api/users/" + UID
             );
-            console.log(response);
             setUser(response.data);
         } catch (error) {
             console.error(error);
