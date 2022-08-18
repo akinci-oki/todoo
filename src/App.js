@@ -31,9 +31,6 @@ function App() {
         }
     }
 
-    /* inside of useEffect, after you got the cookie. Do a Get API call to users/user.id*/
-    /* if there's a user, setUser on the context */
-
     return (
         <div className="App">
             <userContext.Provider
