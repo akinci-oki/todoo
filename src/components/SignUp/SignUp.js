@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+
 import { Spinner } from "../../components";
+import { useUser } from "../../context";
 
 function SignUp() {
+    const { user, setUser } = useUser();
+    const navigate = useNavigate();
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
@@ -11,6 +16,7 @@ function SignUp() {
         firstName: null,
         lastName: null,
         email: null,
+        emailInUse: null,
     });
 
     async function onAddUser() {
@@ -43,14 +49,32 @@ function SignUp() {
         setIsLoading(true);
 
         try {
-            await axios.post("http://localhost:4000/api/users", {
-                firstName,
-                lastName,
-                email,
-            });
+            const response = await axios.post(
+                "http://localhost:4000/api/users",
+                {
+                    firstName,
+                    lastName,
+                    email,
+                }
+            );
             setIsLoading(false);
+            const user = response.data;
+            setUser(user);
+            navigate("/profile");
         } catch (error) {
+            const errorMessage = "bad input: email already in use";
+
+            if (
+                error.response.data.message ===
+                "bad input: email already in use"
+            ) {
+                setError((error) => ({
+                    ...error,
+                    emailInUse: "e-mail address is already in use.",
+                }));
+            }
             console.error(error);
+            console.log(error.response.data.message);
             setIsLoading(false);
         }
     }
@@ -64,6 +88,7 @@ function SignUp() {
                     <input
                         placeholder="Jason"
                         type="text"
+                        disabled={isLoading}
                         id="firstname"
                         onChange={(e) => {
                             e.preventDefault();
@@ -79,6 +104,7 @@ function SignUp() {
                     <input
                         placeholder="Doe"
                         type="text"
+                        disabled={isLoading}
                         id="lastname"
                         onChange={(e) => {
                             e.preventDefault();
@@ -94,6 +120,7 @@ function SignUp() {
                     <input
                         placeholder="@email.com"
                         type="text"
+                        disabled={isLoading}
                         id="email"
                         onChange={(e) => {
                             e.preventDefault();
@@ -104,17 +131,22 @@ function SignUp() {
                 </div>
 
                 <div>
-                    <button
-                        className="primary"
-                        type="submit"
-                        disabled={isLoading}
-                        onClick={(e) => {
-                            e.preventDefault();
-                            onAddUser(e);
-                        }}
-                    >
-                        {isLoading ? <Spinner /> : "sign up"}
-                    </button>
+                    <Link to="/profile">
+                        <button
+                            className="primary"
+                            type="submit"
+                            disabled={isLoading}
+                            onClick={(e) => {
+                                e.preventDefault();
+                                onAddUser(e);
+                            }}
+                        >
+                            {isLoading ? <Spinner /> : "sign up"}
+                        </button>
+                    </Link>
+                    {error.emailInUse && (
+                        <p className="error">{error.emailInUse}</p>
+                    )}
                 </div>
             </form>
         </div>
