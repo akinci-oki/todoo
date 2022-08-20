@@ -60,7 +60,7 @@ function SignUp() {
             setIsLoading(false);
             const user = response.data;
             setUser(user);
-            navigate("/profile");
+            navigate("/profile?welcome=true");
         } catch (error) {
             const errorMessage = "bad input: email already in use";
 

@@ -1,10 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { useUser } from "../../context";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { ReactComponent as SuccessIcon } from "../../icons/success-icon.svg";
 
 function Profile() {
+    let [searchParams, setSearchParams] = useSearchParams();
     const { user, setUser } = useUser();
     const [isLogoutDone, setIsLogoutDone] = useState(false);
 
@@ -17,6 +18,10 @@ function Profile() {
         });
         setIsLogoutDone(true);
     };
+
+    useEffect(() => {
+        console.log(searchParams.values);
+    }, [searchParams]);
 
     return (
         <div className="profile">
