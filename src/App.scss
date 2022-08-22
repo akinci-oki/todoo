@@ -96,6 +96,12 @@ button:hover {
     flex-direction: column;
 }
 
+form {
+    .primary {
+        margin-top: 2rem;
+    }
+}
+
 input,
 select {
     height: 2rem;

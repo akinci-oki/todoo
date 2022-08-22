@@ -53,32 +53,38 @@ function Login() {
     return (
         <div className="login">
             <h2> Profile </h2>
-            <div className="input-container">
-                <label> e-mail </label>
-                <input
-                    placeholder="@email.com"
-                    type="text"
-                    id="email"
-                    onChange={(e) => {
-                        e.preventDefault();
-                        setEmail(e.target.value);
-                    }}
-                />
-                {error.email && <p className="error">{error.email}</p>}
-            </div>
-            <div>
-                <label class="container">
-                    <input type="checkbox" />
-                    <span className="check-label"> Remember me </span>
-                    <span class="checkmark"></span>
-                </label>
-            </div>
-            <div>
-                <button type="submit" onClick={onLogin} disabled={isLoading}>
-                    {isLoading ? <Spinner /> : "log in"}
-                </button>
-                {error.api && <p className="error">{error.api}</p>}
-            </div>
+            <form>
+                <div className="input-container">
+                    <label> e-mail </label>
+                    <input
+                        placeholder="@email.com"
+                        type="text"
+                        id="email"
+                        onChange={(e) => {
+                            e.preventDefault();
+                            setEmail(e.target.value);
+                        }}
+                    />
+                    {error.email && <p className="error">{error.email}</p>}
+                </div>
+                <div>
+                    <label class="container">
+                        <input type="checkbox" />
+                        <span className="check-label"> Remember me </span>
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+                <div>
+                    <button
+                        type="submit"
+                        onClick={onLogin}
+                        disabled={isLoading}
+                    >
+                        {isLoading ? <Spinner /> : "log in"}
+                    </button>
+                    {error.api && <p className="error">{error.api}</p>}
+                </div>
+            </form>
         </div>
     );
 }
