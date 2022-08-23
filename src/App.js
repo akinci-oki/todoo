@@ -4,8 +4,12 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { Menu } from "./components";
 import Router from "./Router";
+import { ReactComponent as ErrorIconRed } from "./icons/error-icon-red.svg";
 
 function App() {
+    const [error, setError] = useState({
+        api: null,
+    });
     const [user, setUser] = useState({
         id: "",
         firstName: "",
@@ -27,7 +31,10 @@ function App() {
             );
             setUser(response.data);
         } catch (error) {
-            console.error(error);
+            setError((error) => ({
+                ...error,
+                api: "something went wrong, please try again.",
+            }));
         }
     }
 
@@ -42,6 +49,14 @@ function App() {
                 <Menu />
                 <Router />
             </userContext.Provider>
+            {error.api && (
+                <div className="error-app">
+                    <span className="icon">
+                        <ErrorIconRed />
+                    </span>
+                    <p className="error">{error.api}</p>
+                </div>
+            )}
         </div>
     );
 }

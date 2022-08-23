@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Spinner } from "../../components";
+import { ReactComponent as ErrorIconRed } from "../../icons/error-icon-red.svg";
 
 function SignUp() {
     const [firstName, setFirstName] = useState("");
@@ -11,6 +12,7 @@ function SignUp() {
         firstName: null,
         lastName: null,
         email: null,
+        api: null,
     });
 
     async function onAddUser() {
@@ -18,6 +20,7 @@ function SignUp() {
             firstName: null,
             lastName: null,
             email: null,
+            api: null,
         });
         if (firstName.length < 1) {
             setError((error) => ({
@@ -50,6 +53,23 @@ function SignUp() {
             });
             setIsLoading(false);
         } catch (error) {
+            const errorMessage = "bad input: email already in use";
+
+            if (
+                error.response.data.message ===
+                "bad input: email already in use"
+            ) {
+                setError((error) => ({
+                    ...error,
+                    api: "e-mail address is already in use.",
+                }));
+            } else {
+                setError((error) => ({
+                    ...error,
+                    api: "something went wrong, please try again.",
+                }));
+            }
+            console.log(error.response.data.message);
             console.error(error);
             setIsLoading(false);
         }
@@ -115,10 +135,17 @@ function SignUp() {
                     >
                         {isLoading ? <Spinner /> : "sign up"}
                     </button>
+                    {error.api && (
+                        <div className="error-red">
+                            <span className="icon">
+                                <ErrorIconRed />
+                            </span>
+                            <p className="error">{error.api}</p>
+                        </div>
+                    )}
                 </div>
             </form>
         </div>
     );
 }
-
 export default SignUp;

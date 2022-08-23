@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { ReactComponent as ErrorIconRed } from "../../icons/error-icon-red.svg";
 
 import { Spinner } from "../../components";
 import { useUser } from "../../context";
@@ -45,6 +46,11 @@ function Login() {
                 setError(() => ({
                     api: "There's no user found!",
                 }));
+            } else {
+                setError((error) => ({
+                    ...error,
+                    api: "something went wrong, please try again.",
+                }));
             }
             setIsLoading(false);
         }
@@ -68,10 +74,10 @@ function Login() {
                     {error.email && <p className="error">{error.email}</p>}
                 </div>
                 <div>
-                    <label class="container">
+                    <label className="container">
                         <input type="checkbox" />
                         <span className="check-label"> Remember me </span>
-                        <span class="checkmark"></span>
+                        <span className="checkmark"></span>
                     </label>
                 </div>
                 <div>
@@ -82,7 +88,14 @@ function Login() {
                     >
                         {isLoading ? <Spinner /> : "log in"}
                     </button>
-                    {error.api && <p className="error">{error.api}</p>}
+                    {error.api && (
+                        <div className="error-red">
+                            <span className="icon">
+                                <ErrorIconRed />
+                            </span>
+                            <p className="error">{error.api}</p>
+                        </div>
+                    )}
                 </div>
             </form>
         </div>

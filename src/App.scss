@@ -48,6 +48,18 @@ h3 {
     font-weight: $fontweight-semibold;
     color: $color-error;
 }
+.error-app {
+    display: flex;
+    align-items: center;
+    font-weight: $fontweight-semibold;
+    color: $color-error;
+    margin-bottom: 1rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+.icon {
+    margin-right: 0.5rem;
+}
 
 button {
     line-height: 1;
