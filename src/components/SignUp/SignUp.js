@@ -16,7 +16,7 @@ function SignUp() {
         firstName: null,
         lastName: null,
         email: null,
-        emailInUse: null,
+        api: null,
     });
 
     async function onAddUser() {
@@ -70,7 +70,7 @@ function SignUp() {
             ) {
                 setError((error) => ({
                     ...error,
-                    emailInUse: "e-mail address is already in use.",
+                    api: "e-mail address is already in use.",
                 }));
             }
             console.error(error);
@@ -144,9 +144,7 @@ function SignUp() {
                             {isLoading ? <Spinner /> : "sign up"}
                         </button>
                     </Link>
-                    {error.emailInUse && (
-                        <p className="error">{error.emailInUse}</p>
-                    )}
+                    {error.emailInUse && <p className="error">{error.api}</p>}
                 </div>
             </form>
         </div>
