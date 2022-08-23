@@ -63,6 +63,7 @@ function SignUp() {
                     <label> first name </label>
                     <input
                         placeholder="Jason"
+                        disabled={isLoading}
                         type="text"
                         id="firstname"
                         onChange={(e) => {
@@ -78,6 +79,7 @@ function SignUp() {
                     <label> last name </label>
                     <input
                         placeholder="Doe"
+                        disabled={isLoading}
                         type="text"
                         id="lastname"
                         onChange={(e) => {
@@ -93,6 +95,7 @@ function SignUp() {
                     <label> e-mail </label>
                     <input
                         placeholder="@email.com"
+                        disabled={isLoading}
                         type="text"
                         id="email"
                         onChange={(e) => {
