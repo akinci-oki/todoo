@@ -1,6 +1,7 @@
-import Avatar from "./Avatar/Avatar";
 import About from "./About/About";
+import Avatar from "./Avatar/Avatar";
 import CategoryForm from "./Settings/CategoryForm";
+import Error from "./error/Error";
 import Home from "./home/Home";
 import Login from "./Login/Login";
 import Menu from "./home/Menu";
@@ -22,4 +23,5 @@ export {
     Settings,
     SignUp,
     Spinner,
+    Error,
 };

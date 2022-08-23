@@ -4,7 +4,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { ReactComponent as ErrorIconRed } from "../../icons/error-icon-red.svg";
 
-import { Spinner } from "../../components";
+import { Spinner, Error } from "../../components";
 import { useUser } from "../../context";
 
 function Login() {
@@ -88,14 +88,7 @@ function Login() {
                     >
                         {isLoading ? <Spinner /> : "log in"}
                     </button>
-                    {error.api && (
-                        <div className="error-red">
-                            <span className="icon">
-                                <ErrorIconRed />
-                            </span>
-                            <p className="error">{error.api}</p>
-                        </div>
-                    )}
+                    {error.api && <Error />}
                 </div>
             </form>
         </div>

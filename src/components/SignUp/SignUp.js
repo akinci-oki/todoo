@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Spinner } from "../../components";
+import { Spinner, Error } from "../../components";
 import { ReactComponent as ErrorIconRed } from "../../icons/error-icon-red.svg";
 
 function SignUp() {
@@ -135,14 +135,7 @@ function SignUp() {
                     >
                         {isLoading ? <Spinner /> : "sign up"}
                     </button>
-                    {error.api && (
-                        <div className="error-red">
-                            <span className="icon">
-                                <ErrorIconRed />
-                            </span>
-                            <p className="error">{error.api}</p>
-                        </div>
-                    )}
+                    {error.api && <Error />}
                 </div>
             </form>
         </div>

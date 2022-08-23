@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { userContext } from "./context";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { Menu } from "./components";
+import { Menu, Error } from "./components";
 import Router from "./Router";
 import { ReactComponent as ErrorIconRed } from "./icons/error-icon-red.svg";
 
@@ -49,14 +49,7 @@ function App() {
                 <Menu />
                 <Router />
             </userContext.Provider>
-            {error.api && (
-                <div className="error-app">
-                    <span className="icon">
-                        <ErrorIconRed />
-                    </span>
-                    <p className="error">{error.api}</p>
-                </div>
-            )}
+            {error.api && <Error />}
         </div>
     );
 }
