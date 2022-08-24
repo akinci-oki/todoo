@@ -38,7 +38,7 @@ function Login() {
             );
             const user = response.data;
             setUser(user);
-            if (true) {
+            if (isRememberChecked) {
                 Cookies.set("UID", user.id, { expires: 7 });
             }
             setIsLoading(false);
@@ -78,7 +78,6 @@ function Login() {
                             disabled={isLoading}
                             onChange={(e) => {
                                 setIsRememberChecked(e.target.checked);
-                                console.log(e.target.checked);
                             }}
                         />
                         <span className="check-label"> Remember me </span>
