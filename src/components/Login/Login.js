@@ -14,6 +14,7 @@ function Login() {
         email: null,
         api: null,
     });
+    const [isRememberChecked, setIsRememberChecked] = useState(false);
     const { user, setUser } = useUser();
 
     async function onLogin() {
@@ -37,7 +38,9 @@ function Login() {
             );
             const user = response.data;
             setUser(user);
-            Cookies.set("UID", user.id, { expires: 7 });
+            if (isRememberChecked) {
+                Cookies.set("UID", user.id, { expires: 7 });
+            }
             setIsLoading(false);
             navigate("/profile");
         } catch (error) {
@@ -59,6 +62,7 @@ function Login() {
                     <input
                         placeholder="@email.com"
                         type="text"
+                        disabled={isLoading}
                         id="email"
                         onChange={(e) => {
                             e.preventDefault();
@@ -68,10 +72,16 @@ function Login() {
                     {error.email && <p className="error">{error.email}</p>}
                 </div>
                 <div>
-                    <label class="container">
-                        <input type="checkbox" />
+                    <label className="container">
+                        <input
+                            type="checkbox"
+                            disabled={isLoading}
+                            onChange={(e) => {
+                                setIsRememberChecked(e.target.checked);
+                            }}
+                        />
                         <span className="check-label"> Remember me </span>
-                        <span class="checkmark"></span>
+                        <span className="checkmark"></span>
                     </label>
                 </div>
                 <div>
