@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { ReactComponent as ErrorIconRed } from "../../icons/error-icon-red.svg";
 
 import { Spinner, Error } from "../../components";
 import { useUser } from "../../context";
@@ -48,7 +47,6 @@ function Login() {
                 }));
             } else {
                 setError((error) => ({
-                    ...error,
                     api: "something went wrong, please try again.",
                 }));
             }

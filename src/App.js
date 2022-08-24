@@ -4,7 +4,6 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { Menu, Error } from "./components";
 import Router from "./Router";
-import { ReactComponent as ErrorIconRed } from "./icons/error-icon-red.svg";
 
 function App() {
     const [error, setError] = useState({
@@ -32,7 +31,6 @@ function App() {
             setUser(response.data);
         } catch (error) {
             setError((error) => ({
-                ...error,
                 api: "something went wrong, please try again.",
             }));
         }

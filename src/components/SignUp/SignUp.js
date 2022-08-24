@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Spinner, Error } from "../../components";
-import { ReactComponent as ErrorIconRed } from "../../icons/error-icon-red.svg";
 
 function SignUp() {
     const [firstName, setFirstName] = useState("");
@@ -53,8 +52,6 @@ function SignUp() {
             });
             setIsLoading(false);
         } catch (error) {
-            const errorMessage = "bad input: email already in use";
-
             if (
                 error.response.data.message ===
                 "bad input: email already in use"
@@ -70,7 +67,6 @@ function SignUp() {
                 }));
             }
             console.log(error.response.data.message);
-            console.error(error);
             setIsLoading(false);
         }
     }
@@ -135,7 +131,7 @@ function SignUp() {
                     >
                         {isLoading ? <Spinner /> : "sign up"}
                     </button>
-                    {error.api && <Error />}
+                    {error.api && <Error message={error.api} />}
                 </div>
             </form>
         </div>
