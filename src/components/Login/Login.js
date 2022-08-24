@@ -59,6 +59,7 @@ function Login() {
                     <input
                         placeholder="@email.com"
                         type="text"
+                        disabled={isLoading}
                         id="email"
                         onChange={(e) => {
                             e.preventDefault();
@@ -69,7 +70,7 @@ function Login() {
                 </div>
                 <div>
                     <label class="container">
-                        <input type="checkbox" />
+                        <input type="checkbox" disabled={isLoading} />
                         <span className="check-label"> Remember me </span>
                         <span class="checkmark"></span>
                     </label>

@@ -64,6 +64,7 @@ function SignUp() {
                     <input
                         placeholder="Jason"
                         type="text"
+                        disabled={isLoading}
                         id="firstname"
                         onChange={(e) => {
                             e.preventDefault();
@@ -79,6 +80,7 @@ function SignUp() {
                     <input
                         placeholder="Doe"
                         type="text"
+                        disabled={isLoading}
                         id="lastname"
                         onChange={(e) => {
                             e.preventDefault();
@@ -94,6 +96,7 @@ function SignUp() {
                     <input
                         placeholder="@email.com"
                         type="text"
+                        disabled={isLoading}
                         id="email"
                         onChange={(e) => {
                             e.preventDefault();
