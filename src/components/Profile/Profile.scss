@@ -18,4 +18,10 @@
     .strong {
         font-weight: $fontweight-semibold;
     }
+    .update-link {
+        text-decoration: underline;
+        font-family: $font-primary;
+        font-weight: $fontweight-normal;
+        color: #000000;
+    }
 }

@@ -9,6 +9,7 @@ import NotFound from "./NotFound/NotFound";
 import Settings from "./Settings/Settings";
 import SignUp from "./SignUp/SignUp";
 import Spinner from "./Spinner/Spinner";
+import UpdateUser from "./UpdateUser/UpdateUser";
 
 export {
     Avatar,
@@ -22,4 +23,5 @@ export {
     Settings,
     SignUp,
     Spinner,
+    UpdateUser,
 };

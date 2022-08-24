@@ -30,6 +30,12 @@ function Profile() {
                             {user.lastName} ({user.email})
                         </strong>
                     </p>
+                    <p>
+                        <Link className="update-link" to="/update-user">
+                            update name or e-mail
+                        </Link>
+                    </p>
+
                     <button onClick={onLogout}> log out </button>
                 </>
             )}
