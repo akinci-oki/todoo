@@ -51,8 +51,8 @@ function UpdateUser() {
         }
         if (firstName.length < 1 || lastName.length < 1 || email.length < 1) {
             return;
-            setIsLoading(true);
         }
+        setIsLoading(true);
         try {
             await axios.put(`http://localhost:4000/api/users/${user.id}`, {
                 firstName,
@@ -86,7 +86,7 @@ function UpdateUser() {
                     <label> first name </label>
                     <input
                         value={firstName}
-                        // disabled={isDisabled || isLoading}
+                        disabled={isLoading}
                         type="text"
                         id="firstname"
                         onChange={(e) => {
@@ -102,7 +102,7 @@ function UpdateUser() {
                     <label> last name </label>
                     <input
                         value={lastName}
-                        // disabled={isDisabled || isLoading}
+                        disabled={isLoading}
                         type="text"
                         id="lastname"
                         onChange={(e) => {
@@ -118,7 +118,7 @@ function UpdateUser() {
                     <label> e-mail </label>
                     <input
                         value={email}
-                        // disabled={isDisabled || isLoading}
+                        disabled={isLoading}
                         type="text"
                         id="email"
                         onChange={(e) => {
