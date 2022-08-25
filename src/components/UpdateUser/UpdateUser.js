@@ -6,13 +6,35 @@ function UpdateUser() {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
+    // const [isUpdated, setIsUpdated] = useState(false);
+    const [isDisabled, setIsDisabled] = useState(true);
+    // const [error, setError] = useState({
+    //     email: null,
+    // });
     const { user } = useUser();
 
     useEffect(() => {
         setFirstName(user.firstName);
         setLastName(user.lastName);
         setEmail(user.email);
+        setIsDisabled(true);
     }, [user]);
+
+    useEffect(() => {
+        onUpdate();
+    }, [firstName, lastName, email]);
+
+    const onUpdate = () => {
+        if (user.firstName !== firstName) {
+            setIsDisabled(false);
+        }
+        if (user.lastName !== lastName) {
+            setIsDisabled(false);
+        }
+        if (user.email !== email) {
+            setIsDisabled(false);
+        }
+    };
 
     return (
         <div className="update-user">
@@ -55,7 +77,11 @@ function UpdateUser() {
                     />
                 </div>
                 <div>
-                    <button disabled={true} className="primary" type="submit">
+                    <button
+                        disabled={isDisabled}
+                        className="primary"
+                        type="submit"
+                    >
                         update
                     </button>
                 </div>
