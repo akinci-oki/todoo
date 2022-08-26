@@ -41,22 +41,18 @@ h3 {
     font-weight: $fontweight-semibold;
     font-size: 1rem;
 }
-
-/* form */
-.error {
-    margin: 0.5rem 0 1rem 0;
+strong {
     font-weight: $fontweight-semibold;
-    color: $color-error;
 }
-.error {
+
+.success {
     display: flex;
     align-items: center;
     font-weight: $fontweight-semibold;
-    color: $color-error;
+    color: $color-success;
     margin-bottom: 1rem;
-    padding-left: 2rem;
-    padding-right: 2rem;
 }
+
 .icon {
     margin-right: 0.5rem;
 }

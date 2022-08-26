@@ -10,11 +10,14 @@ import NotFound from "./NotFound/NotFound";
 import Settings from "./Settings/Settings";
 import SignUp from "./SignUp/SignUp";
 import Spinner from "./Spinner/Spinner";
+import Success from "./Success/Success";
+import UpdateUser from "./UpdateUser/UpdateUser";
 
 export {
-    Avatar,
     About,
+    Avatar,
     CategoryForm,
+    Error,
     Home,
     Login,
     Menu,
@@ -23,5 +26,6 @@ export {
     Settings,
     SignUp,
     Spinner,
-    Error,
+    Success,
+    UpdateUser,
 };
