@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
 import { useUser } from "../../context";
 import { useState } from "react";
-
-import { ReactComponent as SuccessIcon } from "../../icons/success-icon.svg";
+import { Success } from "../../components";
 
 function Profile() {
     const { user, setUser } = useUser();
@@ -30,6 +29,12 @@ function Profile() {
                             {user.lastName} ({user.email})
                         </strong>
                     </p>
+                    <p>
+                        <Link className="update-link" to="/update-user">
+                            update name or e-mail
+                        </Link>
+                    </p>
+
                     <button onClick={onLogout}> log out </button>
                 </>
             )}
@@ -37,12 +42,7 @@ function Profile() {
             {!user.firstName && (
                 <>
                     {isLogoutDone ? (
-                        <div className="success">
-                            <span className="icon">
-                                <SuccessIcon />
-                            </span>
-                            <p> You are now logged out! </p>
-                        </div>
+                        <Success message="You are now logged out!" />
                     ) : (
                         <div>
                             <p>Want to be able to save your TO DO’s?</p>
