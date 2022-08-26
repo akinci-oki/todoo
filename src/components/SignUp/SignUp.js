@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 import { Spinner, Error } from "../../components";
 import { useUser } from "../../context";
 
@@ -59,6 +60,7 @@ function SignUp() {
             );
             setIsLoading(false);
             const user = response.data;
+            Cookies.set("UID", user.id, { expires: 7 });
             setUser(user);
             navigate("/profile?welcome=true");
         } catch (error) {
