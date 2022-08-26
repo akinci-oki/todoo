@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 import { useUser } from "../../context";
-import { Spinner } from "../../components";
+import { Spinner, Success } from "../../components";
 
 function UpdateUser() {
     const [firstName, setFirstName] = useState("");
@@ -11,6 +11,7 @@ function UpdateUser() {
     const [isLoading, setIsLoading] = useState(false);
     // const [isUpdated, setIsUpdated] = useState(false);
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+    const [success, setSuccess] = useState(false);
     const [error, setError] = useState({
         firstName: null,
         lastName: null,
@@ -54,11 +55,16 @@ function UpdateUser() {
         }
         setIsLoading(true);
         try {
-            await axios.put(`http://localhost:4000/api/users/${user.id}`, {
-                firstName,
-                lastName,
-                email,
-            });
+            const response = await axios.put(
+                `http://localhost:4000/api/users/${user.id}`,
+                {
+                    firstName,
+                    lastName,
+                    email,
+                }
+            );
+            setSuccess(true);
+            setUser(response.data);
             setIsLoading(false);
         } catch (error) {
             console.error(error);
@@ -140,6 +146,7 @@ function UpdateUser() {
                     >
                         {isLoading ? <Spinner /> : "update"}
                     </button>
+                    {success && <Success message="successfully updated." />}
                 </div>
             </form>
         </div>
