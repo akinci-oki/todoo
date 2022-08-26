@@ -65,6 +65,7 @@ function SignUp() {
                         placeholder="Jason"
                         disabled={isLoading}
                         type="text"
+                        disabled={isLoading}
                         id="firstname"
                         onChange={(e) => {
                             e.preventDefault();
@@ -81,6 +82,7 @@ function SignUp() {
                         placeholder="Doe"
                         disabled={isLoading}
                         type="text"
+                        disabled={isLoading}
                         id="lastname"
                         onChange={(e) => {
                             e.preventDefault();
@@ -97,6 +99,7 @@ function SignUp() {
                         placeholder="@email.com"
                         disabled={isLoading}
                         type="text"
+                        disabled={isLoading}
                         id="email"
                         onChange={(e) => {
                             e.preventDefault();

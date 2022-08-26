@@ -69,11 +69,23 @@ button {
         color: $color-primary;
         background-color: white;
     }
+
     &:disabled {
-        border: 1px solid $color-disabled;
         background-color: $color-disabled;
+        border: 1px solid $color-disabled;
+        &:hover {
+            cursor: wait;
+        }
     }
 }
+
+input {
+    &:disabled {
+        background-color: white;
+        border: 1px solid $color-disabled;
+    }
+}
+
 a:link,
 a:visited,
 a:hover,
