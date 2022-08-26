@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 import { useUser } from "../../context";
-import { Spinner, Success } from "../../components";
+import { Error, Spinner, Success } from "../../components";
 
 function UpdateUser() {
     const [firstName, setFirstName] = useState("");
@@ -32,6 +32,10 @@ function UpdateUser() {
     }, [firstName, lastName, email]);
 
     async function onUpdateUser() {
+        setSuccess(false);
+        setError(() => ({
+            api: null,
+        }));
         if (firstName.length < 1) {
             setError((error) => ({
                 ...error,
@@ -66,13 +70,25 @@ function UpdateUser() {
             setSuccess(true);
             setUser(response.data);
             setIsLoading(false);
-        } catch (error) {
-            console.error(error);
+        } catch (apiError) {
+            setError(() => ({
+                api: "something went wrong, please try again.",
+            }));
+            console.error(apiError);
             setIsLoading(false);
         }
     }
 
     function checkIfDataChange() {
+        if (user.firstName === firstName) {
+            setIsButtonDisabled(true);
+        }
+        if (user.lastName === lastName) {
+            setIsButtonDisabled(true);
+        }
+        if (user.email === email) {
+            setIsButtonDisabled(true);
+        }
         if (user.firstName !== firstName) {
             setIsButtonDisabled(false);
         }
@@ -147,6 +163,7 @@ function UpdateUser() {
                         {isLoading ? <Spinner /> : "update"}
                     </button>
                     {success && <Success message="successfully updated." />}
+                    {error.api && <Error message={error.api} />}
                 </div>
             </form>
         </div>

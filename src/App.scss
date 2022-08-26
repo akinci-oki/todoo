@@ -45,15 +45,6 @@ strong {
     font-weight: $fontweight-semibold;
 }
 
-.error {
-    display: flex;
-    align-items: center;
-    font-weight: $fontweight-semibold;
-    color: $color-error;
-    margin-bottom: 1rem;
-    padding-left: 2rem;
-    padding-right: 2rem;
-}
 .success {
     display: flex;
     align-items: center;
@@ -61,6 +52,7 @@ strong {
     color: #3ba86d;
     margin-bottom: 1rem;
 }
+
 .icon {
     margin-right: 0.5rem;
 }
