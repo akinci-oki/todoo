@@ -1,13 +1,14 @@
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useUser } from "../../context";
 import { useState, useEffect } from "react";
 
 import { ReactComponent as SuccessIcon } from "../../icons/success-icon.svg";
 
 function Profile() {
-    let [searchParams, setSearchParams] = useSearchParams();
     const { user, setUser } = useUser();
     const [isLogoutDone, setIsLogoutDone] = useState(false);
+    const searchParameters = useLocation().search;
+    const welcome = new URLSearchParams(searchParameters).get("welcome");
 
     const onLogout = () => {
         setUser({
@@ -20,8 +21,8 @@ function Profile() {
     };
 
     useEffect(() => {
-        console.log(searchParams.values);
-    }, [searchParams]);
+        console.log(welcome, user.firstName);
+    }, [searchParameters]);
 
     return (
         <div className="profile">
