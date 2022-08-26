@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
 
-import { Spinner } from "../../components";
+import { Spinner, Error } from "../../components";
 import { useUser } from "../../context";
 
 function Login() {
@@ -47,6 +47,10 @@ function Login() {
             if (error.message === "Request failed with status code 404") {
                 setError(() => ({
                     api: "There's no user found!",
+                }));
+            } else {
+                setError((error) => ({
+                    api: "something went wrong, please try again.",
                 }));
             }
             setIsLoading(false);
@@ -92,7 +96,7 @@ function Login() {
                     >
                         {isLoading ? <Spinner /> : "log in"}
                     </button>
-                    {error.api && <p className="error">{error.api}</p>}
+                    {error.api && <Error />}
                 </div>
             </form>
         </div>

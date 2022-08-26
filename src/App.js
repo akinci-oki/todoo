@@ -2,10 +2,13 @@ import React, { useState, useEffect } from "react";
 import { userContext } from "./context";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { Menu } from "./components";
+import { Menu, Error } from "./components";
 import Router from "./Router";
 
 function App() {
+    const [error, setError] = useState({
+        api: null,
+    });
     const [user, setUser] = useState({
         id: "",
         firstName: "",
@@ -27,7 +30,9 @@ function App() {
             );
             setUser(response.data);
         } catch (error) {
-            console.error(error);
+            setError((error) => ({
+                api: "something went wrong, please try again.",
+            }));
         }
     }
 
@@ -42,6 +47,7 @@ function App() {
                 <Menu />
                 <Router />
             </userContext.Provider>
+            {error.api && <Error />}
         </div>
     );
 }
