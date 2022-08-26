@@ -9,7 +9,6 @@ function UpdateUser() {
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-    // const [isUpdated, setIsUpdated] = useState(false);
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState({
@@ -80,22 +79,19 @@ function UpdateUser() {
     }
 
     function checkIfDataChange() {
-        if (user.firstName === firstName) {
+        if (
+            user.firstName === firstName &&
+            user.lastName === lastName &&
+            user.email === email
+        ) {
             setIsButtonDisabled(true);
         }
-        if (user.lastName === lastName) {
-            setIsButtonDisabled(true);
-        }
-        if (user.email === email) {
-            setIsButtonDisabled(true);
-        }
-        if (user.firstName !== firstName) {
-            setIsButtonDisabled(false);
-        }
-        if (user.lastName !== lastName) {
-            setIsButtonDisabled(false);
-        }
-        if (user.email !== email) {
+
+        if (
+            user.firstName !== firstName ||
+            user.lastName !== lastName ||
+            user.email !== email
+        ) {
             setIsButtonDisabled(false);
         }
     }
