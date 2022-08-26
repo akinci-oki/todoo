@@ -1,7 +1,6 @@
 import { ReactComponent as ErrorIconRed } from "../../icons/error-icon-red.svg";
 
 function Error(props) {
-    console.log(props);
     return (
         <div>
             <div className="error-red">
