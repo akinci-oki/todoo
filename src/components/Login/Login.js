@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
 
-import { Spinner } from "../../components";
+import { Spinner, Error } from "../../components";
 import { useUser } from "../../context";
 
 function Login() {
@@ -14,6 +14,7 @@ function Login() {
         email: null,
         api: null,
     });
+    const [isRememberChecked, setIsRememberChecked] = useState(false);
     const { user, setUser } = useUser();
 
     async function onLogin() {
@@ -37,13 +38,19 @@ function Login() {
             );
             const user = response.data;
             setUser(user);
-            Cookies.set("UID", user.id, { expires: 7 });
+            if (isRememberChecked) {
+                Cookies.set("UID", user.id, { expires: 7 });
+            }
             setIsLoading(false);
             navigate("/profile");
         } catch (error) {
             if (error.message === "Request failed with status code 404") {
                 setError(() => ({
                     api: "There's no user found!",
+                }));
+            } else {
+                setError((error) => ({
+                    api: "something went wrong, please try again.",
                 }));
             }
             setIsLoading(false);
@@ -53,32 +60,45 @@ function Login() {
     return (
         <div className="login">
             <h2> Profile </h2>
-            <div className="input-container">
-                <label> e-mail </label>
-                <input
-                    placeholder="@email.com"
-                    type="text"
-                    id="email"
-                    onChange={(e) => {
-                        e.preventDefault();
-                        setEmail(e.target.value);
-                    }}
-                />
-                {error.email && <p className="error">{error.email}</p>}
-            </div>
-            <div>
-                <label class="container">
-                    <input type="checkbox" />
-                    <span className="check-label"> Remember me </span>
-                    <span class="checkmark"></span>
-                </label>
-            </div>
-            <div>
-                <button type="submit" onClick={onLogin} disabled={isLoading}>
-                    {isLoading ? <Spinner /> : "log in"}
-                </button>
-                {error.api && <p className="error">{error.api}</p>}
-            </div>
+            <form>
+                <div className="input-container">
+                    <label> e-mail </label>
+                    <input
+                        placeholder="@email.com"
+                        type="text"
+                        disabled={isLoading}
+                        id="email"
+                        onChange={(e) => {
+                            e.preventDefault();
+                            setEmail(e.target.value);
+                        }}
+                    />
+                    {error.email && <p className="error">{error.email}</p>}
+                </div>
+                <div>
+                    <label className="container">
+                        <input
+                            type="checkbox"
+                            disabled={isLoading}
+                            onChange={(e) => {
+                                setIsRememberChecked(e.target.checked);
+                            }}
+                        />
+                        <span className="check-label"> Remember me </span>
+                        <span className="checkmark"></span>
+                    </label>
+                </div>
+                <div>
+                    <button
+                        type="submit"
+                        onClick={onLogin}
+                        disabled={isLoading}
+                    >
+                        {isLoading ? <Spinner /> : "log in"}
+                    </button>
+                    {error.api && <Error />}
+                </div>
+            </form>
         </div>
     );
 }

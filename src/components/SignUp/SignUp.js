@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-
-import { Spinner } from "../../components";
+import { Spinner, Error } from "../../components";
 import { useUser } from "../../context";
 
 function SignUp() {
@@ -24,6 +23,7 @@ function SignUp() {
             firstName: null,
             lastName: null,
             email: null,
+            api: null,
         });
         if (firstName.length < 1) {
             setError((error) => ({
@@ -62,8 +62,6 @@ function SignUp() {
             setUser(user);
             navigate("/profile?welcome=true");
         } catch (error) {
-            const errorMessage = "bad input: email already in use";
-
             if (
                 error.response.data.message ===
                 "bad input: email already in use"
@@ -72,8 +70,12 @@ function SignUp() {
                     ...error,
                     api: "e-mail address is already in use.",
                 }));
+            } else {
+                setError((error) => ({
+                    ...error,
+                    api: "something went wrong, please try again.",
+                }));
             }
-            console.error(error);
             console.log(error.response.data.message);
             setIsLoading(false);
         }
@@ -87,6 +89,7 @@ function SignUp() {
                     <label> first name </label>
                     <input
                         placeholder="Jason"
+                        disabled={isLoading}
                         type="text"
                         disabled={isLoading}
                         id="firstname"
@@ -103,6 +106,7 @@ function SignUp() {
                     <label> last name </label>
                     <input
                         placeholder="Doe"
+                        disabled={isLoading}
                         type="text"
                         disabled={isLoading}
                         id="lastname"
@@ -119,6 +123,7 @@ function SignUp() {
                     <label> e-mail </label>
                     <input
                         placeholder="@email.com"
+                        disabled={isLoading}
                         type="text"
                         disabled={isLoading}
                         id="email"
@@ -131,24 +136,21 @@ function SignUp() {
                 </div>
 
                 <div>
-                    <Link to="/profile">
-                        <button
-                            className="primary"
-                            type="submit"
-                            disabled={isLoading}
-                            onClick={(e) => {
-                                e.preventDefault();
-                                onAddUser(e);
-                            }}
-                        >
-                            {isLoading ? <Spinner /> : "sign up"}
-                        </button>
-                    </Link>
-                    {error.emailInUse && <p className="error">{error.api}</p>}
+                    <button
+                        className="primary"
+                        type="submit"
+                        disabled={isLoading}
+                        onClick={(e) => {
+                            e.preventDefault();
+                            onAddUser(e);
+                        }}
+                    >
+                        {isLoading ? <Spinner /> : "sign up"}
+                    </button>
+                    {error.api && <Error message={error.api} />}
                 </div>
             </form>
         </div>
     );
 }
-
 export default SignUp;
