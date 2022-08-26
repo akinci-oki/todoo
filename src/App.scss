@@ -48,6 +48,18 @@ h3 {
     font-weight: $fontweight-semibold;
     color: $color-error;
 }
+.error {
+    display: flex;
+    align-items: center;
+    font-weight: $fontweight-semibold;
+    color: $color-error;
+    margin-bottom: 1rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+.icon {
+    margin-right: 0.5rem;
+}
 
 button {
     line-height: 1;
@@ -69,11 +81,23 @@ button {
         color: $color-primary;
         background-color: white;
     }
+
     &:disabled {
-        border: 1px solid $color-disabled;
         background-color: $color-disabled;
+        border: 1px solid $color-disabled;
+        &:hover {
+            cursor: wait;
+        }
     }
 }
+
+input {
+    &:disabled {
+        background-color: white;
+        border: 1px solid $color-disabled;
+    }
+}
+
 a:link,
 a:visited,
 a:hover,

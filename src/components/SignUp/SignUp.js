@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Spinner } from "../../components";
+import { Spinner, Error } from "../../components";
 
 function SignUp() {
     const [firstName, setFirstName] = useState("");
@@ -11,6 +11,7 @@ function SignUp() {
         firstName: null,
         lastName: null,
         email: null,
+        api: null,
     });
 
     async function onAddUser() {
@@ -18,6 +19,7 @@ function SignUp() {
             firstName: null,
             lastName: null,
             email: null,
+            api: null,
         });
         if (firstName.length < 1) {
             setError((error) => ({
@@ -50,7 +52,21 @@ function SignUp() {
             });
             setIsLoading(false);
         } catch (error) {
-            console.error(error);
+            if (
+                error.response.data.message ===
+                "bad input: email already in use"
+            ) {
+                setError((error) => ({
+                    ...error,
+                    api: "e-mail address is already in use.",
+                }));
+            } else {
+                setError((error) => ({
+                    ...error,
+                    api: "something went wrong, please try again.",
+                }));
+            }
+            console.log(error.response.data.message);
             setIsLoading(false);
         }
     }
@@ -65,6 +81,7 @@ function SignUp() {
                         placeholder="Jason"
                         disabled={isLoading}
                         type="text"
+                        disabled={isLoading}
                         id="firstname"
                         onChange={(e) => {
                             e.preventDefault();
@@ -81,6 +98,7 @@ function SignUp() {
                         placeholder="Doe"
                         disabled={isLoading}
                         type="text"
+                        disabled={isLoading}
                         id="lastname"
                         onChange={(e) => {
                             e.preventDefault();
@@ -97,6 +115,7 @@ function SignUp() {
                         placeholder="@email.com"
                         disabled={isLoading}
                         type="text"
+                        disabled={isLoading}
                         id="email"
                         onChange={(e) => {
                             e.preventDefault();
@@ -118,10 +137,10 @@ function SignUp() {
                     >
                         {isLoading ? <Spinner /> : "sign up"}
                     </button>
+                    {error.api && <Error message={error.api} />}
                 </div>
             </form>
         </div>
     );
 }
-
 export default SignUp;
