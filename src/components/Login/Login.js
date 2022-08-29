@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -36,7 +35,6 @@ function Login() {
             }));
             return;
         }
-        console.log("ahahah");
         setIsLoading(true);
 
         try {
