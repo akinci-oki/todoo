@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 
 import { Spinner, Error } from "../../components";
 import { useUser } from "../../context";
+import { isEmailValid } from "../../utils";
 
 function Login() {
     const navigate = useNavigate();
@@ -13,6 +14,7 @@ function Login() {
     const [error, setError] = useState({
         email: null,
         api: null,
+        emailValid: null,
     });
     const [isRememberChecked, setIsRememberChecked] = useState(false);
     const { setUser } = useUser();
@@ -20,10 +22,16 @@ function Login() {
     async function onLogin() {
         setError({
             email: null,
+            emailValid: null,
         });
         if (email.length < 1) {
             setError(() => ({
                 email: "please fill in your email.",
+            }));
+            return;
+        } else if (!isEmailValid(email)) {
+            setError(() => ({
+                emailValid: "Please enter a valid e-mail address.",
             }));
             return;
         }
@@ -71,6 +79,7 @@ function Login() {
                         }}
                     />
                     {error.email && <p className="error">{error.email}</p>}
+                    {error.emailValid && <p className="error">{error.emailValid}</p>}
                 </div>
                 <div>
                     <label className="container">

@@ -24,6 +24,7 @@
         "comma-dangle": ["warn", "always-multiline"],
         "space-before-function-paren": 0,
         "react/react-in-jsx-scope": 0,
-        "multiline-ternary": 0
+        "multiline-ternary": 0,
+        "prefer-regex-literals": 0
     }
 }

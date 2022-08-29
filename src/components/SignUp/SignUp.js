@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import { Spinner, Error } from "../../components";
 import { useUser } from "../../context";
+import { isEmailValid } from "../../utils";
 
 function SignUp() {
     const { setUser } = useUser();
@@ -16,6 +17,7 @@ function SignUp() {
         firstName: null,
         lastName: null,
         email: null,
+        emailValid: null,
         api: null,
     });
 
@@ -24,6 +26,7 @@ function SignUp() {
             firstName: null,
             lastName: null,
             email: null,
+            emailValid: null,
             api: null,
         });
         if (firstName.length < 1) {
@@ -43,10 +46,15 @@ function SignUp() {
                 ...error,
                 email: "please fill in your email.",
             }));
+        } else if (!isEmailValid(email)) {
+            setError(() => ({
+                emailValid: "Please enter a valid e-mail address.",
+            }));
         }
-        if (firstName.length < 1 || lastName.length < 1 || email.length < 1) {
+        if (firstName.length < 1 || lastName.length < 1 || email.length < 1 || !isEmailValid(email)) {
             return;
         }
+
         setIsLoading(true);
 
         try {
@@ -121,6 +129,7 @@ function SignUp() {
                         }}
                     />
                     {error.email && <p className="error">{error.email}</p>}
+                    {error.emailValid && <p className="error">{error.emailValid}</p>}
                 </div>
 
                 <div>

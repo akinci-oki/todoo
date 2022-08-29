@@ -3,6 +3,7 @@ import axios from "axios";
 
 import { useUser } from "../../context";
 import { Error, Spinner, Success } from "../../components";
+import { isEmailValid } from "../../utils";
 
 function UpdateUser() {
     const [firstName, setFirstName] = useState("");
@@ -15,6 +16,7 @@ function UpdateUser() {
         firstName: null,
         lastName: null,
         email: null,
+        emailValid: null,
     });
 
     const { user, setUser } = useUser();
@@ -52,8 +54,12 @@ function UpdateUser() {
                 ...error,
                 email: "please fill in your email.",
             }));
+        } else if (!isEmailValid(email)) {
+            setError(() => ({
+                emailValid: "Please enter a valid e-mail address.",
+            }));
         }
-        if (firstName.length < 1 || lastName.length < 1 || email.length < 1) {
+        if (firstName.length < 1 || lastName.length < 1 || email.length < 1 || !isEmailValid(email)) {
             return;
         }
         setIsLoading(true);
@@ -131,6 +137,7 @@ function UpdateUser() {
                         }}
                     />
                     {error.email && <p className="error">{error.email}</p>}
+                    {error.emailValid && <p className="error">{error.emailValid}</p>}
                 </div>
                 <div>
                     <button

@@ -1,7 +1,8 @@
 import { Link, useLocation } from "react-router-dom";
 import { useUser } from "../../context";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Success } from "../../components";
+import Cookies from "js-cookie";
 
 function Profile() {
     const { user, setUser } = useUser();
@@ -16,10 +17,9 @@ function Profile() {
             lastName: "",
             email: "",
         });
+        Cookies.remove("UID", { path: "/" });
         setIsLogoutDone(true);
     };
-
-    useEffect(() => {}, [searchParameters]);
 
     return (
         <div className="profile">
