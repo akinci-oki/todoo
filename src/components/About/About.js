@@ -6,10 +6,7 @@ function About() {
     return (
         <div className="About">
             <h2>About</h2>
-            <p>
-                Welcome on my TO DO app. It’s my Hello World project that got a
-                bit out of hand :)
-            </p>
+            <p>Welcome on my TO DO app. It’s my Hello World project that got a bit out of hand :)</p>
             <p> It allowed me to dive deep into:</p>
             <div>
                 <ul>
@@ -35,8 +32,8 @@ function About() {
             <div>
                 <h3>Warning!</h3>
                 <p>
-                    Please note that this is a playground app. Your data is not
-                    protected, don’t share personal todos or e-mail addresses.
+                    Please note that this is a playground app. Your data is not protected, don’t share personal todos or
+                    e-mail addresses.
                 </p>
             </div>
         </div>

@@ -1,0 +1,6 @@
+{
+    "trailingComma": "all",
+    "tabWidth": 4,
+    "printWidth": 125,
+    "singleAttributePerLine": true
+}

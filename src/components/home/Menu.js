@@ -25,11 +25,17 @@ function Menu() {
         <div>
             <ul className={`menu ${isMenuOpen ? "menu-open" : ""}`}>
                 <li className="page-title">
-                    <span className="icon" onClick={onToggleMenu}>
+                    <span
+                        className="icon"
+                        onClick={onToggleMenu}
+                    >
                         <HamburgerIcon />
                     </span>
                     <span className="label">
-                        <Link to="/" onClick={onCloseMenu}>
+                        <Link
+                            to="/"
+                            onClick={onCloseMenu}
+                        >
                             ToDoobieDoompie
                         </Link>
                     </span>
@@ -40,41 +46,65 @@ function Menu() {
                     )}
                 </li>
                 <li className="menu-item">
-                    <span className="icon" onClick={onToggleMenu}>
+                    <span
+                        className="icon"
+                        onClick={onToggleMenu}
+                    >
                         <SettingsIcon />
                     </span>
                     <span className="label">
-                        <Link to="/settings" onClick={onCloseMenu}>
+                        <Link
+                            to="/settings"
+                            onClick={onCloseMenu}
+                        >
                             Categories
                         </Link>
                     </span>
                 </li>
                 <li className="menu-item">
-                    <span className="icon" onClick={onToggleMenu}>
+                    <span
+                        className="icon"
+                        onClick={onToggleMenu}
+                    >
                         <StatisticsIcon />
                     </span>
                     <span className="label">
-                        <Link to="/statistics" onClick={onCloseMenu}>
+                        <Link
+                            to="/statistics"
+                            onClick={onCloseMenu}
+                        >
                             Statistics
                         </Link>
                     </span>
                 </li>
                 <li className="menu-item">
-                    <span className="icon" onClick={onToggleMenu}>
+                    <span
+                        className="icon"
+                        onClick={onToggleMenu}
+                    >
                         <AccountIcon />
                     </span>
                     <span className="label">
-                        <Link to="/profile" onClick={onCloseMenu}>
+                        <Link
+                            to="/profile"
+                            onClick={onCloseMenu}
+                        >
                             Profile
                         </Link>
                     </span>
                 </li>
                 <li className="menu-item">
-                    <span className="icon" onClick={onToggleMenu}>
+                    <span
+                        className="icon"
+                        onClick={onToggleMenu}
+                    >
                         <AboutIcon />
                     </span>
                     <span className="label">
-                        <Link to="/about" onClick={onCloseMenu}>
+                        <Link
+                            to="/about"
+                            onClick={onCloseMenu}
+                        >
                             About
                         </Link>
                     </span>

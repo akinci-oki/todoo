@@ -58,14 +58,11 @@ function UpdateUser() {
         }
         setIsLoading(true);
         try {
-            const response = await axios.put(
-                `http://localhost:4000/api/users/${user.id}`,
-                {
-                    firstName,
-                    lastName,
-                    email,
-                }
-            );
+            const response = await axios.put(`http://localhost:4000/api/users/${user.id}`, {
+                firstName,
+                lastName,
+                email,
+            });
             setSuccess(true);
             setUser(response.data);
             setIsLoading(false);
@@ -73,25 +70,18 @@ function UpdateUser() {
             setError(() => ({
                 api: "something went wrong, please try again.",
             }));
+            /* eslint-disable-next-line no-console */
             console.error(apiError);
             setIsLoading(false);
         }
     }
 
     function checkIfDataChange() {
-        if (
-            user.firstName === firstName &&
-            user.lastName === lastName &&
-            user.email === email
-        ) {
+        if (user.firstName === firstName && user.lastName === lastName && user.email === email) {
             setIsButtonDisabled(true);
         }
 
-        if (
-            user.firstName !== firstName ||
-            user.lastName !== lastName ||
-            user.email !== email
-        ) {
+        if (user.firstName !== firstName || user.lastName !== lastName || user.email !== email) {
             setIsButtonDisabled(false);
         }
     }
@@ -112,9 +102,7 @@ function UpdateUser() {
                             setFirstName(e.target.value);
                         }}
                     />
-                    {error.firstName && (
-                        <p className="error">{error.firstName}</p>
-                    )}
+                    {error.firstName && <p className="error">{error.firstName}</p>}
                 </div>
                 <div className="input-container">
                     <label> last name </label>
@@ -128,9 +116,7 @@ function UpdateUser() {
                             setLastName(e.target.value);
                         }}
                     />
-                    {error.lastName && (
-                        <p className="error">{error.lastName}</p>
-                    )}
+                    {error.lastName && <p className="error">{error.lastName}</p>}
                 </div>
                 <div className="input-container">
                     <label> e-mail </label>

@@ -1,25 +1,19 @@
 import { ReactComponent as EditNameIcon } from "../../icons/edit-name-icon.svg";
 import { ReactComponent as PickAColorIcon } from "../../icons/pick-a-color-icon.svg";
+/* eslint-disable */
 import { ReactComponent as DeleteIcon } from "../../icons/delete-icon.svg";
 import PropTypes from "prop-types";
 import { CategoryForm } from "../../components";
 import { useState } from "react";
 import Modal from "./Modal";
 
-const Settings = ({
-    categories,
-    onAddCategory,
-    onEditCategory,
-    colors,
-    onDeleteCategory,
-}) => {
+const Settings = ({ categories, onAddCategory, onEditCategory, colors, onDeleteCategory }) => {
     const [isEditFormOpen, setIsEditFormOpen] = useState(false);
     const [isNewFormOpen, setIsNewFormOpen] = useState(false);
     const [selectedCategoryId, setSelectedCategoryId] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const getCategoryDesc = (id) =>
-        categories.find((category) => category.id === id).desc;
+    const getCategoryDesc = (id) => categories.find((category) => category.id === id).desc;
 
     const onToggleEdit = (id) => {
         onToggleEditForm();
@@ -68,19 +62,13 @@ const Settings = ({
                         !category.deprecated && (
                             <li key={index}>
                                 <div className="cat-label">
-                                    <div
-                                        className={`bolletje ${category.color}`}
-                                    />
-                                    <div className="cat-desc">
-                                        {category.desc}
-                                    </div>
+                                    <div className={`bolletje ${category.color}`} />
+                                    <div className="cat-desc">{category.desc}</div>
                                 </div>
                                 <span className="icon-container">
                                     <span
                                         className="icon"
-                                        onClick={() =>
-                                            onToggleEdit(category.id)
-                                        }
+                                        onClick={() => onToggleEdit(category.id)}
                                     >
                                         <EditNameIcon />
                                     </span>
@@ -92,18 +80,19 @@ const Settings = ({
                                     </span>
                                     <span
                                         className="icon"
-                                        onClick={() =>
-                                            onToggleDelete(category.id)
-                                        }
+                                        onClick={() => onToggleDelete(category.id)}
                                     >
                                         <DeleteIcon />
                                     </span>
                                 </span>
                             </li>
-                        )
+                        ),
                 )}
             </ul>
-            <button className="primary" onClick={() => onToggleNewForm()}>
+            <button
+                className="primary"
+                onClick={() => onToggleNewForm()}
+            >
                 add new category
             </button>
             {isNewFormOpen && (

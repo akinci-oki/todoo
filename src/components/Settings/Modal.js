@@ -1,10 +1,12 @@
+import PropTypes from "prop-types";
+
 function Modal(props) {
     return (
         <div className="modal-container">
             <div className="Modal">
                 <p>
-                    Are you sure you want to delete category "
-                    {props.categoryDesc}"?
+                    Are you sure you want to delete category &quot;
+                    {props.categoryDesc}&quot;?
                 </p>
                 <button
                     className="secondary"
@@ -27,5 +29,10 @@ function Modal(props) {
         </div>
     );
 }
+Modal.propTypes = {
+    onDeleteCategory: PropTypes.func,
+    onCancel: PropTypes.func,
+    categoryDesc: PropTypes.string,
+};
 
 export default Modal;

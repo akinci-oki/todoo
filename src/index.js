@@ -9,5 +9,6 @@ ReactDOM.render(
     <BrowserRouter>
         <App />
     </BrowserRouter>,
-    document.querySelector("#root")
+    /* eslint-disable-next-line */
+    document.querySelector("#root"),
 );

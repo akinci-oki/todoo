@@ -24,9 +24,7 @@ function Profile() {
     return (
         <div className="profile">
             <h2> Profile </h2>
-            {welcome && welcome.length && (
-                <Success message={`welcome ${user.firstName}!`} />
-            )}
+            {welcome && welcome.length && <Success message={`welcome ${user.firstName}!`} />}
             {user.firstName && (
                 <>
                     <p>
@@ -37,7 +35,10 @@ function Profile() {
                         </strong>
                     </p>
                     <p>
-                        <Link className="update-link" to="/update-user">
+                        <Link
+                            className="update-link"
+                            to="/update-user"
+                        >
                             update name or e-mail
                         </Link>
                     </p>
@@ -53,10 +54,7 @@ function Profile() {
                     ) : (
                         <div>
                             <p>Want to be able to save your TO DO’s?</p>
-                            <p>
-                                Log in with your e-mail and pick up right where
-                                you left off!
-                            </p>
+                            <p>Log in with your e-mail and pick up right where you left off!</p>
                         </div>
                     )}
                     <div>

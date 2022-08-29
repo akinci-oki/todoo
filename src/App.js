@@ -25,12 +25,10 @@ function App() {
 
     async function getUser(UID) {
         try {
-            const response = await axios.get(
-                "http://localhost:4000/api/users/" + UID
-            );
+            const response = await axios.get("http://localhost:4000/api/users/" + UID);
             setUser(response.data);
         } catch (error) {
-            setError((error) => ({
+            setError(() => ({
                 api: "something went wrong, please try again.",
             }));
         }

@@ -6,7 +6,7 @@ import { Spinner, Error } from "../../components";
 import { useUser } from "../../context";
 
 function SignUp() {
-    const { user, setUser } = useUser();
+    const { setUser } = useUser();
     const navigate = useNavigate();
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -50,24 +50,18 @@ function SignUp() {
         setIsLoading(true);
 
         try {
-            const response = await axios.post(
-                "http://localhost:4000/api/users",
-                {
-                    firstName,
-                    lastName,
-                    email,
-                }
-            );
+            const response = await axios.post("http://localhost:4000/api/users", {
+                firstName,
+                lastName,
+                email,
+            });
             setIsLoading(false);
             const user = response.data;
             Cookies.set("UID", user.id, { expires: 7 });
             setUser(user);
             navigate("/profile?welcome=true");
         } catch (error) {
-            if (
-                error.response.data.message ===
-                "bad input: email already in use"
-            ) {
+            if (error.response.data.message === "bad input: email already in use") {
                 setError((error) => ({
                     ...error,
                     api: "e-mail address is already in use.",
@@ -78,7 +72,6 @@ function SignUp() {
                     api: "something went wrong, please try again.",
                 }));
             }
-            console.log(error.response.data.message);
             setIsLoading(false);
         }
     }
@@ -93,16 +86,13 @@ function SignUp() {
                         placeholder="Jason"
                         disabled={isLoading}
                         type="text"
-                        disabled={isLoading}
                         id="firstname"
                         onChange={(e) => {
                             e.preventDefault();
                             setFirstName(e.target.value);
                         }}
                     />
-                    {error.firstName && (
-                        <p className="error">{error.firstName}</p>
-                    )}
+                    {error.firstName && <p className="error">{error.firstName}</p>}
                 </div>
                 <div className="input-container">
                     <label> last name </label>
@@ -110,16 +100,13 @@ function SignUp() {
                         placeholder="Doe"
                         disabled={isLoading}
                         type="text"
-                        disabled={isLoading}
                         id="lastname"
                         onChange={(e) => {
                             e.preventDefault();
                             setLastName(e.target.value);
                         }}
                     />
-                    {error.lastName && (
-                        <p className="error">{error.lastName}</p>
-                    )}
+                    {error.lastName && <p className="error">{error.lastName}</p>}
                 </div>
                 <div className="input-container">
                     <label> e-mail </label>
@@ -127,7 +114,6 @@ function SignUp() {
                         placeholder="@email.com"
                         disabled={isLoading}
                         type="text"
-                        disabled={isLoading}
                         id="email"
                         onChange={(e) => {
                             e.preventDefault();
