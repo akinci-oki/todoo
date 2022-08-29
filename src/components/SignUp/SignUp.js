@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 import { Spinner, Error } from "../../components";
+import { useUser } from "../../context";
 
 function SignUp() {
+    const { user, setUser } = useUser();
+    const navigate = useNavigate();
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
@@ -45,12 +50,19 @@ function SignUp() {
         setIsLoading(true);
 
         try {
-            await axios.post("http://localhost:4000/api/users", {
-                firstName,
-                lastName,
-                email,
-            });
+            const response = await axios.post(
+                "http://localhost:4000/api/users",
+                {
+                    firstName,
+                    lastName,
+                    email,
+                }
+            );
             setIsLoading(false);
+            const user = response.data;
+            Cookies.set("UID", user.id, { expires: 7 });
+            setUser(user);
+            navigate("/profile?welcome=true");
         } catch (error) {
             if (
                 error.response.data.message ===

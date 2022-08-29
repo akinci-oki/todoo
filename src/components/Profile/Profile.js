@@ -1,11 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useUser } from "../../context";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Success } from "../../components";
 
 function Profile() {
     const { user, setUser } = useUser();
     const [isLogoutDone, setIsLogoutDone] = useState(false);
+    const searchParameters = useLocation().search;
+    const welcome = new URLSearchParams(searchParameters).get("welcome");
 
     const onLogout = () => {
         setUser({
@@ -17,9 +19,14 @@ function Profile() {
         setIsLogoutDone(true);
     };
 
+    useEffect(() => {}, [searchParameters]);
+
     return (
         <div className="profile">
             <h2> Profile </h2>
+            {welcome && welcome.length && (
+                <Success message={`welcome ${user.firstName}!`} />
+            )}
             {user.firstName && (
                 <>
                     <p>
