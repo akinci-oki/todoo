@@ -4,7 +4,7 @@ import { categories as importedCategories } from "../../categories";
 
 function Settingspage() {
     const [categories, setCategories] = useState(importedCategories);
-    const [colors, setColors] = useState([
+    const [colors] = useState([
         {
             id: "col-1",
         },
@@ -55,7 +55,7 @@ function Settingspage() {
             {
                 id: `cat-${categories.length + 1}`,
                 desc: categoryName,
-                color: color,
+                color,
                 deprecated: false,
             },
         ]);

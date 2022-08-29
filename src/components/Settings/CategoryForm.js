@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { useState } from "react";
 
 function CategoryForm(props) {
@@ -19,20 +21,14 @@ function CategoryForm(props) {
                         id="my-input"
                     />
                 </div>
-                <div
-                    className={`input-container ${
-                        props.isColorPickerHidden ? "hide-colors" : ""
-                    }`}
-                >
+                <div className={`input-container ${props.isColorPickerHidden ? "hide-colors" : ""}`}>
                     <label>pick a color</label>
 
                     <div className="button-container">
                         {props.colors.map((propColor, index) => {
                             return (
                                 <button
-                                    className={`color-button ${propColor.id} ${
-                                        propColor.id === color ? "selected" : ""
-                                    }`}
+                                    className={`color-button ${propColor.id} ${propColor.id === color ? "selected" : ""}`}
                                     onClick={(e) => {
                                         e.preventDefault();
                                         setColor(propColor.id);

@@ -15,7 +15,7 @@ function Login() {
         api: null,
     });
     const [isRememberChecked, setIsRememberChecked] = useState(false);
-    const { user, setUser } = useUser();
+    const { setUser } = useUser();
 
     async function onLogin() {
         setError({
@@ -30,12 +30,9 @@ function Login() {
         setIsLoading(true);
 
         try {
-            const response = await axios.post(
-                "http://localhost:4000/api/users/getByEmail",
-                {
-                    email,
-                }
-            );
+            const response = await axios.post("http://localhost:4000/api/users/getByEmail", {
+                email,
+            });
             const user = response.data;
             setUser(user);
             if (isRememberChecked) {
@@ -49,7 +46,7 @@ function Login() {
                     api: "There's no user found!",
                 }));
             } else {
-                setError((error) => ({
+                setError(() => ({
                     api: "something went wrong, please try again.",
                 }));
             }
