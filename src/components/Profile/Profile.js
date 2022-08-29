@@ -19,9 +19,7 @@ function Profile() {
         setIsLogoutDone(true);
     };
 
-    useEffect(() => {
-        console.log(welcome, user.firstName);
-    }, [searchParameters]);
+    useEffect(() => {}, [searchParameters]);
 
     return (
         <div className="profile">
