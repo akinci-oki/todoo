@@ -85,6 +85,25 @@ button {
             cursor: wait;
         }
     }
+
+    &.warning {
+        border: 1px solid $color-warning;
+        &.primary {
+            background-color: $color-warning;
+            &:disabled {
+                background-color: $color-warning-disabled;
+                border: $color-warning-disabled;
+            }
+        }
+        &.secondary {
+            color: $color-warning;
+            background-color: white;
+            &:disabled {
+                color: $color-warning-disabled;
+                border: 1px solid $color-warning-disabled;
+            }
+        }
+    }
 }
 
 input {

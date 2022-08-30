@@ -3,21 +3,10 @@
     top: 10rem;
     left: 0;
     position: absolute;
-    color: $color-error;
+    color: $color-warning;
     padding: 3rem 1rem;
-    border: 1px solid $color-error;
+    border: 1px solid $color-warning;
     background-color: white;
-    button {
-        border-color: $color-error;
-        background-color: $color-error;
-        &.secondary {
-            color: $color-error;
-            background-color: white;
-        }
-    }
-    p {
-        margin-bottom: 2rem;
-    }
 }
 
 .modal-container {

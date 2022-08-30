@@ -5,10 +5,13 @@
         margin-bottom: 1rem;
     }
 
-    .update-link {
+    .link {
         text-decoration: underline;
         font-family: $font-primary;
         font-weight: $fontweight-normal;
         color: #000000;
+        &:hover {
+            font-weight: $fontweight-semibold;
+        }
     }
 }

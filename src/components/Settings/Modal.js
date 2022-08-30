@@ -1,38 +1,48 @@
 import PropTypes from "prop-types";
+import { Spinner } from "../../components";
 
 function Modal(props) {
     return (
         <div className="modal-container">
             <div className="Modal">
                 <p>
-                    Are you sure you want to delete category &quot;
-                    {props.categoryDesc}&quot;?
+                    {/* Are you sure you want to delete category &quot;
+                    {props.categoryDesc}&quot;? */}
                 </p>
+                {props.children}
                 <button
-                    className="secondary"
+                    disabled={props.isLoading}
+                    className="warning secondary"
                     onClick={(e) => {
                         e.preventDefault();
                         props.onCancel();
                     }}
                 >
-                    cancel
+                    {props.cancelButtonText}
                 </button>
                 <button
+                    className="warning primary"
+                    disabled={props.isLoading}
                     onClick={(e) => {
                         e.preventDefault();
-                        props.onDeleteCategory();
+                        props.onConfirm();
                     }}
                 >
-                    delete category
+                    {props.isLoading ? <Spinner /> : props.confirmButtonText}
                 </button>
             </div>
         </div>
     );
 }
 Modal.propTypes = {
-    onDeleteCategory: PropTypes.func,
+    isLoading: PropTypes.bool,
+    children: PropTypes.node,
+    confirmButtonText: PropTypes.string,
+    cancelButtonText: PropTypes.string,
     onCancel: PropTypes.func,
-    categoryDesc: PropTypes.string,
+    onConfirm: PropTypes.func,
+    // onDeleteCategory: PropTypes.func,
+    // categoryDesc: PropTypes.string,
 };
 
 export default Modal;
