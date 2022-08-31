@@ -2,14 +2,22 @@
     margin: 2rem;
 
     ul {
-            list-style: none;
-            padding: 0;
-        }
+        list-style: none;
+        padding: 0;
+    }
     .todoo {
         display: flex;
         align-items: center;
         .done {
             text-decoration: line-through;
         }
+    }
+    .round {
+        position: fixed;
+        border-radius: 50%;
+        width: 4rem;
+        height: 4rem;
+        right: 2rem;
+        bottom: 2rem;
     }
 }
