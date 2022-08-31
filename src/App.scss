@@ -92,7 +92,7 @@ button {
             background-color: $color-warning;
             &:disabled {
                 background-color: $color-warning-disabled;
-                border: $color-warning-disabled;
+                border: 1px solid $color-warning-disabled;
             }
         }
         &.secondary {
