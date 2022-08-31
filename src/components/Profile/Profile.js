@@ -1,14 +1,23 @@
-import { Link, useLocation } from "react-router-dom";
-import { useUser } from "../../context";
 import { useState } from "react";
-import { Success } from "../../components";
+import { Link, useLocation } from "react-router-dom";
+import axios from "axios";
 import Cookies from "js-cookie";
+import { useUser } from "../../context";
+import { Success, Modal, Error } from "../../components";
 
 function Profile() {
     const { user, setUser } = useUser();
-    const [isLogoutDone, setIsLogoutDone] = useState(false);
+
     const searchParameters = useLocation().search;
     const welcome = new URLSearchParams(searchParameters).get("welcome");
+
+    const [isLogoutDone, setIsLogoutDone] = useState(false);
+    const [isDeleted, setIsDeleted] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState({
+        api: null,
+    });
 
     const onLogout = () => {
         setUser({
@@ -21,12 +30,29 @@ function Profile() {
         setIsLogoutDone(true);
     };
 
+    async function onDelete() {
+        setIsLoading(true);
+        try {
+            await axios.delete(`http://localhost:4000/api/users/${user.id}`, {
+                user,
+            });
+            onLogout();
+            setIsDeleted(true);
+            setIsModalOpen(false);
+        } catch {
+            setError(() => ({
+                api: "something went wrong, please try again.",
+            }));
+        }
+        setIsLoading(false);
+    }
+
     return (
         <div className="profile">
             <h2> Profile </h2>
-            {welcome && welcome.length && <Success message={`welcome ${user.firstName}!`} />}
             {user.firstName && (
                 <>
+                    {welcome && welcome.length && <Success message={`welcome ${user.firstName}!`} />}
                     <p>
                         You are currently logged in as&nbsp;
                         <strong className="strong">
@@ -36,11 +62,19 @@ function Profile() {
                     </p>
                     <p>
                         <Link
-                            className="update-link"
+                            className="link"
                             to="/update-user"
                         >
                             update name or e-mail
                         </Link>
+                    </p>
+                    <p>
+                        <a
+                            className="link"
+                            onClick={() => setIsModalOpen(true)}
+                        >
+                            delete my profile
+                        </a>
                     </p>
 
                     <button onClick={onLogout}> log out </button>
@@ -49,9 +83,9 @@ function Profile() {
 
             {!user.firstName && (
                 <>
-                    {isLogoutDone ? (
-                        <Success message="You are now logged out!" />
-                    ) : (
+                    {isLogoutDone && !isDeleted && <Success message="You are now logged out!" />}
+                    {isDeleted && <Success message="your profile was deleted" />}
+                    {!isLogoutDone && (
                         <div>
                             <p>Want to be able to save your TO DO’s?</p>
                             <p>Log in with your e-mail and pick up right where you left off!</p>
@@ -68,6 +102,28 @@ function Profile() {
                         </Link>
                     </div>
                 </>
+            )}
+
+            {isModalOpen && (
+                <Modal
+                    onCancel={() => setIsModalOpen(false)}
+                    onConfirm={onDelete}
+                    confirmButtonText={"delete profile"}
+                    cancelButtonText={"cancel"}
+                    isLoading={isLoading}
+                >
+                    {error.api ? (
+                        <Error />
+                    ) : (
+                        <>
+                            <h2> Are you sure? </h2>
+                            <p>Are you sure you want to delete your profile?</p>
+                            <p>
+                                This can not be undone. All your todos, categories and personal information will be deleted.
+                            </p>
+                        </>
+                    )}
+                </Modal>
             )}
         </div>
     );
