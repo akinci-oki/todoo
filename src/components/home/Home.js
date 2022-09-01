@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import { useUser } from "../../context";
 import axios from "axios";
 import { categories } from "../../categories";
+import { Spinner } from "../../components";
 import { ReactComponent as PlusIcon } from "../../icons/plus-icon.svg";
 
 function Home() {
@@ -116,9 +117,10 @@ function Home() {
                             onClick={() => onToggleTodo(toDo)}
                         >
                             <div className="todoo">
-                                {isToDoLoading.includes(toDo.id) && <p> something$ </p>}
-                                <div className={`bolletje ${getColorFromCategoryId(toDo.category)}`} />
-                                <p className={`${toDo.isDone ? "done" : ""}`}>{toDo.name}</p>
+                                <div className={`bolletje ${getColorFromCategoryId(toDo.category)}`}>
+                                    {isToDoLoading.includes(toDo.id) && <Spinner />}
+                                </div>
+                                <p className={`todoname ${toDo.isDone ? "done" : ""}`}>{toDo.name}</p>
                             </div>
                         </li>
                     ))}
