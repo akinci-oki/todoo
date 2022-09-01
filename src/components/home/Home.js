@@ -80,7 +80,6 @@ function Home() {
         setIsFormOpen(!isFormOpen);
     };
     const getColorFromCategoryId = (categoryId) => {
-        console.log(categoryId);
         if (!categoryId) {
             return "col-0";
         }
