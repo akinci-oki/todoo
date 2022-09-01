@@ -1,5 +1,5 @@
 import "../../App.scss";
-import { useState, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useUser } from "../../context";
 import axios from "axios";
 import { categories } from "../../categories";
@@ -7,6 +7,7 @@ import { ReactComponent as PlusIcon } from "../../icons/plus-icon.svg";
 
 function Home() {
     const { user } = useUser();
+    const bottomRef = useRef(null);
     const [toDoName, setToDoName] = useState("");
     const [toDoCategory, setToDoCategory] = useState(null);
     const [isFormOpen, setIsFormOpen] = useState(false);
@@ -18,9 +19,14 @@ function Home() {
 
     useEffect(() => {
         getToDos();
-    }, []);
+    }, [user]);
+
+    useEffect(() => {
+        bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [isFormOpen]);
 
     async function getToDos() {
+        if (!user.id) return;
         try {
             const response = await axios.get(`http://localhost:4000/api/todos/${user.id}`);
             setToDos(response.data);
@@ -59,7 +65,7 @@ function Home() {
     }
     async function onToggleTodo(toDo) {
         try {
-            await axios.put(`http://localhost:4000/api/todos/${toDo.id}`, {
+            await axios.put(`http://localhost:4000/api/todos/${user.id}`, {
                 ...toDo,
                 isDone: !toDo.isDone,
             });
@@ -99,19 +105,19 @@ function Home() {
                     </button>
                 </div>
             )}
-
             <ul>
-                {toDos.map((toDo, index) => (
-                    <li
-                        key={index}
-                        onClick={() => onToggleTodo(toDo)}
-                    >
-                        <div className="todoo">
-                            <div className={`bolletje ${getColorFromCategoryId(toDo.category)}`} />
-                            <p className={`${toDo.isDone ? "done" : ""}`}>{toDo.name}</p>
-                        </div>
-                    </li>
-                ))}
+                {toDos.length > 0 &&
+                    toDos.map((toDo, index) => (
+                        <li
+                            key={index}
+                            onClick={() => onToggleTodo(toDo)}
+                        >
+                            <div className="todoo">
+                                <div className={`bolletje ${getColorFromCategoryId(toDo.category)}`} />
+                                <p className={`${toDo.isDone ? "done" : ""}`}>{toDo.name}</p>
+                            </div>
+                        </li>
+                    ))}
             </ul>
             {isFormOpen && (
                 <form>
@@ -166,6 +172,7 @@ function Home() {
                     </div>
                 </form>
             )}
+            <div ref={bottomRef}></div>
         </div>
     );
 }
