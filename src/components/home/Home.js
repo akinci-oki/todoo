@@ -1,10 +1,12 @@
 import "../../App.scss";
 import { useState, useEffect } from "react";
-import { categories } from "../../categories";
+import { useUser } from "../../context";
 import axios from "axios";
+import { categories } from "../../categories";
 import { ReactComponent as PlusIcon } from "../../icons/plus-icon.svg";
 
 function Home() {
+    const { user } = useUser();
     const [toDoName, setToDoName] = useState("");
     const [toDoCategory, setToDoCategory] = useState(null);
     const [isFormOpen, setIsFormOpen] = useState(false);
@@ -20,7 +22,7 @@ function Home() {
 
     async function getToDos() {
         try {
-            const response = await axios.get("http://localhost:4000/api/todos");
+            const response = await axios.get(`http://localhost:4000/api/todos/${user.id}`);
             setToDos(response.data);
         } catch (error) {
             /* eslint-disable-next-line no-console */
@@ -72,6 +74,7 @@ function Home() {
         setIsFormOpen(!isFormOpen);
     };
     const getColorFromCategoryId = (categoryId) => {
+        console.log(categoryId);
         if (!categoryId) {
             return "col-0";
         }
