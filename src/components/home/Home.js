@@ -2,6 +2,7 @@ import "../../App.scss";
 import { useState, useEffect } from "react";
 import { categories } from "../../categories";
 import axios from "axios";
+import { ReactComponent as PlusIcon } from "../../icons/plus-icon.svg";
 
 function Home() {
     const [toDoName, setToDoName] = useState("");
@@ -83,17 +84,32 @@ function Home() {
             {!isFormOpen && (
                 <div>
                     <button
-                        className="primary"
+                        className="round"
                         onClick={(e) => {
                             e.preventDefault();
                             onToggleForm();
                         }}
                     >
-                        add new to do
+                        <span>
+                            <PlusIcon />
+                        </span>
                     </button>
                 </div>
             )}
 
+            <ul>
+                {toDos.map((toDo, index) => (
+                    <li
+                        key={index}
+                        onClick={() => onToggleTodo(toDo)}
+                    >
+                        <div className="todoo">
+                            <div className={`bolletje ${getColorFromCategoryId(toDo.category)}`} />
+                            <p className={`${toDo.isDone ? "done" : ""}`}>{toDo.name}</p>
+                        </div>
+                    </li>
+                ))}
+            </ul>
             {isFormOpen && (
                 <form>
                     <div className="input-container">
@@ -147,20 +163,6 @@ function Home() {
                     </div>
                 </form>
             )}
-
-            <ul>
-                {toDos.map((toDo, index) => (
-                    <li
-                        key={index}
-                        onClick={() => onToggleTodo(toDo)}
-                    >
-                        <div className="todoo">
-                            <div className={`bolletje ${getColorFromCategoryId(toDo.category)}`} />
-                            <p className={`${toDo.isDone ? "done" : ""}`}>{toDo.name}</p>
-                        </div>
-                    </li>
-                ))}
-            </ul>
         </div>
     );
 }
