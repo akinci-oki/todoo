@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import { useUser } from "../../context";
 import axios from "axios";
 import { categories } from "../../categories";
-import { Spinner } from "../../components";
+import { Spinner, Error } from "../../components";
 import { ReactComponent as PlusIcon } from "../../icons/plus-icon.svg";
 
 function Home() {
@@ -13,9 +13,11 @@ function Home() {
     const [toDoCategory, setToDoCategory] = useState(null);
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [isToDoLoading, setIsToDoLoading] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
     const [errors, setErrors] = useState({
         toDoName: null,
         toDoCategory: null,
+        api: null,
     });
     const [toDos, setToDos] = useState([]);
 
@@ -52,18 +54,25 @@ function Home() {
         if (toDoName.length < 1 || toDoCategory === "make a choice" || toDoCategory === null) {
             return;
         }
+        setIsLoading(true);
 
         try {
-            await axios.post("http://localhost:4000/api/todos", {
+            await axios.post(`http://localhost:4000/api/todos/${user.id}`, {
                 name: toDoName,
                 isDone: false,
                 category: toDoCategory,
             });
             getToDos();
         } catch (error) {
+            if (error.message === "Request failed with status code 404") {
+                setErrors(() => ({
+                    api: "something went wrong, please try again.",
+                }));
+            }
             /* eslint-disable-next-line no-console */
             console.error(error);
         }
+        setIsLoading(false);
     }
     async function onToggleTodo(toDo) {
         setIsToDoLoading((isToDoLoading) => [...isToDoLoading, toDo.id]);
@@ -79,6 +88,7 @@ function Home() {
             /* eslint-disable-next-line no-console */
             console.error(error);
         }
+        setIsLoading(false);
     }
 
     const onToggleForm = () => {
@@ -133,6 +143,7 @@ function Home() {
                             placeholder="to do"
                             type="text"
                             id="desc"
+                            disabled={isLoading}
                             onChange={(e) => {
                                 e.preventDefault();
                                 // setErrors({ ...errors, toDoName: null });
@@ -146,6 +157,7 @@ function Home() {
                         <label> category </label>
                         <select
                             name="pets"
+                            disabled={isLoading}
                             id="pet-select"
                             onChange={(e) => {
                                 setToDoCategory(e.target.value);
@@ -169,11 +181,13 @@ function Home() {
                         <div>
                             <button
                                 className="primary"
+                                disabled={isLoading}
                                 type="submit"
                                 onClick={(e) => onAddToDo(e)}
                             >
-                                add
+                                {isLoading ? <Spinner /> : "add"}
                             </button>
+                            {errors.api && <Error />}
                         </div>
                     </div>
                 </form>
