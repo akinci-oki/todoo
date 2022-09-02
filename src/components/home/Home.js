@@ -13,6 +13,8 @@ function Home() {
     const [toDoCategory, setToDoCategory] = useState(null);
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [isToDoLoading, setIsToDoLoading] = useState([]);
+    const [lists, setLists] = useState();
+    const [toDosPerList, setToDosPerList] = useState();
     const [errors, setErrors] = useState({
         toDoName: null,
         toDoCategory: null,
@@ -24,8 +26,24 @@ function Home() {
     }, [user]);
 
     useEffect(() => {
+        getTodosPerList();
+    }, [user]);
+
+    useEffect(() => {
         bottomRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [isFormOpen]);
+
+    async function getTodosPerList() {
+        if (!user.id) return;
+        try {
+            const response = await axios.get(`http://localhost:4000/api/todos/${user.id}/per-list`);
+            setToDosPerList(response.data);
+            console.log(response.data);
+        } catch (error) {
+            /* eslint-disable-next-line no-console */
+            console.error(error);
+        }
+    }
 
     async function getToDos() {
         if (!user.id) return;
@@ -54,7 +72,7 @@ function Home() {
         }
 
         try {
-            await axios.post("http://localhost:4000/api/todos", {
+            await axios.post(`http://localhost:4000/api/todos/${user.id}`, {
                 name: toDoName,
                 isDone: false,
                 category: toDoCategory,
@@ -109,6 +127,19 @@ function Home() {
                     </button>
                 </div>
             )}
+
+            <div className="row">
+                <div className="card">
+                    <p>personal</p>
+                </div>
+                <div className="card">
+                    <p>professional</p>
+                </div>
+                <div className="card">
+                    <p>kids</p>
+                </div>
+            </div>
+
             <ul>
                 {toDos.length > 0 &&
                     toDos.map((toDo, index) => (
