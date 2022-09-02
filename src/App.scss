@@ -156,7 +156,16 @@ label {
 }
 
 /* others */
+
+.todoname {
+    &:hover {
+        font-weight: $fontweight-semibold;
+        cursor: pointer;
+    }
+}
+
 .bolletje {
+    font-size: 0.9rem;
     margin-right: 0.5rem;
     border-radius: 50%;
     width: 1rem;
@@ -166,59 +175,87 @@ label {
         border: 1px solid black;
     }
 
-    &.col-1 {
+    &.col-1,
+    &.col-1 * {
         background-color: #f02d50;
+        color: #f02d50;
     }
 
-    &.col-2 {
+    &.col-2,
+    &.col-2 * {
         background-color: #3ba86d;
+        color: #3ba86d;
     }
 
-    &.col-3 {
+    &.col-3,
+    &.col-3 * {
         background-color: #69b8e4;
+        color: #69b8e4;
     }
 
-    &.col-4 {
+    &.col-4,
+    &.col-4 * {
         background-color: #e7c826;
+        color: #e7c826;
     }
 
-    &.col-5 {
+    &.col-5,
+    &.col-5 * {
         background-color: #7c40c8;
+        color: #7c40c8;
     }
 
-    &.col-6 {
+    &.col-6,
+    &.col-6 * {
         background-color: #f89c13;
+        color: #f89c13;
     }
 
-    &.col-7 {
+    &.col-7,
+    &.col-7 * {
         background-color: #e96bdc;
+        color: #e96bdc;
     }
 
-    &.col-8 {
+    &.col-8,
+    &.col-8 * {
         background-color: #4b4a4a;
+        color: #4b4a4a;
     }
 
-    &.col-9 {
+    &.col-9,
+    &.col-9 * {
         background-color: #4e3313;
+        color: #4e3313;
     }
 
-    &.col-10 {
+    &.col-10,
+    &.col-10 * {
         background-color: #000000;
+        color: #000000;
     }
 
-    &.col-11 {
+    &.col-11,
+    &.col-11 * {
         background-color: #120b69;
+        color: #120b69;
     }
 
-    &.col-12 {
+    &.col-12,
+    &.col-12 * {
         background-color: #780505;
+        color: #780505;
     }
 
-    &.col-13 {
+    &.col-13,
+    &.col-13 * {
         background-color: #0f4632;
+        color: #0f4632;
     }
 
-    &.col-14 {
+    &.col-14,
+    &.col-14 * {
         background-color: #42083c;
+        color: #42083c;
     }
 }

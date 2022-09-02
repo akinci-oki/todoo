@@ -25,6 +25,7 @@
         "space-before-function-paren": 0,
         "react/react-in-jsx-scope": 0,
         "multiline-ternary": 0,
-        "prefer-regex-literals": 0
+        "prefer-regex-literals": 0,
+        "no-unused-vars": "warn"
     }
 }

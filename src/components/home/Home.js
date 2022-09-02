@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import { useUser } from "../../context";
 import axios from "axios";
 import { categories } from "../../categories";
+import { Spinner } from "../../components";
 import { ReactComponent as PlusIcon } from "../../icons/plus-icon.svg";
 
 function Home() {
@@ -11,6 +12,7 @@ function Home() {
     const [toDoName, setToDoName] = useState("");
     const [toDoCategory, setToDoCategory] = useState(null);
     const [isFormOpen, setIsFormOpen] = useState(false);
+    const [isToDoLoading, setIsToDoLoading] = useState([]);
     const [errors, setErrors] = useState({
         toDoName: null,
         toDoCategory: null,
@@ -64,12 +66,15 @@ function Home() {
         }
     }
     async function onToggleTodo(toDo) {
+        setIsToDoLoading((isToDoLoading) => [...isToDoLoading, toDo.id]);
         try {
-            await axios.put(`http://localhost:4000/api/todos/${user.id}`, {
-                ...toDo,
+            await axios.put(`http://localhost:4000/api/todos/${user.id}/${toDo.id}`, {
+                name: toDo.name,
                 isDone: !toDo.isDone,
+                category: toDo.category,
             });
             getToDos();
+            setIsToDoLoading((isToDoLoading) => isToDoLoading.filter((id) => id !== toDo.id));
         } catch (error) {
             /* eslint-disable-next-line no-console */
             console.error(error);
@@ -112,8 +117,10 @@ function Home() {
                             onClick={() => onToggleTodo(toDo)}
                         >
                             <div className="todoo">
-                                <div className={`bolletje ${getColorFromCategoryId(toDo.category)}`} />
-                                <p className={`${toDo.isDone ? "done" : ""}`}>{toDo.name}</p>
+                                <div className={`bolletje ${getColorFromCategoryId(toDo.category)}`}>
+                                    {isToDoLoading.includes(toDo.id) && <Spinner />}
+                                </div>
+                                <p className={`todoname ${toDo.isDone ? "done" : ""}`}>{toDo.name}</p>
                             </div>
                         </li>
                     ))}
