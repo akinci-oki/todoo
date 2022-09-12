@@ -42,6 +42,7 @@ function Home() {
 
     async function onAddToDo(e) {
         e.preventDefault();
+        console.log(toDoCategory);
         if (toDoName.length < 1) {
             setErrors({
                 toDoName: "please fill in a description.",
