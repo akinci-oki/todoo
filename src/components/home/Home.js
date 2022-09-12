@@ -44,19 +44,20 @@ function Home() {
             toDoCategory: null,
         });
         e.preventDefault();
+        console.log(toDoCategory);
         if (toDoName.length < 1) {
             setError((error) => ({
                 ...error,
                 toDoName: "please fill in a description.",
             }));
         }
-        if (toDoCategory === null) {
+        if (toDoCategory === null || toDoCategory === "") {
             setError((error) => ({
                 ...error,
                 toDoCategory: "please pick a category.",
             }));
         }
-        if (toDoName.length < 1 || toDoCategory === null) {
+        if (toDoName.length < 1 || toDoCategory === null || toDoCategory === "") {
             return;
         }
 
@@ -142,7 +143,6 @@ function Home() {
                             id="desc"
                             onChange={(e) => {
                                 e.preventDefault();
-                                // setError({ ...error, toDoName: null });
                                 setToDoName(e.target.value);
                             }}
                         />
@@ -152,17 +152,13 @@ function Home() {
                     <div className="input-container">
                         <label> category </label>
                         <select
-                            name="pets"
-                            id="pet-select"
+                            name="category"
+                            id="category-select"
                             onChange={(e) => {
                                 setToDoCategory(e.target.value);
-                                // setError({
-                                //     ...error,
-                                //     toDoCategory: null,
-                                // });
                             }}
                         >
-                            <option value={null}>make a choice</option>
+                            <option value={""}>make a choice</option>
                             {categories.map((category, index) => (
                                 <option
                                     key={index}
