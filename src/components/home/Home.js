@@ -14,6 +14,7 @@ function Home() {
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [isToDoLoading, setIsToDoLoading] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [errors, setErrors] = useState({
         toDoName: null,
         toDoCategory: null,
         api: null,
@@ -40,24 +41,17 @@ function Home() {
     }
 
     async function onAddToDo(e) {
-        setError({
-            toDoName: null,
-            toDoCategory: null,
-        });
         e.preventDefault();
         if (toDoName.length < 1) {
-            setError((error) => ({
-                ...error,
+            setErrors({
                 toDoName: "please fill in a description.",
-            }));
-        }
-        if (toDoCategory === null || toDoCategory === "") {
-            setError((error) => ({
-                ...error,
+            });
+        } else if (toDoCategory === "make a choice" || toDoCategory === null) {
+            setErrors({
                 toDoCategory: "please pick a category.",
-            }));
+            });
         }
-        if (toDoName.length < 1 || toDoCategory === null || toDoCategory === "") {
+        if (toDoName.length < 1 || toDoCategory === "make a choice" || toDoCategory === null) {
             return;
         }
         setIsLoading(true);
@@ -154,20 +148,24 @@ function Home() {
                                 setToDoName(e.target.value);
                             }}
                         />
-                        {error.toDoName && <p className="error">{error.toDoName}</p>}
+                        {errors.toDoName && <p className="error">{errors.toDoName}</p>}
                     </div>
 
                     <div className="input-container">
                         <label> category </label>
                         <select
+                            name="pets"
                             disabled={isLoading}
-                            name="category"
-                            id="category-select"
+                            id="pet-select"
                             onChange={(e) => {
                                 setToDoCategory(e.target.value);
+                                // setErrors({
+                                //     ...errors,
+                                //     toDoCategory: null,
+                                // });
                             }}
                         >
-                            <option value={""}>make a choice</option>
+                            <option value={null}>make a choice</option>
                             {categories.map((category, index) => (
                                 <option
                                     key={index}
@@ -177,7 +175,7 @@ function Home() {
                                 </option>
                             ))}
                         </select>
-                        {error.toDoCategory && <p className="error">{error.toDoCategory}</p>}
+                        {errors.toDoCategory && <p className="error">{errors.toDoCategory}</p>}
                         <div>
                             <button
                                 className="primary"
