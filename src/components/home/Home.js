@@ -64,11 +64,10 @@ function Home() {
             });
             getToDos();
         } catch (error) {
-            if (error.message === "Request failed with status code 404") {
-                setErrors(() => ({
-                    api: "something went wrong, please try again.",
-                }));
-            }
+            setErrors(() => ({
+                api: "something went wrong, please try again.",
+            }));
+
             /* eslint-disable-next-line no-console */
             console.error(error);
         }
@@ -146,7 +145,6 @@ function Home() {
                             disabled={isLoading}
                             onChange={(e) => {
                                 e.preventDefault();
-                                // setErrors({ ...errors, toDoName: null });
                                 setToDoName(e.target.value);
                             }}
                         />
