@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import { useUser } from "../../context";
 import axios from "axios";
 import { categories } from "../../categories";
-import { Spinner } from "../../components";
+import { Spinner, Error } from "../../components";
 import { ReactComponent as PlusIcon } from "../../icons/plus-icon.svg";
 
 function Home() {
@@ -13,9 +13,11 @@ function Home() {
     const [toDoCategory, setToDoCategory] = useState(null);
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [isToDoLoading, setIsToDoLoading] = useState([]);
-    const [error, setError] = useState({
+    const [isLoading, setIsLoading] = useState(false);
+    const [errors, setErrors] = useState({
         toDoName: null,
         toDoCategory: null,
+        api: null,
     });
     const [toDos, setToDos] = useState([]);
 
@@ -39,38 +41,37 @@ function Home() {
     }
 
     async function onAddToDo(e) {
-        setError({
-            toDoName: null,
-            toDoCategory: null,
-        });
         e.preventDefault();
         if (toDoName.length < 1) {
-            setError((error) => ({
-                ...error,
+            setErrors({
                 toDoName: "please fill in a description.",
-            }));
-        }
-        if (toDoCategory === null || toDoCategory === "") {
-            setError((error) => ({
-                ...error,
+            });
+        } else if (toDoCategory === "make a choice" || toDoCategory === null) {
+            setErrors({
                 toDoCategory: "please pick a category.",
-            }));
+            });
         }
-        if (toDoName.length < 1 || toDoCategory === null || toDoCategory === "") {
+        if (toDoName.length < 1 || toDoCategory === "make a choice" || toDoCategory === null) {
             return;
         }
+        setIsLoading(true);
 
         try {
-            await axios.post("http://localhost:4000/api/todos", {
+            await axios.post(`http://localhost:4000/api/todos/${user.id}`, {
                 name: toDoName,
                 isDone: false,
                 category: toDoCategory,
             });
             getToDos();
         } catch (error) {
+            setErrors(() => ({
+                api: "something went wrong, please try again.",
+            }));
+
             /* eslint-disable-next-line no-console */
             console.error(error);
         }
+        setIsLoading(false);
     }
     async function onToggleTodo(toDo) {
         setIsToDoLoading((isToDoLoading) => [...isToDoLoading, toDo.id]);
@@ -86,6 +87,7 @@ function Home() {
             /* eslint-disable-next-line no-console */
             console.error(error);
         }
+        setIsLoading(false);
     }
 
     const onToggleForm = () => {
@@ -140,24 +142,30 @@ function Home() {
                             placeholder="to do"
                             type="text"
                             id="desc"
+                            disabled={isLoading}
                             onChange={(e) => {
                                 e.preventDefault();
                                 setToDoName(e.target.value);
                             }}
                         />
-                        {error.toDoName && <p className="error">{error.toDoName}</p>}
+                        {errors.toDoName && <p className="error">{errors.toDoName}</p>}
                     </div>
 
                     <div className="input-container">
                         <label> category </label>
                         <select
-                            name="category"
-                            id="category-select"
+                            name="pets"
+                            disabled={isLoading}
+                            id="pet-select"
                             onChange={(e) => {
                                 setToDoCategory(e.target.value);
+                                // setErrors({
+                                //     ...errors,
+                                //     toDoCategory: null,
+                                // });
                             }}
                         >
-                            <option value={""}>make a choice</option>
+                            <option value={null}>make a choice</option>
                             {categories.map((category, index) => (
                                 <option
                                     key={index}
@@ -167,15 +175,17 @@ function Home() {
                                 </option>
                             ))}
                         </select>
-                        {error.toDoCategory && <p className="error">{error.toDoCategory}</p>}
+                        {errors.toDoCategory && <p className="error">{errors.toDoCategory}</p>}
                         <div>
                             <button
                                 className="primary"
+                                disabled={isLoading}
                                 type="submit"
                                 onClick={(e) => onAddToDo(e)}
                             >
-                                add
+                                {isLoading ? <Spinner /> : "add"}
                             </button>
+                            {errors.api && <Error />}
                         </div>
                     </div>
                 </form>
