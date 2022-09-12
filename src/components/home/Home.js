@@ -44,7 +44,6 @@ function Home() {
             toDoCategory: null,
         });
         e.preventDefault();
-        console.log(toDoCategory);
         if (toDoName.length < 1) {
             setError((error) => ({
                 ...error,
