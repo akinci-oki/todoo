@@ -14,7 +14,7 @@ function Home() {
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [isToDoLoading, setIsToDoLoading] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [errors, setErrors] = useState({
+    const [error, setError] = useState({
         toDoName: null,
         toDoCategory: null,
         api: null,
@@ -42,17 +42,24 @@ function Home() {
 
     async function onAddToDo(e) {
         e.preventDefault();
-        console.log(toDoCategory);
+        setError({
+            toDoName: null,
+            toDoCategory: null,
+            api: null,
+        });
         if (toDoName.length < 1) {
-            setErrors({
+            setError((error) => ({
+                ...error,
                 toDoName: "please fill in a description.",
-            });
-        } else if (toDoCategory === "make a choice" || toDoCategory === null) {
-            setErrors({
-                toDoCategory: "please pick a category.",
-            });
+            }));
         }
-        if (toDoName.length < 1 || toDoCategory === "make a choice" || toDoCategory === null) {
+        if (toDoCategory === "" || toDoCategory === null) {
+            setError((error) => ({
+                ...error,
+                toDoCategory: "please pick a category.",
+            }));
+        }
+        if (toDoName.length < 1 || toDoCategory === "" || toDoCategory === null) {
             return;
         }
         setIsLoading(true);
@@ -65,7 +72,7 @@ function Home() {
             });
             getToDos();
         } catch (error) {
-            setErrors(() => ({
+            setError(() => ({
                 api: "something went wrong, please try again.",
             }));
 
@@ -149,24 +156,20 @@ function Home() {
                                 setToDoName(e.target.value);
                             }}
                         />
-                        {errors.toDoName && <p className="error">{errors.toDoName}</p>}
+                        {error.toDoName && <p className="error">{error.toDoName}</p>}
                     </div>
 
                     <div className="input-container">
                         <label> category </label>
                         <select
-                            name="pets"
+                            name="category-select"
                             disabled={isLoading}
-                            id="pet-select"
+                            id="category-select"
                             onChange={(e) => {
                                 setToDoCategory(e.target.value);
-                                // setErrors({
-                                //     ...errors,
-                                //     toDoCategory: null,
-                                // });
                             }}
                         >
-                            <option value={null}>make a choice</option>
+                            <option value={""}>make a choice</option>
                             {categories.map((category, index) => (
                                 <option
                                     key={index}
@@ -176,7 +179,7 @@ function Home() {
                                 </option>
                             ))}
                         </select>
-                        {errors.toDoCategory && <p className="error">{errors.toDoCategory}</p>}
+                        {error.toDoCategory && <p className="error">{error.toDoCategory}</p>}
                         <div>
                             <button
                                 className="primary"
@@ -186,7 +189,7 @@ function Home() {
                             >
                                 {isLoading ? <Spinner /> : "add"}
                             </button>
-                            {errors.api && <Error />}
+                            {error.api && <Error />}
                         </div>
                     </div>
                 </form>
