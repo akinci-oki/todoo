@@ -14,18 +14,14 @@ function Home() {
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [isToDoLoading, setIsToDoLoading] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [lists, setLists] = useState();
+    const [desc, setDesc] = useState([]);
     const [toDosPerList, setToDosPerList] = useState();
+    const [toDos, setToDos] = useState([]);
     const [error, setError] = useState({
         toDoName: null,
         toDoCategory: null,
         api: null,
     });
-    const [toDos, setToDos] = useState([]);
-
-    useEffect(() => {
-        getToDos();
-    }, [user]);
 
     useEffect(() => {
         getTodosPerList();
@@ -35,23 +31,23 @@ function Home() {
         bottomRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [isFormOpen]);
 
+    const getCategoryDesc = (id) => {
+        const myCategory = categories.find((category) => category.id === id);
+        return myCategory.desc;
+    };
+
     async function getTodosPerList() {
         if (!user.id) return;
         try {
             const response = await axios.get(`http://localhost:4000/api/todos/${user.id}/per-list`);
             setToDosPerList(response.data);
-            console.log(response.data);
-        } catch (error) {
-            /* eslint-disable-next-line no-console */
-            console.error(error);
-        }
-    }
 
-    async function getToDos() {
-        if (!user.id) return;
-        try {
-            const response = await axios.get(`http://localhost:4000/api/todos/${user.id}`);
-            setToDos(response.data);
+            const cardLabels = Object.keys(response.data);
+            const myCardLabels = cardLabels.map((cardLabel) => getCategoryDesc(cardLabel));
+            setDesc(myCardLabels);
+
+            const toDos = Object.values(response.data).flat();
+            setToDos(toDos);
         } catch (error) {
             /* eslint-disable-next-line no-console */
             console.error(error);
@@ -84,7 +80,7 @@ function Home() {
                 isDone: false,
                 category: toDoCategory,
             });
-            getToDos();
+            getTodosPerList();
         } catch (error) {
             setError(() => ({
                 api: "something went wrong, please try again.",
@@ -103,7 +99,7 @@ function Home() {
                 isDone: !toDo.isDone,
                 category: toDo.category,
             });
-            getToDos();
+            getTodosPerList();
             setIsToDoLoading((isToDoLoading) => isToDoLoading.filter((id) => id !== toDo.id));
         } catch (error) {
             /* eslint-disable-next-line no-console */
@@ -141,17 +137,18 @@ function Home() {
                 </div>
             )}
 
-            <div className="row">
-                <div className="card">
-                    <p>personal</p>
+            {desc.length > 0 && (
+                <div className="row">
+                    {desc.map((desc, index) => (
+                        <div
+                            key={index}
+                            className="card"
+                        >
+                            <p>{desc}</p>
+                        </div>
+                    ))}
                 </div>
-                <div className="card">
-                    <p>professional</p>
-                </div>
-                <div className="card">
-                    <p>kids</p>
-                </div>
-            </div>
+            )}
 
             <ul>
                 {toDos.length > 0 &&
