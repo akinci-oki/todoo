@@ -20,4 +20,20 @@
         right: 2rem;
         bottom: 2rem;
     }
+
+    .row {
+        display: flex;
+        overflow-x: scroll;
+        .card {
+            p {
+                padding-left: 1rem;
+            }
+            display: inline-block;
+            min-width: 8rem;
+            background-color: white;
+            border-radius: 0.5rem;
+            height: 5rem;
+            margin-right: 1.5rem;
+        }
+    }
 }
