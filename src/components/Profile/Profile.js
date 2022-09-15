@@ -87,8 +87,7 @@ function Profile() {
                     {isDeleted && <Success message="your profile was deleted" />}
                     {!isLogoutDone && (
                         <div>
-                            <p>Want to be able to save your TO DO’s?</p>
-                            <p>Log in with your e-mail and pick up right where you left off!</p>
+                            <p>You need to log in to be able to use the app.</p>
                         </div>
                     )}
                     <div>
@@ -96,6 +95,11 @@ function Profile() {
                             <button> log in </button>
                         </Link>
                     </div>
+                    {!isLogoutDone && (
+                        <div>
+                            <p>Don’t have a profile yet?</p>
+                        </div>
+                    )}
                     <div>
                         <Link to="/sign-up">
                             <button>sign up</button>
