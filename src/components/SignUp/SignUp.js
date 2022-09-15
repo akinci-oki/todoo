@@ -69,7 +69,6 @@ function SignUp() {
             setUser(user);
             navigate("/profile?welcome=true");
         } catch (error) {
-            /*  */
             if (error.response.data.message === "bad input: email not unique") {
                 setError((error) => ({
                     ...error,
