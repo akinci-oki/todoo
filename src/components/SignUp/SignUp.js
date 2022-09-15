@@ -70,7 +70,7 @@ function SignUp() {
             navigate("/profile?welcome=true");
         } catch (error) {
             /*  */
-            if (error.response.data.message === "bad input: email already in use") {
+            if (error.response.data.message === "bad input: email not unique") {
                 setError((error) => ({
                     ...error,
                     api: "e-mail address is already in use.",
