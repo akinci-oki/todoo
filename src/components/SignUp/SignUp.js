@@ -69,6 +69,7 @@ function SignUp() {
             setUser(user);
             navigate("/profile?welcome=true");
         } catch (error) {
+            /*  */
             if (error.response.data.message === "bad input: email already in use") {
                 setError((error) => ({
                     ...error,
