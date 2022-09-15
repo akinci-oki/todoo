@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../../context";
 import axios from "axios";
+import Cookies from "js-cookie";
 import { categories } from "../../categories";
 import { Spinner, Error } from "../../components";
 import { ReactComponent as PlusIcon } from "../../icons/plus-icon.svg";
@@ -26,10 +27,11 @@ function Home() {
     });
 
     useEffect(() => {
-        if (!user.id) {
+        const UID = Cookies.get("UID");
+        if (!UID) {
             navigate("/profile");
         }
-    });
+    }, []);
 
     useEffect(() => {
         getTodosPerList();
