@@ -1,5 +1,6 @@
 import "../../App.scss";
 import { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useUser } from "../../context";
 import axios from "axios";
 import { categories } from "../../categories";
@@ -9,6 +10,7 @@ import { ReactComponent as PlusIcon } from "../../icons/plus-icon.svg";
 function Home() {
     const { user } = useUser();
     const bottomRef = useRef(null);
+    const navigate = useNavigate();
     const [toDoName, setToDoName] = useState("");
     const [toDoCategory, setToDoCategory] = useState(null);
     const [isFormOpen, setIsFormOpen] = useState(false);
@@ -21,6 +23,12 @@ function Home() {
         toDoName: null,
         toDoCategory: null,
         api: null,
+    });
+
+    useEffect(() => {
+        if (!user.id) {
+            navigate("/profile");
+        }
     });
 
     useEffect(() => {
