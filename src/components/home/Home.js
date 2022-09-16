@@ -5,7 +5,7 @@ import { useUser } from "../../context";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { categories } from "../../categories";
-import { Spinner, Error } from "../../components";
+import { Spinner, Error, ProgressBar } from "../../components";
 import { ReactComponent as PlusIcon } from "../../icons/plus-icon.svg";
 
 function Home() {
@@ -158,6 +158,7 @@ function Home() {
                             className="card"
                         >
                             <p>{desc}</p>
+                            <ProgressBar />
                         </div>
                     ))}
                 </div>
