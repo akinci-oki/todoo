@@ -71,13 +71,16 @@ function Home() {
         });
         e.preventDefault();
         if (toDoName.length < 1) {
-            setError({
+            setError((error) => ({
+                ...error,
                 toDoName: "please fill in a description.",
-            });
-        } else if (toDoCategory === "" || toDoCategory === null) {
-            setError({
+            }));
+        }
+        if (toDoCategory === "" || toDoCategory === null) {
+            setError((error) => ({
+                ...error,
                 toDoCategory: "please pick a category.",
-            });
+            }));
         }
         if (toDoName.length < 1 || toDoCategory === "" || toDoCategory === null) {
             return;
