@@ -161,7 +161,11 @@ function Home() {
                             className="card"
                         >
                             <p>{desc}</p>
-                            <ProgressBar />
+                            <ProgressBar
+                                compeletedTodos={5}
+                                totalTodos={15}
+                                backgroundColor={"green"}
+                            />
                         </div>
                     ))}
                 </div>
