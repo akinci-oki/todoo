@@ -122,9 +122,7 @@ function Profile() {
                         <>
                             <h2> Are you sure? </h2>
                             <p>Are you sure you want to delete your profile?</p>
-                            <p>
-                                This can not be undone. All your todos, categories and personal information will be deleted.
-                            </p>
+                            <p>This can not be undone. All your todos, lists and personal information will be deleted.</p>
                         </>
                     )}
                 </Modal>

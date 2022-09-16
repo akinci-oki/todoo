@@ -22,9 +22,9 @@
         background-color: white;
         padding: 0;
     }
-    .cat-label {
+    .list-label {
         display: flex;
-        .cat-desc {
+        .list-desc {
             /* Mobile M*/
             @media screen and (max-width: $breakpoint-small) {
                 width: 5rem;

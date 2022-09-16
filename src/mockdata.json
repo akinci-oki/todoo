@@ -2,7 +2,7 @@
     "users": [
         {
             "name": "Regen",
-            "categories": [],
+            "lists": [],
             "todoos": [],
             "statistics": {
                 "registrationDate": "04.05.2021",
@@ -11,7 +11,7 @@
         },
         {
             "name": "Caitlyn",
-            "categories": [],
+            "lists": [],
             "todoos": [],
             "statistics": {
                 "registrationDate": "24.09.2021",

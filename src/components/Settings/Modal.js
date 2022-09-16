@@ -6,8 +6,8 @@ function Modal(props) {
         <div className="modal-container">
             <div className="Modal">
                 <p>
-                    {/* Are you sure you want to delete category &quot;
-                    {props.categoryDesc}&quot;? */}
+                    {/* Are you sure you want to delete list &quot;
+                    {props.listDesc}&quot;? */}
                 </p>
                 {props.children}
                 <button
@@ -41,8 +41,8 @@ Modal.propTypes = {
     cancelButtonText: PropTypes.string,
     onCancel: PropTypes.func,
     onConfirm: PropTypes.func,
-    // onDeleteCategory: PropTypes.func,
-    // categoryDesc: PropTypes.string,
+    // onDeleteList: PropTypes.func,
+    // listDesc: PropTypes.string,
 };
 
 export default Modal;
