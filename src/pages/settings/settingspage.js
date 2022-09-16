@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Settings } from "../../components";
-import { categories as importedCategories } from "../../categories";
+import { lists as importedLists } from "../../lists";
 
 function Settingspage() {
-    const [categories, setCategories] = useState(importedCategories);
+    const [lists, setLists] = useState(importedLists);
     const [colors] = useState([
         {
             id: "col-1",
@@ -49,53 +49,53 @@ function Settingspage() {
         },
     ]);
 
-    const onAddCategory = (categoryName, color) => {
-        setCategories([
-            ...categories,
+    const onAddList = (listName, color) => {
+        setLists([
+            ...lists,
             {
-                id: `cat-${categories.length + 1}`,
-                desc: categoryName,
+                id: `list-${lists.length + 1}`,
+                desc: listName,
                 color,
                 deprecated: false,
             },
         ]);
     };
 
-    const onEditCategory = (id, newName) => {
-        const updatedCategories = categories.map((category) => {
-            if (category.id === id) {
+    const onEditList = (id, newName) => {
+        const updatedLists = lists.map((list) => {
+            if (list.id === id) {
                 return {
-                    ...category,
+                    ...list,
                     desc: newName,
                 };
             } else {
-                return category;
+                return list;
             }
         });
-        setCategories(updatedCategories);
+        setLists(updatedLists);
     };
 
-    const onDeleteCategory = (id) => {
-        const updatedCategories = categories.map((category) => {
-            if (category.id === id) {
+    const onDeleteList = (id) => {
+        const updatedLists = lists.map((list) => {
+            if (list.id === id) {
                 return {
-                    ...category,
+                    ...list,
                     deprecated: true,
                 };
             } else {
-                return category;
+                return list;
             }
         });
-        setCategories(updatedCategories);
+        setLists(updatedLists);
     };
     return (
         <div className="settingspage">
             <Settings
-                categories={categories}
-                onAddCategory={onAddCategory}
-                onEditCategory={onEditCategory}
+                lists={lists}
+                onAddList={onAddList}
+                onEditList={onEditList}
                 colors={colors}
-                onDeleteCategory={onDeleteCategory}
+                onDeleteList={onDeleteList}
             />
         </div>
     );

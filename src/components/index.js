@@ -1,6 +1,6 @@
 import About from "./About/About";
 import Avatar from "./Avatar/Avatar";
-import CategoryForm from "./Settings/CategoryForm";
+import ListForm from "./Settings/ListForm";
 import Error from "./error/Error";
 import Home from "./home/Home";
 import Login from "./Login/Login";
@@ -17,7 +17,7 @@ import ProgressBar from "./ProgressBar/ProgressBar";
 export {
     About,
     Avatar,
-    CategoryForm,
+    ListForm,
     Error,
     Home,
     Login,

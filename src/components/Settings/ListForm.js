@@ -2,20 +2,20 @@
 
 import { useState } from "react";
 
-function CategoryForm(props) {
-    const [categoryname, setCategoryname] = useState("");
+function ListForm(props) {
+    const [listname, setListname] = useState("");
     const [color, setColor] = useState("col-1");
     return (
-        <div className="CategoryForm">
+        <div className="ListForm">
             <h2> {props.title} </h2>
             <form>
                 <div className="input-container">
                     <label>name</label>
                     <input
-                        value={categoryname}
+                        value={listname}
                         onChange={(e) => {
                             e.preventDefault();
-                            setCategoryname(e.target.value);
+                            setListname(e.target.value);
                         }}
                         type="text"
                         id="my-input"
@@ -46,9 +46,9 @@ function CategoryForm(props) {
                         onClick={(e) => {
                             e.preventDefault();
                             if (props.mode === "new") {
-                                props.onAddCategory(categoryname, color);
+                                props.onAddList(listname, color);
                             } else if (props.mode === "edit") {
-                                props.onEditCategory(categoryname);
+                                props.onEditList(listname);
                             }
                         }}
                     >
@@ -70,4 +70,4 @@ function CategoryForm(props) {
     );
 }
 
-export default CategoryForm;
+export default ListForm;

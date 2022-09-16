@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useUser } from "../../context";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { categories } from "../../categories";
+import { lists } from "../../lists";
 import { Spinner, Error, ProgressBar } from "../../components";
 import { ReactComponent as PlusIcon } from "../../icons/plus-icon.svg";
 
@@ -13,7 +13,7 @@ function Home() {
     const bottomRef = useRef(null);
     const navigate = useNavigate();
     const [toDoName, setToDoName] = useState("");
-    const [toDoCategory, setToDoCategory] = useState(null);
+    const [toDoList, setToDoList] = useState(null);
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [isToDoLoading, setIsToDoLoading] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -22,7 +22,7 @@ function Home() {
     const [toDos, setToDos] = useState([]);
     const [error, setError] = useState({
         toDoName: null,
-        toDoCategory: null,
+        toDoList: null,
         api: null,
     });
 
@@ -41,9 +41,12 @@ function Home() {
         bottomRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [isFormOpen]);
 
-    const getCategoryDesc = (id) => {
-        const myCategory = categories.find((category) => category.id === id);
-        return myCategory.desc;
+    const getListDesc = (id) => {
+        const myList = lists.find((list) => list.id === id);
+        console.log(myList);
+        console.log(lists);
+
+        return myList.desc;
     };
 
     async function getTodosPerList() {
@@ -53,7 +56,7 @@ function Home() {
             setToDosPerList(response.data);
 
             const cardLabels = Object.keys(response.data);
-            const myCardLabels = cardLabels.map((cardLabel) => getCategoryDesc(cardLabel));
+            const myCardLabels = cardLabels.map((cardLabel) => getListDesc(cardLabel));
             setDesc(myCardLabels);
 
             const toDos = Object.values(response.data).flat();
@@ -66,7 +69,7 @@ function Home() {
 
     async function onAddToDo(e) {
         setError({
-            toDoCategory: null,
+            toDoList: null,
             toDoName: null,
         });
         e.preventDefault();
@@ -76,13 +79,13 @@ function Home() {
                 toDoName: "please fill in a description.",
             }));
         }
-        if (toDoCategory === "" || toDoCategory === null) {
+        if (toDoList === "" || toDoList === null) {
             setError((error) => ({
                 ...error,
-                toDoCategory: "please pick a category.",
+                toDoList: "please pick a list.",
             }));
         }
-        if (toDoName.length < 1 || toDoCategory === "" || toDoCategory === null) {
+        if (toDoName.length < 1 || toDoList === "" || toDoList === null) {
             return;
         }
         setIsLoading(true);
@@ -91,7 +94,7 @@ function Home() {
             await axios.post(`http://localhost:4000/api/todos/${user.id}`, {
                 name: toDoName,
                 isDone: false,
-                category: toDoCategory,
+                list: toDoList,
             });
             getTodosPerList();
         } catch (error) {
@@ -110,7 +113,7 @@ function Home() {
             await axios.put(`http://localhost:4000/api/todos/${user.id}/${toDo.id}`, {
                 name: toDo.name,
                 isDone: !toDo.isDone,
-                category: toDo.category,
+                list: toDo.list,
             });
             getTodosPerList();
             setIsToDoLoading((isToDoLoading) => isToDoLoading.filter((id) => id !== toDo.id));
@@ -124,13 +127,13 @@ function Home() {
     const onToggleForm = () => {
         setIsFormOpen(!isFormOpen);
     };
-    const getColorFromCategoryId = (categoryId) => {
-        if (!categoryId) {
+    const getColorFromListId = (listId) => {
+        if (!listId) {
             return "col-0";
         }
-        const selectedCategory = categories.find((category) => category.id === categoryId);
+        const selectedList = lists.find((list) => list.id === listId);
 
-        return selectedCategory.color;
+        return selectedList.color;
     };
     return (
         <div className="home">
@@ -172,7 +175,7 @@ function Home() {
                             onClick={() => onToggleTodo(toDo)}
                         >
                             <div className="todoo">
-                                <div className={`bolletje ${getColorFromCategoryId(toDo.category)}`}>
+                                <div className={`bolletje ${getColorFromListId(toDo.list)}`}>
                                     {isToDoLoading.includes(toDo.id) && <Spinner />}
                                 </div>
                                 <p className={`todoname ${toDo.isDone ? "done" : ""}`}>{toDo.name}</p>
@@ -198,26 +201,26 @@ function Home() {
                     </div>
 
                     <div className="input-container">
-                        <label> category </label>
+                        <label> list </label>
                         <select
-                            name="category"
+                            name="list"
                             disabled={isLoading}
-                            id="category-select"
+                            id="list-select"
                             onChange={(e) => {
-                                setToDoCategory(e.target.value);
+                                setToDoList(e.target.value);
                             }}
                         >
                             <option value={""}>make a choice</option>
-                            {categories.map((category, index) => (
+                            {lists.map((list, index) => (
                                 <option
                                     key={index}
-                                    value={category.id}
+                                    value={list.id}
                                 >
-                                    {category.desc}
+                                    {list.desc}
                                 </option>
                             ))}
                         </select>
-                        {error.toDoCategory && <p className="error">{error.toDoCategory}</p>}
+                        {error.toDoList && <p className="error">{error.toDoList}</p>}
                         <div>
                             <button
                                 className="primary"
