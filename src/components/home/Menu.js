@@ -57,7 +57,7 @@ function Menu() {
                             to="/settings"
                             onClick={onCloseMenu}
                         >
-                            Categories
+                            Lists
                         </Link>
                     </span>
                 </li>

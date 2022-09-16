@@ -3,21 +3,21 @@ import { ReactComponent as PickAColorIcon } from "../../icons/pick-a-color-icon.
 /* eslint-disable */
 import { ReactComponent as DeleteIcon } from "../../icons/delete-icon.svg";
 import PropTypes from "prop-types";
-import { CategoryForm } from "../../components";
+import { ListForm } from "../../components";
 import { useState } from "react";
 import Modal from "./Modal";
 
-const Settings = ({ categories, onAddCategory, onEditCategory, colors, onDeleteCategory }) => {
+const Settings = ({ lists, onAddList, onEditList, colors, onDeleteList }) => {
     const [isEditFormOpen, setIsEditFormOpen] = useState(false);
     const [isNewFormOpen, setIsNewFormOpen] = useState(false);
-    const [selectedCategoryId, setSelectedCategoryId] = useState(null);
+    const [selectedListId, setSelectedListId] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const getCategoryDesc = (id) => categories.find((category) => category.id === id).desc;
+    const getListDesc = (id) => lists.find((list) => list.id === id).desc;
 
     const onToggleEdit = (id) => {
         onToggleEditForm();
-        setSelectedCategoryId(id);
+        setSelectedListId(id);
     };
     const onColor = (id) => {
         console.log("color", id);
@@ -26,7 +26,7 @@ const Settings = ({ categories, onAddCategory, onEditCategory, colors, onDeleteC
         setIsModalOpen(true);
         setIsEditFormOpen(false);
         setIsNewFormOpen(false);
-        setSelectedCategoryId(id);
+        setSelectedListId(id);
         document.body.style.overflow = "hidden";
     };
     const onCloseModal = () => {
@@ -36,7 +36,7 @@ const Settings = ({ categories, onAddCategory, onEditCategory, colors, onDeleteC
 
     const onConfirmDelete = () => {
         onCloseModal();
-        onDeleteCategory(selectedCategoryId);
+        onDeleteList(selectedListId);
     };
 
     /* only one form should be open at the same time...!!! */
@@ -49,38 +49,38 @@ const Settings = ({ categories, onAddCategory, onEditCategory, colors, onDeleteC
         setIsNewFormOpen(false);
     };
 
-    const onSubmitEditCategoryForm = (newName) => {
-        onEditCategory(selectedCategoryId, newName);
+    const onSubmitEditListForm = (newName) => {
+        onEditList(selectedListId, newName);
     };
 
     return (
         <div className="settings">
-            <h2> My categories </h2>
+            <h2> My lists </h2>
             <ul>
-                {categories.map(
-                    (category, index) =>
-                        !category.deprecated && (
+                {lists.map(
+                    (list, index) =>
+                        !list.deprecated && (
                             <li key={index}>
-                                <div className="cat-label">
-                                    <div className={`bolletje ${category.color}`} />
-                                    <div className="cat-desc">{category.desc}</div>
+                                <div className="list-label">
+                                    <div className={`bolletje ${list.color}`} />
+                                    <div className="list-desc">{list.desc}</div>
                                 </div>
                                 <span className="icon-container">
                                     <span
                                         className="icon"
-                                        onClick={() => onToggleEdit(category.id)}
+                                        onClick={() => onToggleEdit(list.id)}
                                     >
                                         <EditNameIcon />
                                     </span>
                                     <span
                                         className="icon"
-                                        onClick={() => onColor(category.id)}
+                                        onClick={() => onColor(list.id)}
                                     >
                                         <PickAColorIcon />
                                     </span>
                                     <span
                                         className="icon"
-                                        onClick={() => onToggleDelete(category.id)}
+                                        onClick={() => onToggleDelete(list.id)}
                                     >
                                         <DeleteIcon />
                                     </span>
@@ -93,30 +93,30 @@ const Settings = ({ categories, onAddCategory, onEditCategory, colors, onDeleteC
                 className="primary"
                 onClick={() => onToggleNewForm()}
             >
-                add new category
+                add new list
             </button>
             {isNewFormOpen && (
                 <div className={"new-form-container"}>
-                    <CategoryForm
-                        onAddCategory={onAddCategory}
+                    <ListForm
+                        onAddList={onAddList}
                         onToggleForm={onToggleNewForm}
                         colors={colors}
                         mode="new"
-                        title="New category"
-                        buttonLabel="add category"
+                        title="New list"
+                        buttonLabel="add list"
                     />
                 </div>
             )}
             {isEditFormOpen && (
                 <div className={"edit-form-container"}>
-                    <CategoryForm
-                        onEditCategory={onSubmitEditCategoryForm}
+                    <ListForm
+                        onEditList={onSubmitEditListForm}
                         onToggleForm={onToggleEditForm}
                         colors={colors}
                         isColorPickerHidden
                         mode="edit"
-                        title="Edit category"
-                        buttonLabel="update category"
+                        title="Edit list"
+                        buttonLabel="update list"
                     />
                 </div>
             )}
@@ -124,8 +124,8 @@ const Settings = ({ categories, onAddCategory, onEditCategory, colors, onDeleteC
             {isModalOpen && (
                 <Modal
                     onCancel={onCloseModal}
-                    categoryDesc={getCategoryDesc(selectedCategoryId)}
-                    onDeleteCategory={onConfirmDelete}
+                    listDesc={getListDesc(selectedListId)}
+                    onDeleteList={onConfirmDelete}
                 />
             )}
         </div>
@@ -133,9 +133,9 @@ const Settings = ({ categories, onAddCategory, onEditCategory, colors, onDeleteC
 };
 
 Settings.propTypes = {
-    categories: PropTypes.array,
-    onAddCategory: PropTypes.func,
-    onEditCategory: PropTypes.func,
+    lists: PropTypes.array,
+    onAddList: PropTypes.func,
+    onEditList: PropTypes.func,
     colors: PropTypes.array,
 };
 
