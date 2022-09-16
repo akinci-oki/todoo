@@ -6,8 +6,8 @@ function ProgressBar({ compeletedTodos, totalTodos, backgroundColor }) {
     return (
         <div className="bar">
             <div
-                className="progress"
-                style={{ backgroundColor: backgroundColor, width: `${percentage}%` }}
+                className={`progress ${backgroundColor}`}
+                style={{ width: `${percentage}%` }}
             ></div>
         </div>
     );
