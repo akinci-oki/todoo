@@ -74,13 +74,16 @@ function Home() {
         });
         e.preventDefault();
         if (toDoName.length < 1) {
-            setError({
+            setError((error) => ({
+                ...error,
                 toDoName: "please fill in a description.",
-            });
-        } else if (toDoList === "" || toDoList === null) {
-            setError({
+            }));
+        }
+        if (toDoList === "" || toDoList === null) {
+            setError((error) => ({
+                ...error,
                 toDoList: "please pick a list.",
-            });
+            }));
         }
         if (toDoName.length < 1 || toDoList === "" || toDoList === null) {
             return;
