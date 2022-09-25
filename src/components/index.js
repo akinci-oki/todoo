@@ -12,6 +12,7 @@ import SignUp from "./SignUp/SignUp";
 import Spinner from "./Spinner/Spinner";
 import Success from "./Success/Success";
 import UpdateUser from "./UpdateUser/UpdateUser";
+import ProgressBar from "./ProgressBar/ProgressBar";
 
 export {
     About,
@@ -28,4 +29,5 @@ export {
     Spinner,
     Success,
     UpdateUser,
+    ProgressBar,
 };

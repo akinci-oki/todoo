@@ -5,7 +5,7 @@ import { useUser } from "../../context";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { lists } from "../../lists";
-import { Spinner, Error } from "../../components";
+import { Spinner, Error, ProgressBar } from "../../components";
 import { ReactComponent as PlusIcon } from "../../icons/plus-icon.svg";
 
 function Home() {
@@ -41,19 +41,26 @@ function Home() {
         bottomRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [isFormOpen]);
 
-    const getListDesc = (id) => {
-        const myList = lists.find((list) => list.id === id);
-        console.log(myList);
-        console.log(lists);
+    const getTotalTodos = (list) => {
+        return list.length;
+    };
+    const getCompletedTodos = (toDos) => {
+        return toDos.filter((toDo) => toDo.isDone).length;
+    };
 
-        return myList.desc;
+    const getBackgroundColor = (id) => {
+        return lists.find((list) => list.id === id).color;
+    };
+
+    const getListDesc = (id) => {
+        return lists.find((list) => list.id === id).desc;
     };
 
     async function getTodosPerList() {
         if (!user.id) return;
         try {
             const response = await axios.get(`http://localhost:4000/api/todos/${user.id}/per-list`);
-            setToDosPerList(response.data);
+            setToDosPerList(Object.entries(response.data));
 
             const cardLabels = Object.keys(response.data);
             const myCardLabels = cardLabels.map((cardLabel) => getListDesc(cardLabel));
@@ -153,14 +160,19 @@ function Home() {
                 </div>
             )}
 
-            {desc.length > 0 && (
+            {toDosPerList && toDosPerList.length > 0 && (
                 <div className="row">
-                    {desc.map((desc, index) => (
+                    {toDosPerList.map(([key, value], index) => (
                         <div
                             key={index}
                             className="card"
                         >
-                            <p>{desc}</p>
+                            <p>{getListDesc(key)}</p>
+                            <ProgressBar
+                                compeletedTodos={getCompletedTodos(value)}
+                                totalTodos={getTotalTodos(value)}
+                                backgroundColor={getBackgroundColor(key)}
+                            />
                         </div>
                     ))}
                 </div>
