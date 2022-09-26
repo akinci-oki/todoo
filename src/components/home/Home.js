@@ -148,6 +148,7 @@ function Home() {
                 <div>
                     <button
                         className="round"
+                        type="button"
                         onClick={(e) => {
                             e.preventDefault();
                             onToggleForm();
@@ -236,12 +237,21 @@ function Home() {
                             <button
                                 className="primary"
                                 disabled={isLoading}
-                                type="submit"
+                                type="button"
                                 onClick={(e) => onAddToDo(e)}
                             >
                                 {isLoading ? <Spinner /> : "add"}
                             </button>
                             {error.api && <Error />}
+                            <button
+                                className="secondary"
+                                type="button"
+                                onClick={() => {
+                                    setIsFormOpen(false);
+                                }}
+                            >
+                                cancel
+                            </button>
                         </div>
                     </div>
                 </form>
