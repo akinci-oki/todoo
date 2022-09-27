@@ -180,6 +180,11 @@ function Home() {
             )}
 
             <ul>
+                <form className="row-link">
+                    {/* <p className="link">edit todo</p> */}
+                    <p className="link">delete todo</p>
+                </form>
+
                 {toDos.length > 0 &&
                     toDos.map((toDo, index) => (
                         <li

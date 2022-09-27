@@ -21,6 +21,13 @@
         bottom: 2rem;
     }
 
+    .row-link {
+        .link {
+            margin-right: 1rem;
+        }
+        display: flex;
+    }
+
     .row {
         display: flex;
         overflow-x: scroll;
