@@ -12,6 +12,14 @@
             text-decoration: line-through;
         }
     }
+
+    .mode-on {
+        font-weight: $fontweight-semibold;
+    }
+    .includes {
+        color: $color-disabled;
+    }
+
     .round {
         position: fixed;
         border-radius: 50%;
