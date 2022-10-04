@@ -56,6 +56,17 @@ strong {
     margin-right: 0.5rem;
 }
 
+.link {
+    text-decoration: underline;
+    font-family: $font-primary;
+    font-weight: $fontweight-normal;
+    color: #000000;
+    &:hover {
+        cursor: pointer;
+        font-weight: $fontweight-semibold;
+    }
+}
+
 button {
     line-height: 1;
     display: flex;

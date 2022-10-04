@@ -12,6 +12,14 @@
             text-decoration: line-through;
         }
     }
+
+    .mode-on {
+        font-weight: $fontweight-semibold;
+    }
+    .includes {
+        color: $color-disabled;
+    }
+
     .round {
         position: fixed;
         border-radius: 50%;
@@ -19,6 +27,13 @@
         height: 4rem;
         right: 2rem;
         bottom: 2rem;
+    }
+
+    .row-link {
+        .link {
+            margin-right: 1rem;
+        }
+        display: flex;
     }
 
     .row {

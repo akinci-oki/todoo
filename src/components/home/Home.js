@@ -17,8 +17,8 @@ function Home() {
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [isToDoLoading, setIsToDoLoading] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [desc, setDesc] = useState([]);
     const [toDosPerList, setToDosPerList] = useState();
+    const [isDeleteModeOn, setIsDeleteModeOn] = useState(false);
     const [toDos, setToDos] = useState([]);
     const [error, setError] = useState({
         toDoName: null,
@@ -61,10 +61,6 @@ function Home() {
         try {
             const response = await axios.get(`http://localhost:4000/api/todos/${user.id}/per-list`);
             setToDosPerList(Object.entries(response.data));
-
-            const cardLabels = Object.keys(response.data);
-            const myCardLabels = cardLabels.map((cardLabel) => getListDesc(cardLabel));
-            setDesc(myCardLabels);
 
             const toDos = Object.values(response.data).flat();
             setToDos(toDos);
@@ -130,6 +126,21 @@ function Home() {
         }
         setIsLoading(false);
     }
+    async function onDeleteTodo(toDo) {
+        setIsToDoLoading((isToDoLoading) => [...isToDoLoading, toDo.id]);
+        try {
+            await axios.delete(`http://localhost:4000/api/todos/${user.id}/${toDo.id}`);
+            getTodosPerList();
+        } catch (error) {
+            setError(() => ({
+                api: "something went wrong, please try again.",
+            }));
+            setIsToDoLoading((isToDoLoading) => isToDoLoading.filter((id) => id !== toDo.id));
+            /* eslint-disable-next-line no-console */
+            console.error(error);
+        }
+        setIsDeleteModeOn(false);
+    }
 
     const onToggleForm = () => {
         setIsFormOpen(!isFormOpen);
@@ -180,17 +191,36 @@ function Home() {
             )}
 
             <ul>
+                <form className="row-link">
+                    {/* <p className="link">edit todo</p> */}
+                    <p
+                        className={`link ${isDeleteModeOn ? "mode-on" : ""}`}
+                        onClick={() => {
+                            setIsDeleteModeOn(!isDeleteModeOn);
+                        }}
+                    >
+                        delete todo
+                    </p>
+                </form>
+                {error.api && <Error />}
+
                 {toDos.length > 0 &&
                     toDos.map((toDo, index) => (
                         <li
                             key={index}
-                            onClick={() => onToggleTodo(toDo)}
+                            onClick={() => (isDeleteModeOn ? onDeleteTodo(toDo) : onToggleTodo(toDo))}
                         >
                             <div className="todoo">
                                 <div className={`bolletje ${getColorFromListId(toDo.list)}`}>
                                     {isToDoLoading.includes(toDo.id) && <Spinner />}
                                 </div>
-                                <p className={`todoname ${toDo.isDone ? "done" : ""}`}>{toDo.name}</p>
+                                <p
+                                    className={`todoname ${toDo.isDone ? "done" : ""} ${
+                                        isToDoLoading.includes(toDo.id) ? "includes" : ""
+                                    } `}
+                                >
+                                    {toDo.name}
+                                </p>
                             </div>
                         </li>
                     ))}
