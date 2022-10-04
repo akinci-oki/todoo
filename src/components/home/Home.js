@@ -14,11 +14,14 @@ function Home() {
     const navigate = useNavigate();
     const [toDoName, setToDoName] = useState("");
     const [toDoList, setToDoList] = useState(null);
+    const [selectedTodoId, setSelectedTodoId] = useState(null);
+    const [toDoDone, setToDoDone] = useState(null);
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [isToDoLoading, setIsToDoLoading] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [toDosPerList, setToDosPerList] = useState();
     const [isDeleteModeOn, setIsDeleteModeOn] = useState(false);
+    const [isEditModeOn, setIsEditModeOn] = useState(false);
     const [toDos, setToDos] = useState([]);
     const [error, setError] = useState({
         toDoName: null,
@@ -93,12 +96,16 @@ function Home() {
         }
         setIsLoading(true);
 
+        const apiUrl = isEditModeOn
+            ? `http://localhost:4000/api/todos/${user.id}/${selectedTodoId}`
+            : `http://localhost:4000/api/todos/${user.id}`;
+        const requestBody = {
+            name: toDoName,
+            isDone: isEditModeOn ? toDoDone : false,
+            list: toDoList,
+        };
         try {
-            await axios.post(`http://localhost:4000/api/todos/${user.id}`, {
-                name: toDoName,
-                isDone: false,
-                list: toDoList,
-            });
+            await axios.post(apiUrl, requestBody);
             getTodosPerList();
         } catch (error) {
             setError(() => ({
@@ -140,6 +147,28 @@ function Home() {
             console.error(error);
         }
         setIsDeleteModeOn(false);
+    }
+
+    async function onEditTodo(toDo) {
+        setToDoList(toDo.list);
+        setToDoName(toDo.name);
+        setToDoDone(toDo.isDone);
+        setSelectedTodoId(toDo.id);
+        setIsFormOpen(true);
+        // try {
+        //     await axios.put(`http://localhost:4000/api/todos/${user.id}/${toDo.id}`, {
+        //         name: toDo.name,
+        //         isDone: toDo.isDone,
+        //         list: toDo.list,
+        //     });
+        //     getTodosPerList();
+        // } catch (error) {
+        //     setError(() => ({
+        //         api: "something went wrong, please try again.",
+        //     }));
+        //     /* eslint-disable-next-line no-console */
+        //     console.error(error);
+        // }
     }
 
     const onToggleForm = () => {
@@ -192,7 +221,14 @@ function Home() {
 
             <ul>
                 <form className="row-link">
-                    {/* <p className="link">edit todo</p> */}
+                    <p
+                        className={`link ${isEditModeOn ? "mode-on" : ""}`}
+                        onClick={() => {
+                            setIsEditModeOn(!isEditModeOn);
+                        }}
+                    >
+                        edit todo
+                    </p>
                     <p
                         className={`link ${isDeleteModeOn ? "mode-on" : ""}`}
                         onClick={() => {
@@ -208,7 +244,9 @@ function Home() {
                     toDos.map((toDo, index) => (
                         <li
                             key={index}
-                            onClick={() => (isDeleteModeOn ? onDeleteTodo(toDo) : onToggleTodo(toDo))}
+                            onClick={() =>
+                                isDeleteModeOn ? onDeleteTodo(toDo) : isEditModeOn ? onEditTodo(toDo) : onToggleTodo(toDo)
+                            }
                         >
                             <div className="todoo">
                                 <div className={`bolletje ${getColorFromListId(toDo.list)}`}>
@@ -270,7 +308,7 @@ function Home() {
                                 type="button"
                                 onClick={(e) => onAddToDo(e)}
                             >
-                                {isLoading ? <Spinner /> : "add"}
+                                {isLoading ? <Spinner /> : isEditModeOn ? "save" : "add"}
                             </button>
                             {error.api && <Error />}
                             <button
