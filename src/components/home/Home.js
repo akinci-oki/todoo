@@ -105,7 +105,14 @@ function Home() {
             list: toDoList,
         };
         try {
-            await axios.post(apiUrl, requestBody);
+            const config = {
+                data: requestBody,
+                method: isEditModeOn ? "put" : "post",
+                url: apiUrl,
+            };
+
+            await axios(config);
+
             getTodosPerList();
         } catch (error) {
             setError(() => ({
@@ -155,20 +162,6 @@ function Home() {
         setToDoDone(toDo.isDone);
         setSelectedTodoId(toDo.id);
         setIsFormOpen(true);
-        // try {
-        //     await axios.put(`http://localhost:4000/api/todos/${user.id}/${toDo.id}`, {
-        //         name: toDo.name,
-        //         isDone: toDo.isDone,
-        //         list: toDo.list,
-        //     });
-        //     getTodosPerList();
-        // } catch (error) {
-        //     setError(() => ({
-        //         api: "something went wrong, please try again.",
-        //     }));
-        //     /* eslint-disable-next-line no-console */
-        //     console.error(error);
-        // }
     }
 
     const onToggleForm = () => {
@@ -269,6 +262,7 @@ function Home() {
                         <label> description </label>
                         <input
                             placeholder="to do"
+                            value={toDoName}
                             type="text"
                             id="desc"
                             disabled={isLoading}
@@ -284,6 +278,7 @@ function Home() {
                         <label> list </label>
                         <select
                             name="list"
+                            value={toDoList}
                             disabled={isLoading}
                             id="list-select"
                             onChange={(e) => {
@@ -306,7 +301,9 @@ function Home() {
                                 className="primary"
                                 disabled={isLoading}
                                 type="button"
-                                onClick={(e) => onAddToDo(e)}
+                                onClick={(e) => {
+                                    onAddToDo(e);
+                                }}
                             >
                                 {isLoading ? <Spinner /> : isEditModeOn ? "save" : "add"}
                             </button>
