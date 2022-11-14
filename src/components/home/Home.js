@@ -19,6 +19,7 @@ function Home() {
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [isToDoLoading, setIsToDoLoading] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [isButtonDisabled, setIsButtonDisabled] = useState(true);
     const [toDosPerList, setToDosPerList] = useState();
     const [isDeleteModeOn, setIsDeleteModeOn] = useState(false);
     const [isEditModeOn, setIsEditModeOn] = useState(false);
@@ -37,6 +38,11 @@ function Home() {
     }, []);
 
     useEffect(() => {
+        checkIfDataChange();
+    }, [toDoName, toDoList]);
+
+    useEffect(() => {
+        setIsButtonDisabled(true);
         getTodosPerList();
     }, [user]);
 
@@ -175,6 +181,18 @@ function Home() {
 
         return selectedList.color;
     };
+
+    function checkIfDataChange() {
+        const selectedToDo = toDos.find((toDo) => toDo.id === selectedTodoId);
+        if (!selectedToDo) return;
+        if (toDoName === selectedToDo.name && toDoList === selectedToDo.list) {
+            setIsButtonDisabled(true);
+        }
+        if (toDoName !== selectedToDo.name || toDoList !== selectedToDo.list) {
+            setIsButtonDisabled(false);
+        }
+    }
+
     return (
         <div className="home">
             {!isFormOpen && (
@@ -299,7 +317,7 @@ function Home() {
                         <div>
                             <button
                                 className="primary"
-                                disabled={isLoading}
+                                disabled={isButtonDisabled || isLoading}
                                 type="button"
                                 onClick={(e) => {
                                     onAddToDo(e);
