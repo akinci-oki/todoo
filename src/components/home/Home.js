@@ -42,7 +42,7 @@ function Home() {
     }, [toDoName, toDoList]);
 
     useEffect(() => {
-        setIsButtonDisabled(true);
+        setIsButtonDisabled(false);
         getTodosPerList();
     }, [user]);
 
@@ -120,6 +120,7 @@ function Home() {
             await axios(config);
 
             getTodosPerList();
+            setIsFormOpen(false);
         } catch (error) {
             setError(() => ({
                 api: "something went wrong, please try again.",
