@@ -14,11 +14,15 @@ function Home() {
     const navigate = useNavigate();
     const [toDoName, setToDoName] = useState("");
     const [toDoList, setToDoList] = useState(null);
+    const [selectedTodoId, setSelectedTodoId] = useState(null);
+    const [toDoDone, setToDoDone] = useState(null);
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [isToDoLoading, setIsToDoLoading] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [isButtonDisabled, setIsButtonDisabled] = useState(true);
     const [toDosPerList, setToDosPerList] = useState();
     const [isDeleteModeOn, setIsDeleteModeOn] = useState(false);
+    const [isEditModeOn, setIsEditModeOn] = useState(false);
     const [toDos, setToDos] = useState([]);
     const [error, setError] = useState({
         toDoName: null,
@@ -34,6 +38,11 @@ function Home() {
     }, []);
 
     useEffect(() => {
+        checkIfDataChange();
+    }, [toDoName, toDoList]);
+
+    useEffect(() => {
+        setIsButtonDisabled(false);
         getTodosPerList();
     }, [user]);
 
@@ -93,13 +102,25 @@ function Home() {
         }
         setIsLoading(true);
 
+        const apiUrl = isEditModeOn
+            ? `http://localhost:4000/api/todos/${user.id}/${selectedTodoId}`
+            : `http://localhost:4000/api/todos/${user.id}`;
+        const requestBody = {
+            name: toDoName,
+            isDone: isEditModeOn ? toDoDone : false,
+            list: toDoList,
+        };
         try {
-            await axios.post(`http://localhost:4000/api/todos/${user.id}`, {
-                name: toDoName,
-                isDone: false,
-                list: toDoList,
-            });
+            const config = {
+                data: requestBody,
+                method: isEditModeOn ? "put" : "post",
+                url: apiUrl,
+            };
+
+            await axios(config);
+
             getTodosPerList();
+            setIsFormOpen(false);
         } catch (error) {
             setError(() => ({
                 api: "something went wrong, please try again.",
@@ -142,6 +163,14 @@ function Home() {
         setIsDeleteModeOn(false);
     }
 
+    async function onEditTodo(toDo) {
+        setToDoList(toDo.list);
+        setToDoName(toDo.name);
+        setToDoDone(toDo.isDone);
+        setSelectedTodoId(toDo.id);
+        setIsFormOpen(true);
+    }
+
     const onToggleForm = () => {
         setIsFormOpen(!isFormOpen);
     };
@@ -153,6 +182,18 @@ function Home() {
 
         return selectedList.color;
     };
+
+    function checkIfDataChange() {
+        const selectedToDo = toDos.find((toDo) => toDo.id === selectedTodoId);
+        if (!selectedToDo) return;
+        if (toDoName === selectedToDo.name && toDoList === selectedToDo.list) {
+            setIsButtonDisabled(true);
+        }
+        if (toDoName !== selectedToDo.name || toDoList !== selectedToDo.list) {
+            setIsButtonDisabled(false);
+        }
+    }
+
     return (
         <div className="home">
             {!isFormOpen && (
@@ -192,7 +233,14 @@ function Home() {
 
             <ul>
                 <form className="row-link">
-                    {/* <p className="link">edit todo</p> */}
+                    <p
+                        className={`link ${isEditModeOn ? "mode-on" : ""}`}
+                        onClick={() => {
+                            setIsEditModeOn(!isEditModeOn);
+                        }}
+                    >
+                        edit todo
+                    </p>
                     <p
                         className={`link ${isDeleteModeOn ? "mode-on" : ""}`}
                         onClick={() => {
@@ -208,7 +256,9 @@ function Home() {
                     toDos.map((toDo, index) => (
                         <li
                             key={index}
-                            onClick={() => (isDeleteModeOn ? onDeleteTodo(toDo) : onToggleTodo(toDo))}
+                            onClick={() =>
+                                isDeleteModeOn ? onDeleteTodo(toDo) : isEditModeOn ? onEditTodo(toDo) : onToggleTodo(toDo)
+                            }
                         >
                             <div className="todoo">
                                 <div className={`bolletje ${getColorFromListId(toDo.list)}`}>
@@ -231,6 +281,7 @@ function Home() {
                         <label> description </label>
                         <input
                             placeholder="to do"
+                            value={toDoName}
                             type="text"
                             id="desc"
                             disabled={isLoading}
@@ -246,6 +297,7 @@ function Home() {
                         <label> list </label>
                         <select
                             name="list"
+                            value={toDoList}
                             disabled={isLoading}
                             id="list-select"
                             onChange={(e) => {
@@ -266,11 +318,13 @@ function Home() {
                         <div>
                             <button
                                 className="primary"
-                                disabled={isLoading}
+                                disabled={isButtonDisabled || isLoading}
                                 type="button"
-                                onClick={(e) => onAddToDo(e)}
+                                onClick={(e) => {
+                                    onAddToDo(e);
+                                }}
                             >
-                                {isLoading ? <Spinner /> : "add"}
+                                {isLoading ? <Spinner /> : isEditModeOn ? "save" : "add"}
                             </button>
                             {error.api && <Error />}
                             <button
